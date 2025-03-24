@@ -1,6 +1,7 @@
 # App Idea Generator
 
-A creative tool that generates app ideas using AI, with adjustable creativity levels. Built with Next.js, Tailwind CSS, and OpenAI's GPT-3.5.
+A creative tool that generates app ideas using AI, with adjustable creativity levels.
+Built with Next.js, Tailwind CSS, and OpenAI's GPT-3.5.
 
 ## Features
 
