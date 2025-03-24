@@ -1,8 +1,24 @@
 import OpenAI from 'openai';
 import { NextResponse } from 'next/server';
+import { Redis } from '@upstash/redis';
+import { Ratelimit } from '@upstash/ratelimit';
+import { headers } from 'next/headers';
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+// Create a new Redis client
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL || '',
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
+});
+
+// Create a new ratelimiter that allows 10 requests per 10 minutes
+const ratelimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(10, '10 m'),
+  analytics: true,
 });
 
 const getVibePrompt = (vibe: number) => {
@@ -22,6 +38,27 @@ const getVibePrompt = (vibe: number) => {
 
 export async function POST(request: Request) {
   try {
+    // Get IP for rate limiting
+    const headersList = headers();
+    const ip = headersList.get('x-forwarded-for') || 'anonymous';
+    
+    // Check rate limit
+    const { success, limit, reset, remaining } = await ratelimit.limit(ip);
+    
+    if (!success) {
+      return NextResponse.json(
+        { error: 'Rate limit exceeded. Please try again later.' },
+        { 
+          status: 429,
+          headers: {
+            'X-RateLimit-Limit': limit.toString(),
+            'X-RateLimit-Remaining': remaining.toString(),
+            'X-RateLimit-Reset': reset.toString()
+          }
+        }
+      );
+    }
+
     const { vibe = 1 } = await request.json();
     
     const completion = await openai.chat.completions.create({
