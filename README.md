@@ -11,7 +11,7 @@ Deployed via [Vercel](https://vercel.com) • Powered by [Next.js](https://nextj
 | Day | App Name                     | Description                              | Demo |
 |-----|------------------------------|------------------------------------------|------|
 | 1   | What App Should I Build?     | Get a random project idea based on vibe  | [Live](https://30-in-30-app-1.vercel.app/) |
-| 2   | PM Coaching App              | Track PM career growth with self & manager assessments | [Live](https://30apps30days.vercel.app/02) |
+| 2   | PM Coaching App              | Track PM career growth with self & manager assessments | [Live](https://30-in-30-app-2.vercel.app/) |
 | 3   | TBC                          | -                                        | -    |
 
 ---

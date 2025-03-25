@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD029 -->
 # PM Coaching App
 
 A professional development tool for Product Managers to track their career growth through self-assessments and manager feedback.
