@@ -19,14 +19,17 @@ export default function ManagerAssessment() {
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-3xl space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Manager Assessment
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Evaluate {currentUser.name}'s competencies from your perspective as
-            their manager
-          </p>
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/10 rounded-2xl"></div>
+          <div className="relative p-8">
+            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-200">
+              Manager Assessment
+            </h1>
+            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">
+              Evaluate {currentUser.name}'s competencies from your perspective
+              as their manager
+            </p>
+          </div>
         </div>
 
         <div className="card p-6">

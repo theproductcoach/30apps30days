@@ -22,7 +22,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="min-h-screen">
           <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between max-w-5xl mx-auto">
               <Navigation />
               <ThemeToggle />
             </div>

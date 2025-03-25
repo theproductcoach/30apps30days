@@ -19,13 +19,16 @@ export default function SelfAssessment() {
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-3xl space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Self Assessment
-          </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Evaluate your current competencies on a scale of 1-5
-          </p>
+        <div className="relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/10 rounded-2xl"></div>
+          <div className="relative p-8">
+            <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-200">
+              Self Assessment
+            </h1>
+            <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">
+              Evaluate your current competencies on a scale of 1-5
+            </p>
+          </div>
         </div>
 
         <div className="card p-6">

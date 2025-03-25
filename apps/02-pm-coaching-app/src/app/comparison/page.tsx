@@ -48,13 +48,16 @@ export default function Comparison() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-          Assessment Comparison
-        </h1>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
-          Compare your self-assessment with manager feedback and ideal targets
-        </p>
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/10 rounded-2xl"></div>
+        <div className="relative p-8 text-center">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-800 dark:from-primary-400 dark:to-primary-200">
+            Assessment Comparison
+          </h1>
+          <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">
+            Compare your self-assessment with manager feedback and ideal targets
+          </p>
+        </div>
       </div>
 
       <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm border border-gray-200 dark:border-gray-700">

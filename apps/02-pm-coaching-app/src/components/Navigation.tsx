@@ -11,17 +11,17 @@ export default function Navigation({ showBack = false }: NavigationProps) {
   const router = useRouter();
 
   return (
-    <nav className="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-800">
+    <nav className="flex items-center justify-between py-4">
       <Link
         href="/"
-        className="text-xl font-bold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400"
+        className="inline-flex items-center px-4 py-2 bg-gray-900/90 dark:bg-gray-800 rounded-lg"
       >
-        PM Coaching
+        <span className="text-lg font-semibold text-primary-400">Home</span>
       </Link>
       {showBack && (
         <button
           onClick={() => router.back()}
-          className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+          className="inline-flex items-center px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
         >
           ← Back
         </button>
