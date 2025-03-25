@@ -32,17 +32,17 @@ export default function ManagerAssessment() {
           </div>
         </div>
 
-        <div className="card p-6">
-          <div className="flex items-center justify-between mb-6 pb-6 border-b border-gray-200 dark:border-gray-700">
+        <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 dark:from-blue-900/20 dark:to-blue-800/10 rounded-lg p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-6 pb-6 border-b border-blue-200 dark:border-blue-800">
             <div>
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {currentUser.name}
               </h2>
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+              <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                 Manager assessment in progress
               </p>
             </div>
-            <div className="px-3 py-1 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 rounded-full text-sm font-medium">
+            <div className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">
               {currentUser.role}
             </div>
           </div>

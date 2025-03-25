@@ -135,6 +135,8 @@ export default function RadarChart({
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       r: {
         beginAtZero: true,
@@ -150,34 +152,35 @@ export default function RadarChart({
           color: isDark ? "rgba(209, 213, 219, 0.2)" : "rgba(55, 65, 81, 0.2)",
         },
         pointLabels: {
-          color: isDark ? "rgb(229, 231, 235)" : "rgb(31, 41, 55)",
           font: {
-            size: 14,
-            weight: "normal" as const,
+            size: window.innerWidth < 640 ? 10 : 12,
           },
+          color: isDark ? "rgb(209, 213, 219)" : "rgb(55, 65, 81)",
+          backdropColor: "transparent",
         },
       },
     },
     plugins: {
       legend: {
-        display: false,
+        position: (window.innerWidth < 640 ? "bottom" : "top") as
+          | "top"
+          | "bottom",
+        labels: {
+          boxWidth: window.innerWidth < 640 ? 8 : 12,
+          padding: window.innerWidth < 640 ? 8 : 12,
+          font: {
+            size: window.innerWidth < 640 ? 10 : 12,
+          },
+        },
       },
       tooltip: {
-        backgroundColor: isDark ? "rgb(31, 41, 55)" : "rgb(255, 255, 255)",
-        titleColor: isDark ? "rgb(229, 231, 235)" : "rgb(31, 41, 55)",
-        bodyColor: isDark ? "rgb(229, 231, 235)" : "rgb(31, 41, 55)",
-        borderColor: isDark ? "rgb(75, 85, 99)" : "rgb(229, 231, 235)",
-        borderWidth: 1,
-        padding: 12,
-        titleFont: {
-          size: 14,
-        },
-        bodyFont: {
-          size: 14,
+        callbacks: {
+          label: function (context: any) {
+            return `${context.dataset.label}: ${context.raw}`;
+          },
         },
       },
     },
-    maintainAspectRatio: false,
   };
 
   const toggleDataset = (label: string) => {
@@ -216,7 +219,7 @@ export default function RadarChart({
           </button>
         ))}
       </div>
-      <div className="h-[400px]">
+      <div className="w-full h-[400px] sm:h-[500px] md:h-[600px]">
         <Radar data={data} options={options} />
       </div>
     </div>
