@@ -19,7 +19,7 @@ export const competencies: Competency[] = [
   {
     id: 'fluency-with-data',
     name: 'Fluency with Data',
-    description: 'Ability to analyze and make decisions based on data',
+    description: 'Ability to analyse and make decisions based on data',
     idealScores: {
       APM: 4,
       PM: 5,

@@ -46,7 +46,7 @@ export default function Home() {
               PM Coaching App
             </h1>
             <p className="mt-3 text-lg text-gray-600 dark:text-gray-400">
-              Track your professional development and get personalized coaching
+              Track your professional development and get personalised coaching
             </p>
           </div>
         </div>

@@ -38,7 +38,7 @@ export default function SelfAssessment() {
                 {currentUser.name}
               </h2>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
-                Completing self assessment
+                Completing self-assessment
               </p>
             </div>
             <div className="px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-full text-sm font-medium">

@@ -39,8 +39,14 @@ export default function AssessmentForm({ type }: AssessmentFormProps) {
       updatedAt: new Date().toISOString(),
     };
 
-    addAssessment(assessment);
-    router.push("/comparison");
+    const confirmed = window.confirm(
+      `Are you sure you want to submit this ${type} assessment? This action cannot be undone.`
+    );
+
+    if (confirmed) {
+      addAssessment(assessment);
+      router.push("/comparison");
+    }
   };
 
   const handleScoreChange = (competencyId: string, value: number) => {
