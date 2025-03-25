@@ -12,7 +12,7 @@ export interface Assessment {
   userId: string;
   type: 'self' | 'manager';
   competencies: Record<string, number>;
-  notes?: string;
+  notes?: Record<string, string>;
   createdAt: string;
   updatedAt: string;
 }
