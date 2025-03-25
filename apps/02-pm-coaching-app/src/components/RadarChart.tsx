@@ -153,7 +153,7 @@ export default function RadarChart({
           color: isDark ? "rgb(229, 231, 235)" : "rgb(31, 41, 55)",
           font: {
             size: 14,
-            weight: "500",
+            weight: "normal" as const,
           },
         },
       },

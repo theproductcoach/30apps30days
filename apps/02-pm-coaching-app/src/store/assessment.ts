@@ -23,7 +23,7 @@ export const useAssessmentStore = create<AssessmentStore>((set) => ({
     {
       id: '2',
       name: 'Jane Smith',
-      role: 'SPM',
+      role: 'Senior PM',
     },
   ],
   assessments: [],
