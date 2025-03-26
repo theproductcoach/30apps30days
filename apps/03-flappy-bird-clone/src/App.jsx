@@ -338,8 +338,9 @@ function App() {
       ctx.font = 'bold 36px Arial';
       const scoreText = game.score.toString();
       const scoreX = canvas.width / 2 - ctx.measureText(scoreText).width / 2;
-      ctx.strokeText(scoreText, scoreX, 50);
-      ctx.fillText(scoreText, scoreX, 50);
+      const scoreY = 90; // 50 + 40 to move it down
+      ctx.strokeText(scoreText, scoreX, scoreY);
+      ctx.fillText(scoreText, scoreX, scoreY);
 
       // Draw game over or start message
       if (game.gameOver) {
