@@ -1,12 +1,95 @@
-# React + Vite
+# Flappy Bird Clone
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web-based clone of Flappy Bird built with React and Canvas, with mobile support via Capacitor.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Classic Flappy Bird gameplay
+- Responsive canvas rendering
+- Multiple control options (spacebar, mouse click, touch)
+- Random bird colors and day/night backgrounds
+- Mobile-friendly design
 
-## Expanding the ESLint configuration
+## Development Setup
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Start development server:
+
+```bash
+npm run dev
+```
+
+3. Build for production:
+
+```bash
+npm run build
+```
+
+## Mobile Development (Android)
+
+### Prerequisites
+
+- Node.js v20 or higher
+- Android Studio installed
+- Android SDK configured
+- JDK (Java Development Kit)
+
+### Building for Android
+
+1. Install Capacitor:
+
+```bash
+npm install @capacitor/core @capacitor/cli
+npm install @capacitor/android
+```
+
+2. Build the web app:
+
+```bash
+npm run build
+```
+
+3. Add Android platform:
+
+```bash
+npx cap add android
+```
+
+4. Sync web content with Android:
+
+```bash
+npx cap sync
+```
+
+5. Open in Android Studio:
+
+```bash
+npx cap open android
+```
+
+### Testing on Android
+
+1. In Android Studio:
+   - Wait for project sync to complete
+   - Set up an Android Virtual Device (emulator) or connect a physical device
+   - Click the "Run" button (green play icon) or press Shift+F10
+
+2. For subsequent updates:
+   - Rebuild the web app: `npm run build`
+   - Sync with Android: `npx cap sync`
+   - Run again in Android Studio
+
+## Controls
+
+- Press spacebar to flap
+- Click/tap the screen to flap
+- Press spacebar/click/tap to restart after game over
+
+## License
+
+MIT License
