@@ -12,6 +12,7 @@ A modern web-based clone of Flappy Bird built with React and Canvas, with mobile
 
 ## Development Setup
 
+<!-- markdownlint-disable MD029 -->
 1. Install dependencies:
 
 ```bash
@@ -93,3 +94,4 @@ npx cap open android
 ## License
 
 MIT License
+<!-- markdownlint-enable MD029 -->
