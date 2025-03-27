@@ -13,7 +13,7 @@ Deployed via [Vercel](https://vercel.com) • Powered by [Next.js](https://nextj
 | 1   | What App Should I Build?     | Get a random project idea based on vibe  | [Live](https://30-in-30-app-1.vercel.app/) |
 | 2   | PM Coaching App              | Track PM career growth with self & manager assessments | [Live](https://30-in-30-app-2.vercel.app/) |
 | 3   | Flappy Bird Clone            | Classic game rebuilt with React & Canvas, includes mobile Android app | [Live](https://30-in-30-app-3.vercel.app/) |
-| 4   | TBD                         | -                                        | -    |
+| 4   | Climber Coaching App         | Rock climbing coaching platform with blog, session booking, Q&A, and Redpoint Journal | [Live](https://30-in-30-app-4.vercel.app/) |
 
 ---
 

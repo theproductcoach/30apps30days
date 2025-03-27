@@ -10,7 +10,11 @@ export default function SessionForm({
   climbId: string;
   onAddSession: (session: Omit<ClimbSession, "id">) => void;
 }) {
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<{
+    notes: string;
+    status: "in progress" | "sent";
+    date: string;
+  }>({
     notes: "",
     status: "in progress",
     date: new Date().toISOString().split("T")[0],
@@ -36,7 +40,9 @@ export default function SessionForm({
       />
       <select
         value={form.status}
-        onChange={(e) => setForm({ ...form, status: e.target.value })}
+        onChange={(e) =>
+          setForm({ ...form, status: e.target.value as "in progress" | "sent" })
+        }
         className="input-field mb-4"
       >
         <option value="in progress">In Progress</option>
