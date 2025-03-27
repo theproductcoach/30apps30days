@@ -1,6 +1,6 @@
 # Climber Coach App
 
-A Next.js application for rock climbing coaching, featuring blog posts, session booking, Q&A, and progress tracking.
+A Next.js application for rock climbing coaching, featuring blog posts, session booking, Q&A, progress tracking, and a Redpoint Journal.
 
 ## Features
 
@@ -8,6 +8,7 @@ A Next.js application for rock climbing coaching, featuring blog posts, session 
 - Session booking system
 - Q&A section for climbing-related questions
 - Progress tracking for logged climbs
+- Redpoint Journal for tracking climbing projects and sessions
 - Admin dashboard for managing content and requests
 
 ## Tech Stack
@@ -15,7 +16,7 @@ A Next.js application for rock climbing coaching, featuring blog posts, session 
 - Next.js 14 (App Router)
 - TypeScript
 - Tailwind CSS
-- Supabase (Database)
+- Local storage and server-side JSON storage
 - React Markdown
 
 ## Setup
@@ -27,54 +28,16 @@ A Next.js application for rock climbing coaching, featuring blog posts, session 
    npm install
    ```
 
-3. Create a Supabase project and set up the following tables:
+3. Install Tailwind Typography plugin for the blog:
 
-   ```sql
-   -- Blog posts table
-   create table blog_posts (
-     id uuid default uuid_generate_v4() primary key,
-     title text not null,
-     content text not null,
-     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
-   );
-
-   -- Booking requests table
-   create table booking_requests (
-     id uuid default uuid_generate_v4() primary key,
-     name text not null,
-     email text not null,
-     preferred_date timestamp with time zone not null,
-     goals text not null,
-     status text not null default 'pending',
-     created_at timestamp with time zone default timezone('utc'::text, now()) not null
-   );
-
-   -- Questions table
-   create table questions (
-     id uuid default uuid_generate_v4() primary key,
-     question text not null,
-     answer text,
-     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-     updated_at timestamp with time zone
-   );
-
-   -- Climb logs table
-   create table climb_logs (
-     id uuid default uuid_generate_v4() primary key,
-     date date not null,
-     climb_name text not null,
-     grade text not null,
-     notes text,
-     created_at timestamp with time zone default timezone('utc'::text, now()) not null
-   );
+   ```bash
+   npm install @tailwindcss/typography
    ```
 
-4. Create a `.env.local` file in the root directory with your Supabase credentials:
+4. Update your `tailwind.config.ts` to include the typography plugin:
 
-   ```
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+   ```typescript
+   plugins: [require('@tailwindcss/typography')],
    ```
 
 5. Run the development server:
@@ -85,19 +48,32 @@ A Next.js application for rock climbing coaching, featuring blog posts, session 
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser
 
+## Redpoint Journal
+
+The Redpoint Journal feature allows climbers to:
+
+- Log climbing projects they're working on
+- Record session notes for each attempt
+- Track progress from "in progress" to "sent" status
+- View a history of attempts on each project
+
+Data is stored using:
+
+- API routes for server interaction
+- JSON files in the `/data` directory
+
 ## Deployment
 
 The app is ready to be deployed on Vercel. Simply connect your GitHub repository to Vercel and it will automatically deploy your application.
-
-Make sure to add your Supabase environment variables in the Vercel project settings.
 
 ## Usage
 
 1. **Blog**: View climbing tips and advice in the blog section
 2. **Booking**: Submit a session booking request
 3. **Q&A**: Ask questions and view answers from the coach
-4. **Progress**: Log your climbs and track your progress
-5. **Admin**: Access the admin dashboard at `/admin` to manage content and requests
+4. **Progress**: Track your overall climbing progress
+5. **Journal**: Log and track specific climbing projects
+6. **Admin**: Access the admin dashboard at `/admin` to manage content and requests
 
 ## Contributing
 
