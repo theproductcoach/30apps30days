@@ -1,0 +1,51 @@
+[
+  {
+    "id": "session1",
+    "climbId": "climb1",
+    "notes": "First attempt. Struggled with the crux move.",
+    "date": "2025-02-25T11:48:18.689Z",
+    "status": "in progress"
+  },
+  {
+    "id": "session2",
+    "climbId": "climb1",
+    "notes": "Second attempt. Made it past the crux but fell near the top.",
+    "date": "2025-03-02T11:48:18.690Z",
+    "status": "in progress"
+  },
+  {
+    "id": "session3",
+    "climbId": "climb1",
+    "notes": "Finally sent it! Felt great.",
+    "date": "2025-03-07T11:48:18.690Z",
+    "status": "sent"
+  },
+  {
+    "id": "session4",
+    "climbId": "climb2",
+    "notes": "Started working on the route. Tough!",
+    "date": "2025-03-13T11:48:18.690Z",
+    "status": "in progress"
+  },
+  {
+    "id": "session5",
+    "climbId": "climb2",
+    "notes": "Made progress on the middle section.",
+    "date": "2025-03-17T11:48:18.690Z",
+    "status": "in progress"
+  },
+  {
+    "id": "session6",
+    "climbId": "climb3",
+    "notes": "First day on this route. Love the moves!",
+    "date": "2025-03-20T11:48:18.690Z",
+    "status": "in progress"
+  },
+  {
+    "id": "session7",
+    "climbId": "climb4",
+    "notes": "Flash attempt! Surprised myself.",
+    "date": "2025-03-24T11:48:18.690Z",
+    "status": "sent"
+  }
+]

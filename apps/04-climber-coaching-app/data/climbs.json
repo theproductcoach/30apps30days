@@ -1,0 +1,26 @@
+[
+  {
+    "id": "climb1",
+    "name": "Midnight Lightning",
+    "grade": "V8",
+    "createdAt": "2025-02-25T11:48:18.689Z"
+  },
+  {
+    "id": "climb2",
+    "name": "The Nose",
+    "grade": "5.14a",
+    "createdAt": "2025-03-13T11:48:18.689Z"
+  },
+  {
+    "id": "climb3",
+    "name": "Moonlight Buttress",
+    "grade": "5.12d",
+    "createdAt": "2025-03-20T11:48:18.689Z"
+  },
+  {
+    "id": "climb4",
+    "name": "Astroman",
+    "grade": "5.11c",
+    "createdAt": "2025-03-24T11:48:18.689Z"
+  }
+]

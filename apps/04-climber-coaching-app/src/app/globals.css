@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 17, 24, 39;
+  --background-end-rgb: 11, 15, 25;
+  --accent-green: 34, 197, 94;
+  --accent-green-dark: 22, 163, 74;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      rgb(var(--background-start-rgb)),
+      rgb(var(--background-end-rgb)));
+  min-height: 100vh;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-md transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-700 hover:border-green-500 transition-colors duration-200;
+  }
+
+  .input-field {
+    @apply bg-gray-700 border border-gray-600 rounded-md px-4 py-2 text-white focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none;
+  }
+}
