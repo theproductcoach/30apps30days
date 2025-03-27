@@ -421,7 +421,7 @@ function App() {
         height={window.innerHeight}
         className="game-canvas"
       />
-    </div>
+      </div>
   );
 }
 
