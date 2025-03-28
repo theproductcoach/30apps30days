@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import type { PantryItem } from "@/lib/supabase";
 import PantryItemComponent from "@/components/PantryItem";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 export default function PantryPage() {
   const { user, loading: authLoading } = useAuth();
@@ -25,25 +26,41 @@ export default function PantryPage() {
   useEffect(() => {
     async function fetchItems() {
       if (!user) {
-        console.log("No user in fetchItems");
+        console.log("[Client] No user in fetchItems");
         return;
       }
 
       try {
         setError(null);
-        console.log("Fetching items from API");
+        console.log("[Client] User ID:", user.id);
+        console.log("[Client] Starting API request");
 
-        const response = await fetch("/api/pantry-items");
+        // Get the session
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
+        if (!session?.access_token) {
+          throw new Error("No access token available");
+        }
+
+        const response = await fetch("/api/pantry-items", {
+          headers: {
+            Authorization: `Bearer ${session.access_token}`,
+          },
+        });
+        console.log("[Client] API response status:", response.status);
+
         if (!response.ok) {
           const errorData = await response.json();
+          console.log("[Client] API error:", errorData);
           throw new Error(errorData.error || "Failed to fetch items");
         }
 
         const data = await response.json();
-        console.log("API response:", data);
+        console.log("[Client] API success, items:", data?.length || 0);
         setItems(data || []);
       } catch (err) {
-        console.error("Error fetching items:", err);
+        console.error("[Client] Error:", err);
         setError(err instanceof Error ? err.message : "Failed to load items");
       } finally {
         setLoading(false);
@@ -57,8 +74,19 @@ export default function PantryPage() {
 
   const handleDelete = async (id: string) => {
     try {
+      // Get the session
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        throw new Error("No access token available");
+      }
+
       const response = await fetch(`/api/pantry-items/${id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${session.access_token}`,
+        },
       });
 
       if (!response.ok) {
