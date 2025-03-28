@@ -1,6 +1,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from 'next/server';
 
+// Initialize Supabase client with service role key for admin access
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false
+    }
+  }
+);
+
 export const dynamic = 'force-dynamic';
 
 export async function DELETE(
@@ -8,14 +20,6 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      console.error('Missing environment variables');
-      return NextResponse.json(
-        { error: 'Missing environment variables' },
-        { status: 500 }
-      );
-    }
-
     // Get the authorization header
     const authHeader = request.headers.get('authorization');
     if (!authHeader) {
@@ -25,56 +29,38 @@ export async function DELETE(
       );
     }
 
-    // Extract the JWT token
+    // Extract the token
     const token = authHeader.replace('Bearer ', '');
-    if (!token) {
-      return NextResponse.json(
-        { error: 'No token provided' },
-        { status: 401 }
-      );
-    }
-
-    // Create a Supabase client with service role key
-    const supabase = createClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY,
-      {
-        auth: {
-          autoRefreshToken: false,
-          persistSession: false
-        }
-      }
-    );
-
-    // Verify the token and get the user
-    const { data: { user }, error: userError } = await supabase.auth.getUser(token);
     
-    if (userError || !user) {
-      console.error('Auth error:', userError || 'No user');
+    // Verify the JWT and get the user
+    const { data: { user }, error: authError } = await supabaseAdmin.auth.getUser(token);
+    
+    if (authError || !user) {
+      console.error('Auth error:', authError);
       return NextResponse.json(
-        { error: 'Not authenticated' },
+        { error: 'Invalid token' },
         { status: 401 }
       );
     }
 
     // Delete the item
-    const { error } = await supabase
+    const { error: deleteError } = await supabaseAdmin
       .from('pantry_items')
       .delete()
       .eq('id', params.id)
       .eq('user_id', user.id);
 
-    if (error) {
-      console.error('Delete error:', error);
+    if (deleteError) {
+      console.error('Delete error:', deleteError);
       return NextResponse.json(
-        { error: error.message },
+        { error: 'Failed to delete item' },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Unexpected error:', error);
+    console.error('Error in delete route:', error);
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
