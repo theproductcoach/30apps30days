@@ -10,6 +10,10 @@ export interface PantryItem {
   barcode: string;
   image_url?: string;
   created_at: string;
+  product_name?: string;
+  brand?: string;
+  quantity?: string;
+  categories?: string;
 }
 
 export async function getCurrentUser() {

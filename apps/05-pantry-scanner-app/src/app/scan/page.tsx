@@ -5,33 +5,65 @@ import { useRouter } from "next/navigation";
 import BarcodeScanner from "@/components/BarcodeScanner";
 import ProductForm from "@/components/ProductForm";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 export default function ScanPage() {
   const router = useRouter();
   const [scannedBarcode, setScannedBarcode] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
 
   const handleScan = (barcode: string) => {
     setScannedBarcode(barcode);
   };
 
-  const handleSubmit = async (barcode: string, imageUrl?: string) => {
+  const handleSave = async () => {
+    if (!scannedBarcode) {
+      alert("Please scan or enter a barcode first");
+      return;
+    }
+
     try {
+      setIsSaving(true);
+
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        throw new Error("No access token available");
+      }
+
       const response = await fetch("/api/save-product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify({ barcode, imageUrl }),
+        body: JSON.stringify({
+          barcode: scannedBarcode,
+          imageUrl: capturedImage,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save product");
+        const error = await response.text();
+        throw new Error(error);
       }
 
-      router.push("/");
+      const savedItem = await response.json();
+      console.log("Product saved:", savedItem);
+
+      // Clear the form
+      setScannedBarcode(null);
+      setCapturedImage(null);
+
+      // Show success message
+      alert("Product saved successfully!");
     } catch (error) {
       console.error("Error saving product:", error);
       alert("Failed to save product. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -48,11 +80,17 @@ export default function ScanPage() {
           </Link>
         </div>
 
-        {!scannedBarcode ? (
-          <BarcodeScanner onScan={handleScan} />
-        ) : (
-          <ProductForm barcode={scannedBarcode} onSubmit={handleSubmit} />
-        )}
+        <div className="flex-1 p-4">
+          {!scannedBarcode ? (
+            <BarcodeScanner onScan={handleScan} />
+          ) : (
+            <ProductForm
+              barcode={scannedBarcode}
+              onSubmit={handleSave}
+              isLoading={isSaving}
+            />
+          )}
+        </div>
       </div>
     </main>
   );
