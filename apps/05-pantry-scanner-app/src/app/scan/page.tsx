@@ -8,7 +8,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabase";
 
 export default function ScanPage() {
-  const router = useRouter();
+  const { push } = useRouter();
   const [scannedBarcode, setScannedBarcode] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -26,11 +26,13 @@ export default function ScanPage() {
     try {
       setIsSaving(true);
 
+      // Get the current session
       const {
         data: { session },
       } = await supabase.auth.getSession();
       if (!session?.access_token) {
-        throw new Error("No access token available");
+        push("/sign-in");
+        return;
       }
 
       const response = await fetch("/api/save-product", {
@@ -46,8 +48,8 @@ export default function ScanPage() {
       });
 
       if (!response.ok) {
-        const error = await response.text();
-        throw new Error(error);
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to save product");
       }
 
       const savedItem = await response.json();
@@ -57,11 +59,16 @@ export default function ScanPage() {
       setScannedBarcode(null);
       setCapturedImage(null);
 
-      // Show success message
+      // Show success message and redirect
       alert("Product saved successfully!");
+      push("/pantry");
     } catch (error) {
       console.error("Error saving product:", error);
-      alert("Failed to save product. Please try again.");
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert("Failed to save product. Please try again.");
+      }
     } finally {
       setIsSaving(false);
     }
