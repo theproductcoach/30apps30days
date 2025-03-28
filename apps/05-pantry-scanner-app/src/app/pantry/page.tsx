@@ -164,6 +164,10 @@ export default function PantryPage() {
                 barcode={item.barcode}
                 imageUrl={item.image_url}
                 createdAt={item.created_at}
+                productName={item.product_name}
+                brand={item.brand}
+                quantity={item.quantity}
+                categories={item.categories}
                 onDelete={handleDelete}
               />
             ))}
