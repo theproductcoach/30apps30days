@@ -2,7 +2,7 @@
 
 interface ProductFormProps {
   barcode: string | null;
-  onSubmit: () => Promise<void>;
+  onSubmit: (barcode: string, imageUrl?: string) => Promise<void>;
   isLoading?: boolean;
 }
 
@@ -13,7 +13,9 @@ export default function ProductForm({
 }: ProductFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit();
+    if (barcode) {
+      await onSubmit(barcode);
+    }
   };
 
   return (
