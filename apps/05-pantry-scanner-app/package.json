@@ -1,9 +1,9 @@
 {
-  "name": "04.5-pantry-scanner-app",
+  "name": "05-pantry-scanner-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,20 +16,21 @@
     "@zxing/browser": "^0.1.5",
     "@zxing/library": "^0.21.3",
     "date-fns": "^4.1.0",
-    "next": "15.2.4",
+    "next": "14.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-qr-barcode-scanner": "^2.0.0"
+    "react-qr-barcode-scanner": "^2.0.0",
+    "tailwind": "^4.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.2.4",
-    "tailwindcss": "^4",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^8",
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.0.17",
     "typescript": "^5"
   }
 }

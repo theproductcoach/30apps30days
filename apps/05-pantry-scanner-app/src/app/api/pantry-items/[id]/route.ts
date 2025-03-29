@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Initialize Supabase client with service role key for admin access
 const supabaseAdmin = createClient(
@@ -16,10 +16,12 @@ const supabaseAdmin = createClient(
 export const dynamic = 'force-dynamic';
 
 export async function DELETE(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
-) {
+): Promise<NextResponse> {
   try {
+    const { id } = params;
+
     // Get the authorization header
     const authHeader = request.headers.get('authorization');
     if (!authHeader) {
@@ -47,7 +49,7 @@ export async function DELETE(
     const { error: deleteError } = await supabaseAdmin
       .from('pantry_items')
       .delete()
-      .eq('id', params.id)
+      .eq('id', id)
       .eq('user_id', user.id);
 
     if (deleteError) {

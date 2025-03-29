@@ -3,64 +3,79 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ProductForm from "@/components/ProductForm";
-import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 
 export default function EnterPage() {
-  const router = useRouter();
-  const [barcode, setBarcode] = useState("");
-  const [error, setError] = useState("");
+  const { push } = useRouter();
+  const [barcode, setBarcode] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (barcode: string, imageUrl?: string) => {
+  const handleSubmit = async (submittedBarcode: string) => {
+    if (!submittedBarcode) {
+      setError("Please enter a barcode");
+      return;
+    }
+
     try {
+      setIsLoading(true);
+      setError("");
+
+      // Get the current session
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session?.access_token) {
+        push("/sign-in");
+        return;
+      }
+
       const response = await fetch("/api/save-product", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
-        body: JSON.stringify({ barcode, imageUrl }),
+        body: JSON.stringify({
+          barcode: submittedBarcode,
+        }),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to save product");
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to save product");
       }
 
-      router.push("/");
+      const savedItem = await response.json();
+      console.log("Product saved:", savedItem);
+
+      // Clear the form
+      setBarcode("");
+
+      // Show success message and redirect
+      alert("Product saved successfully!");
+      push("/pantry");
     } catch (error) {
       console.error("Error saving product:", error);
-      alert("Failed to save product. Please try again.");
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError("Failed to save product. Please try again.");
+      }
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const handleBarcodeSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!barcode.trim()) {
-      setError("Please enter a barcode");
-      return;
-    }
-    setError("");
   };
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold">Enter Barcode</h1>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1 text-sm bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-200 px-4 py-2 rounded-lg"
-          >
-            ← Back to Home
-          </Link>
-        </div>
-
-        <form
-          onSubmit={handleBarcodeSubmit}
-          className="max-w-md mx-auto space-y-4"
-        >
+      <div className="max-w-md mx-auto">
+        <h1 className="text-2xl font-bold mb-8">Enter Barcode</h1>
+        <div className="space-y-4">
           <div>
             <label
               htmlFor="barcode"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-gray-700"
             >
               Barcode
             </label>
@@ -69,24 +84,19 @@ export default function EnterPage() {
               id="barcode"
               value={barcode}
               onChange={(e) => setBarcode(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
               placeholder="Enter barcode number"
             />
-            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
           </div>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg
-              hover:bg-blue-700 transition-colors duration-200"
-          >
-            Continue
-          </button>
-        </form>
-
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+        </div>
         {barcode && !error && (
           <div className="mt-8">
-            <ProductForm barcode={barcode} onSubmit={handleSubmit} />
+            <ProductForm
+              barcode={barcode}
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+            />
           </div>
         )}
       </div>
