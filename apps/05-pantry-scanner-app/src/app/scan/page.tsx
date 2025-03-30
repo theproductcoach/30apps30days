@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import BarcodeScanner from "@/components/BarcodeScanner";
 import ProductForm from "@/components/ProductForm";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
+import { useStorage } from "@/contexts/StorageContext";
 
 export default function ScanPage() {
-  const { push } = useRouter();
+  const router = useRouter();
+  const { addItem } = useStorage();
   const [scannedBarcode, setScannedBarcode] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -26,34 +27,13 @@ export default function ScanPage() {
     try {
       setIsSaving(true);
 
-      // Get the current session
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session?.access_token) {
-        push("/sign-in");
-        return;
-      }
-
-      const response = await fetch("/api/save-product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.access_token}`,
-        },
-        body: JSON.stringify({
-          barcode: scannedBarcode,
-          imageUrl: capturedImage,
-        }),
+      // Add item to local storage
+      addItem({
+        name: `Product ${scannedBarcode}`,
+        barcode: scannedBarcode,
+        quantity: 1,
+        imageUrl: capturedImage || undefined,
       });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(errorText || "Failed to save product");
-      }
-
-      const savedItem = await response.json();
-      console.log("Product saved:", savedItem);
 
       // Clear the form
       setScannedBarcode(null);
@@ -61,14 +41,10 @@ export default function ScanPage() {
 
       // Show success message and redirect
       alert("Product saved successfully!");
-      push("/pantry");
+      router.push("/pantry");
     } catch (error) {
       console.error("Error saving product:", error);
-      if (error instanceof Error) {
-        alert(error.message);
-      } else {
-        alert("Failed to save product. Please try again.");
-      }
+      alert("Failed to save product. Please try again.");
     } finally {
       setIsSaving(false);
     }
