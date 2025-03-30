@@ -6,6 +6,16 @@ import ProductForm from "@/components/ProductForm";
 import Link from "next/link";
 import { useStorage } from "@/contexts/StorageContext";
 
+interface ProductData {
+  name: string;
+  brand: string;
+  imageUrl: string | null;
+  quantity: string | null;
+  categories: string | null;
+  ingredients: string | null;
+  nutriments: any | null;
+}
+
 export default function EnterPage() {
   const router = useRouter();
   const { addItem } = useStorage();
@@ -13,14 +23,18 @@ export default function EnterPage() {
   const [error, setError] = useState("");
   const [showProductForm, setShowProductForm] = useState(false);
 
-  const handleSubmit = async (barcode: string, imageUrl?: string) => {
+  const handleSubmit = async (barcode: string, productData?: ProductData) => {
     try {
-      // Add item to local storage
+      // Add item to local storage with product data if available
       addItem({
-        name: `Product ${barcode}`,
+        name: productData?.name || `Product ${barcode}`,
         barcode,
         quantity: 1,
-        imageUrl: imageUrl || undefined,
+        imageUrl: productData?.imageUrl || undefined,
+        brand: productData?.brand,
+        categories: productData?.categories,
+        ingredients: productData?.ingredients,
+        nutriments: productData?.nutriments,
       });
 
       router.push("/pantry");

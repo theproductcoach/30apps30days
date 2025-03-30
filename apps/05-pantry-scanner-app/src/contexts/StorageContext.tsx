@@ -9,6 +9,10 @@ interface PantryItem {
   quantity: number;
   addedDate: string;
   imageUrl?: string;
+  brand?: string;
+  categories?: string | null;
+  ingredients?: string | null;
+  nutriments?: any | null;
 }
 
 interface StorageContextType {
