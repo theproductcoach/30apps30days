@@ -19,27 +19,20 @@ export default function ProductForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label
-          htmlFor="barcode"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Barcode
-        </label>
-        <input
-          type="text"
-          id="barcode"
-          value={barcode || ""}
-          readOnly
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-        />
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto space-y-6">
+      <div className="text-center">
+        <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+          Confirm barcode
+        </p>
+        <p className="text-2xl font-mono text-gray-900 dark:text-white mb-8">
+          {barcode}
+        </p>
       </div>
-      <div>
+      <div className="flex justify-center">
         <button
           type="submit"
           disabled={!barcode || isLoading}
-          className={`inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
+          className={`px-6 py-3 bg-blue-600 text-white text-lg font-medium rounded-lg shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200 ${
             !barcode || isLoading ? "opacity-50 cursor-not-allowed" : ""
           }`}
         >

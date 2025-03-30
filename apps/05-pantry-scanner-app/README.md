@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PantrySnap - Pantry Scanner App
+
+A simple and efficient way to manage your pantry inventory using barcode scanning. Built with Next.js and local storage for offline-first functionality.
+
+## Features
+
+- 📱 Scan product barcodes using your device's camera
+- ⌨️ Manually enter barcodes for products
+- 📦 Store product information locally in your browser
+- 🗃️ View and manage your pantry inventory
+- 🌓 Dark mode support
+- 📱 Responsive design for all devices
+
+## Technologies Used
+
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Local Storage for data persistence
+- react-qr-barcode-scanner for barcode scanning
+- date-fns for date formatting
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How to Use
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Add Items**
+   - Use the "Scan Barcode" option to scan product barcodes with your camera
+   - Or use "Enter Barcode" to manually input barcode numbers
 
-## Learn More
+2. **View Inventory**
+   - Go to "My Pantry" to see all your stored items
+   - Edit item names and quantities
+   - Remove items you no longer need
 
-To learn more about Next.js, take a look at the following resources:
+3. **Manage Products**
+   - All data is stored locally in your browser
+   - No account required
+   - Works offline
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Future Improvements
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] Add product name lookup using a barcode database API
+- [ ] Add ability to categorize items
+- [ ] Add expiration date tracking
+- [ ] Add shopping list generation
+- [ ] Add data export/import functionality
+- [ ] Add ability to add custom product images
