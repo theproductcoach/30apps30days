@@ -11,6 +11,7 @@ interface PantryItemProps {
   quantity: number;
   addedDate: string;
   imageUrl?: string;
+  brand?: string;
 }
 
 export default function PantryItem({
@@ -20,11 +21,14 @@ export default function PantryItem({
   quantity,
   addedDate,
   imageUrl,
+  brand,
 }: PantryItemProps) {
   const { updateItem, removeItem } = useStorage();
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(name);
   const [editedQuantity, setEditedQuantity] = useState(quantity);
+
+  const displayName = brand ? `${brand}: ${name}` : name;
 
   const handleSave = () => {
     updateItem(id, {
@@ -43,7 +47,7 @@ export default function PantryItem({
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700">
       <div className="flex items-start justify-between">
-        <div className="flex-1">
+        <div>
           {isEditing ? (
             <div className="space-y-4">
               <div>
@@ -87,7 +91,7 @@ export default function PantryItem({
           ) : (
             <>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {name}
+                {displayName}
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 Barcode: {barcode}
@@ -101,7 +105,7 @@ export default function PantryItem({
               {imageUrl && (
                 <img
                   src={imageUrl}
-                  alt={name}
+                  alt={displayName}
                   className="mt-2 w-24 h-24 object-cover rounded-lg"
                 />
               )}

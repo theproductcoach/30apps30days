@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: "PantrySnap - Track Your Pantry Items",
   description:
     "Keep track of your pantry items by scanning barcodes or entering them manually.",
+  icons: {
+    icon: [{ url: "/favicon.ico", type: "image/x-icon" }],
+    shortcut: [{ url: "/favicon.ico", type: "image/x-icon" }],
+  },
 };
 
 export default function RootLayout({
