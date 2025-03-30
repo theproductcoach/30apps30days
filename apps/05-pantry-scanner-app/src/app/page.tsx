@@ -2,12 +2,24 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">PantrySnap</h1>
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <div className="relative w-24 h-24">
+            <Image
+              src="/pantrysnapimage.png"
+              alt="PantrySnap Logo"
+              fill
+              className="object-contain dark:invert"
+              priority
+            />
+          </div>
+          <h1 className="text-4xl font-bold">PantrySnap</h1>
+        </div>
         <p className="text-gray-600 dark:text-gray-300 text-lg mb-8">
           Keep track of your pantry items by scanning barcodes or entering them
           manually. Take photos of your items and organize them all in one
