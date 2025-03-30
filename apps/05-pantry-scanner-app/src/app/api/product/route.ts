@@ -1,49 +1,44 @@
-import { NextResponse } from 'next/server';
-import OFF from 'openfoodfacts-nodejs';
+import OpenFoodFacts from "openfoodfacts-nodejs";
 
-// Initialize the Open Food Facts client
-const client = new OFF();
+// @ts-ignore - Library types are incomplete
+const client = new OpenFoodFacts();
 
 export async function POST(request: Request) {
   try {
-    // Get the barcode from the request body
     const { barcode } = await request.json();
 
-    if (!barcode) {
-      return NextResponse.json(
-        { error: 'Barcode is required' },
-        { status: 400 }
-      );
+    // Get product data from Open Food Facts
+    const product = await client.getProduct(barcode);
+
+    if (!product || !product.product) {
+      return Response.json({ error: 'Product not found' }, { status: 404 });
     }
 
-    // Fetch product data from Open Food Facts
-    const result = await client.getProduct(barcode);
+    // Extract relevant product information
+    const {
+      product_name: name,
+      brands: brand,
+      image_url: imageUrl,
+      quantity,
+      categories,
+      ingredients_text: ingredients,
+      nutriments,
+    } = product.product;
 
-    // If product not found
-    if (!result || !result.product) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      );
-    }
-
-    // Extract relevant product data
-    const product = {
-      name: result.product.product_name || 'Unknown Product',
-      brand: result.product.brands || 'Unknown Brand',
-      imageUrl: result.product.image_url || null,
-      quantity: result.product.quantity || null,
-      categories: result.product.categories || null,
-      ingredients: result.product.ingredients_text || null,
-      nutriments: result.product.nutriments || null,
-    };
-
-    return NextResponse.json(product);
+    return Response.json({
+      name,
+      brand,
+      imageUrl,
+      quantity,
+      categories,
+      ingredients,
+      nutriments,
+    });
   } catch (error) {
     console.error('Error fetching product:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch product data' },
+    return Response.json(
+      { error: 'Failed to fetch product information' },
       { status: 500 }
     );
   }
-} 
+}
