@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import StatusBar from "@/components/StatusBar";
 
 export default function SignUp() {
   // We need router and signUp but don't use them directly
@@ -24,6 +25,14 @@ export default function SignUp() {
   const [bio, setBio] = useState("");
   const [interests, setInterests] = useState<string[]>([]);
 
+  // Validation states
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [coupleNameTouched, setCoupleNameTouched] = useState(false);
+  const [partner1NameTouched, setPartner1NameTouched] = useState(false);
+  const [partner2NameTouched, setPartner2NameTouched] = useState(false);
+  const [interestsTouched, setInterestsTouched] = useState(false);
+
   // Final step state
   const [signupComplete, setSignupComplete] = useState(false);
 
@@ -38,7 +47,13 @@ export default function SignUp() {
     { id: "fitness", name: "Fitness", icon: "💪" },
   ];
 
+  // Email validation
+  const isEmailValid = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const toggleInterest = (interest: string) => {
+    setInterestsTouched(true);
     if (interests.includes(interest)) {
       setInterests(interests.filter((i) => i !== interest));
     } else {
@@ -47,10 +62,18 @@ export default function SignUp() {
   };
 
   const handleNextStep = () => {
-    // Validate current step
+    // Mark all fields as touched for the current step
     if (step === 1) {
+      setEmailTouched(true);
+      setPasswordTouched(true);
+      setCoupleNameTouched(true);
+
       if (!email || !password || !coupleName) {
         setError("Please fill out all fields");
+        return;
+      }
+      if (!isEmailValid(email)) {
+        setError("Please enter a valid email address");
         return;
       }
       if (password.length < 6) {
@@ -60,6 +83,9 @@ export default function SignUp() {
     }
 
     if (step === 2) {
+      setPartner1NameTouched(true);
+      setPartner2NameTouched(true);
+
       if (!partner1Name || !partner2Name) {
         setError("Please enter both partner names");
         return;
@@ -67,6 +93,8 @@ export default function SignUp() {
     }
 
     if (step === 3) {
+      setInterestsTouched(true);
+
       if (interests.length < 1) {
         setError("Please select at least one interest");
         return;
@@ -103,7 +131,13 @@ export default function SignUp() {
 
   const isCurrentStepValid = () => {
     if (step === 1) {
-      return email && password && coupleName;
+      return (
+        email &&
+        isEmailValid(email) &&
+        password &&
+        password.length >= 6 &&
+        coupleName
+      );
     }
     if (step === 2) {
       return partner1Name && partner2Name;
@@ -144,10 +178,23 @@ export default function SignUp() {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="form-input"
+                onBlur={() => setEmailTouched(true)}
+                className={`form-input ${
+                  emailTouched && (!email || !isEmailValid(email))
+                    ? "input-error"
+                    : ""
+                }`}
                 placeholder="Enter your email"
                 required
               />
+              {emailTouched && !email && (
+                <p className="validation-message">Email is required</p>
+              )}
+              {emailTouched && email && !isEmailValid(email) && (
+                <p className="validation-message">
+                  Please enter a valid email address
+                </p>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="password">Password</label>
@@ -156,11 +203,24 @@ export default function SignUp() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="form-input"
+                onBlur={() => setPasswordTouched(true)}
+                className={`form-input ${
+                  passwordTouched && (!password || password.length < 6)
+                    ? "input-error"
+                    : ""
+                }`}
                 placeholder="Create a password"
                 required
               />
               <p className="input-help">At least 6 characters</p>
+              {passwordTouched && !password && (
+                <p className="validation-message">Password is required</p>
+              )}
+              {passwordTouched && password && password.length < 6 && (
+                <p className="validation-message">
+                  Password must be at least 6 characters
+                </p>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="coupleName">Couple Name</label>
@@ -169,11 +229,17 @@ export default function SignUp() {
                 id="coupleName"
                 value={coupleName}
                 onChange={(e) => setCoupleName(e.target.value)}
-                className="form-input"
+                onBlur={() => setCoupleNameTouched(true)}
+                className={`form-input ${
+                  coupleNameTouched && !coupleName ? "input-error" : ""
+                }`}
                 placeholder="How you want to be known"
                 required
               />
               <p className="input-help">This will be visible to other users</p>
+              {coupleNameTouched && !coupleName && (
+                <p className="validation-message">Couple name is required</p>
+              )}
             </div>
           </div>
         );
@@ -188,10 +254,16 @@ export default function SignUp() {
                 id="partner1Name"
                 value={partner1Name}
                 onChange={(e) => setPartner1Name(e.target.value)}
-                className="form-input"
+                onBlur={() => setPartner1NameTouched(true)}
+                className={`form-input ${
+                  partner1NameTouched && !partner1Name ? "input-error" : ""
+                }`}
                 placeholder="Enter first partner's name"
                 required
               />
+              {partner1NameTouched && !partner1Name && (
+                <p className="validation-message">Partner 1 name is required</p>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="partner2Name">Partner 2 Name</label>
@@ -200,10 +272,16 @@ export default function SignUp() {
                 id="partner2Name"
                 value={partner2Name}
                 onChange={(e) => setPartner2Name(e.target.value)}
-                className="form-input"
+                onBlur={() => setPartner2NameTouched(true)}
+                className={`form-input ${
+                  partner2NameTouched && !partner2Name ? "input-error" : ""
+                }`}
                 placeholder="Enter second partner's name"
                 required
               />
+              {partner2NameTouched && !partner2Name && (
+                <p className="validation-message">Partner 2 name is required</p>
+              )}
             </div>
             <div className="form-group">
               <label htmlFor="bio">Couple Bio (Optional)</label>
@@ -239,6 +317,11 @@ export default function SignUp() {
                 </div>
               ))}
             </div>
+            {interestsTouched && interests.length === 0 && (
+              <p className="validation-message">
+                Please select at least one interest
+              </p>
+            )}
           </div>
         );
       case 4:
@@ -272,7 +355,8 @@ export default function SignUp() {
   return (
     <div className="app-container">
       <div className="phone-container">
-        <div className="main-content-no-status">
+        <StatusBar title="Sign Up" />
+        <div className="main-content">
           <main className="content-wrapper">
             <div className="header">
               <Link href="/" className="back-link">

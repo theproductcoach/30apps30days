@@ -2,23 +2,42 @@
 
 import Link from "next/link";
 import BottomNavigation from "@/components/BottomNavigation";
+import StatusBar from "@/components/StatusBar";
 
 export default function MeetCouplesPage() {
   return (
     <div className="app-container">
       <div className="phone-container">
         <div className="main-content">
-          <header className="status-bar">
-            <div className="status-left">
-              <Link href="/" className="back-link">
-                ← Home
-              </Link>
-            </div>
-            <div className="status-center">Meet Couples</div>
-            <div className="status-right"></div>
-          </header>
+          <StatusBar title="Meet Couples" />
 
           <main className="content-wrapper">
+            <Link href="/" className="back-to-home">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.33333 8H12.6667"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M7 12L3 8L7 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              Home
+            </Link>
+
             <div className="feature-banner">
               <div className="feature-icon-large">👥</div>
               <h1 className="feature-title">Meet Couples</h1>
@@ -65,13 +84,10 @@ export default function MeetCouplesPage() {
                 <Link href="/signup" className="btn btn-connect">
                   Sign Up Now
                 </Link>
-                <Link href="/" className="btn btn-skip">
-                  Back to Home
-                </Link>
               </div>
             </div>
           </main>
-          
+
           {/* Bottom navigation */}
           <BottomNavigation />
         </div>

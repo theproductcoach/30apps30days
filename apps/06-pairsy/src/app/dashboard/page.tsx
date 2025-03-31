@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import Image from "next/image";
+import BottomNavigation from "@/components/BottomNavigation";
 
 // Mock data type
 type Couple = {
@@ -223,24 +224,7 @@ export default function Dashboard() {
               )}
             </div>
 
-            <div className="dashboard-nav">
-              <Link href="/dashboard" className="nav-item active">
-                <span className="nav-icon">🏠</span>
-                <span className="nav-label">Home</span>
-              </Link>
-              <Link href="/dashboard/explore" className="nav-item">
-                <span className="nav-icon">🔍</span>
-                <span className="nav-label">Explore</span>
-              </Link>
-              <Link href="/dashboard/messages" className="nav-item">
-                <span className="nav-icon">💬</span>
-                <span className="nav-label">Messages</span>
-              </Link>
-              <Link href="/dashboard/profile" className="nav-item">
-                <span className="nav-icon">👤</span>
-                <span className="nav-label">Profile</span>
-              </Link>
-            </div>
+            <BottomNavigation activePath="/dashboard" />
           </main>
         </div>
       </div>

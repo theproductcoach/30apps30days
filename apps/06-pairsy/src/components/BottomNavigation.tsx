@@ -49,9 +49,10 @@ export default function BottomNavigation({ activePath = "/" }: BottomNavigationP
   const [toastMessage, setToastMessage] = useState("");
 
   const handleNavClick = (item: NavItem) => {
+    // Check if navigation requires authentication
     if (item.requiresAuth && !user) {
       // Show a toast message
-      setToastMessage(`Sign in to access ${item.label}`);
+      setToastMessage(`Sign up to access ${item.label}`);
       setShowToast(true);
 
       // Hide toast after 3 seconds
@@ -59,8 +60,8 @@ export default function BottomNavigation({ activePath = "/" }: BottomNavigationP
         setShowToast(false);
       }, 3000);
 
-      // Redirect to login with return URL
-      router.push(`/login?returnUrl=${encodeURIComponent(item.path)}`);
+      // Redirect directly to signup page
+      router.push("/signup");
       return;
     }
 
@@ -75,8 +76,11 @@ export default function BottomNavigation({ activePath = "/" }: BottomNavigationP
           <button
             key={item.label}
             className={`nav-item ${item.path === activePath ? "active" : ""}`}
-            onClick={() => handleNavClick(item)}
-            style={{ border: 'none', background: 'none' }}
+            onClick={(e) => {
+              e.preventDefault(); // Prevent default navigation
+              handleNavClick(item);
+            }}
+            style={{ border: "none", background: "none" }}
             aria-label={item.label}
           >
             <span className="nav-icon">{item.icon}</span>

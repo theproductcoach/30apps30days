@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import StatusBar from "@/components/StatusBar";
 
 export default function Login() {
   const router = useRouter();
@@ -17,6 +18,15 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const [returnUrl, setReturnUrl] = useState("/dashboard");
 
+  // Validation states
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
+
+  // Email validation
+  const isEmailValid = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   // Get return URL from query params
   useEffect(() => {
     const returnParam = searchParams.get("returnUrl");
@@ -27,6 +37,15 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Check validation before submit
+    setEmailTouched(true);
+    setPasswordTouched(true);
+
+    if (!email || !isEmailValid(email) || !password) {
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
@@ -44,10 +63,15 @@ export default function Login() {
     }
   };
 
+  const isFormValid = () => {
+    return email && isEmailValid(email) && password;
+  };
+
   return (
     <div className="app-container">
       <div className="phone-container">
-        <div className="main-content-no-status">
+        <StatusBar title="Sign In" />
+        <div className="main-content">
           <main className="content-wrapper">
             <div className="header">
               <Link href="/" className="back-link">
@@ -66,10 +90,23 @@ export default function Login() {
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="form-input"
+                  onBlur={() => setEmailTouched(true)}
+                  className={`form-input ${
+                    emailTouched && (!email || !isEmailValid(email))
+                      ? "input-error"
+                      : ""
+                  }`}
                   placeholder="Enter your email"
                   required
                 />
+                {emailTouched && !email && (
+                  <p className="validation-message">Email is required</p>
+                )}
+                {emailTouched && email && !isEmailValid(email) && (
+                  <p className="validation-message">
+                    Please enter a valid email address
+                  </p>
+                )}
               </div>
 
               <div className="form-group">
@@ -79,10 +116,16 @@ export default function Login() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="form-input"
+                  onBlur={() => setPasswordTouched(true)}
+                  className={`form-input ${
+                    passwordTouched && !password ? "input-error" : ""
+                  }`}
                   placeholder="Enter your password"
                   required
                 />
+                {passwordTouched && !password && (
+                  <p className="validation-message">Password is required</p>
+                )}
               </div>
 
               <div className="forgot-password">
@@ -94,7 +137,7 @@ export default function Login() {
               <button
                 type="submit"
                 className="btn btn-connect"
-                disabled={loading}
+                disabled={loading || !isFormValid()}
               >
                 {loading ? "Signing in..." : "Sign In"}
               </button>
