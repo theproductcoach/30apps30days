@@ -7,7 +7,7 @@ import StatusBar from "@/components/StatusBar";
 
 export default function Home() {
   return (
-    <div className="app-container">
+    <div className="app-container homepage">
       {/* Phone Container */}
       <div className="phone-container">
         <div className="main-content">

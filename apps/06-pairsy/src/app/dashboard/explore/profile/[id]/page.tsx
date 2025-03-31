@@ -36,8 +36,8 @@ const MOCK_PROFILES: { [key: string]: CoupleProfile } = {
     distance: "2 miles away",
     compatibility: 85,
     joined_date: "March 2023",
-    location: "Downtown Seattle",
-    relationship_status: "Married",
+    location: "Inner East London",
+    relationship_status: "Dating",
     looking_for: ["Double dates", "Activity partners", "City adventures"],
   },
   "couple-2": {

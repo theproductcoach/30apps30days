@@ -35,7 +35,7 @@ const MOCK_PROFILE: CoupleProfile = {
   email: "couple@example.com",
   avatar: "/images/avatars/Will & Bri.png",
   joined_date: "May 2023",
-  location: "Seattle, WA",
+  location: "London, UK",
   relationship_status: "Married",
   looking_for: ["Double dates", "Couple friends", "Activity partners"],
 };
