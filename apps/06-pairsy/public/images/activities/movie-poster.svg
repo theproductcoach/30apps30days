@@ -1,0 +1,7 @@
+<svg width="300" height="450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="300" height="450" fill="#1a3b5c" />
+  <text x="150" y="150" font-family="Arial" font-size="24" fill="white" text-anchor="middle">Eternal Horizons</text>
+  <text x="150" y="185" font-family="Arial" font-size="16" fill="#cccccc" text-anchor="middle">Romantic Comedy</text>
+  <path d="M120,230 C150,210 180,210 210,230 C230,260 190,300 150,320 C110,300 70,260 90,230 C120,210 150,210 180,230" fill="#ff7bb3" />
+  <text x="150" y="420" font-family="Arial" font-size="14" fill="white" text-anchor="middle">In Theaters June 20</text>
+</svg> 

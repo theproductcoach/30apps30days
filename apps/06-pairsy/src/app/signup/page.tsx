@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import Image from "next/image";
 import StatusBar from "@/components/StatusBar";
 
 function SignUpContent() {
@@ -355,14 +356,26 @@ function SignUpContent() {
   return (
     <div className="app-container">
       <div className="phone-container">
-        <StatusBar title="Sign Up" />
+        <StatusBar />
         <div className="main-content">
           <main className="content-wrapper">
             <div className="header">
               <Link href="/" className="back-link">
                 ← Home
               </Link>
-              <h1 className="app-title">Sign Up</h1>
+            </div>
+
+            <div className="auth-logo-container">
+              <div className="logo-container">
+                <Image
+                  src="/pairsy-icon.png"
+                  alt="Pairsy"
+                  width={60}
+                  height={60}
+                  className="auth-logo"
+                />
+                <h1 className="app-title">Sign Up</h1>
+              </div>
             </div>
 
             {error && <div className="error-message">{error}</div>}

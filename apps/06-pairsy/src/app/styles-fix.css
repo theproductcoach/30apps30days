@@ -81,14 +81,6 @@ body {
     overflow-x: hidden;
 }
 
-.homepage .content-wrapper {
-    padding-bottom: 80px;
-}
-
-.homepage .features-section {
-    margin-bottom: 20px;
-}
-
 /* Fix navigation bar positioning */
 .dashboard-nav {
     position: fixed;
@@ -104,27 +96,11 @@ body {
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Ensure fixed positioning doesn't cause disappearing nav */
-.phone-container {
-    position: relative;
-    padding-bottom: 60px;
-    /* Space for fixed nav */
-}
 
-.app-container .main-content {
-    padding-bottom: 70px;
-    /* Ensure content doesn't get cut off by nav */
-}
-
-/* Fix content wrapper to avoid overlap */
-.content-wrapper {
-    padding-bottom: 80px;
-    /* Ensure content clears fixed nav */
-}
 
 /* Fix homepage feature section margin */
 .features-section {
-    margin-bottom: 80px !important;
+    margin-bottom: 30px !important;
     /* Force margin to clear nav */
 }
 
@@ -474,4 +450,1049 @@ body {
         border-bottom-left-radius: 1.5rem;
         border-bottom-right-radius: 1.5rem;
     }
+}
+/* Logo styling */
+.pairsy-logo {
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.status-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+        text-align: left;
+        gap: 0rem;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+}
+
+.homepage-logo {
+    border-radius: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+    position: relative;
+        top: 3px;
+        /* Nudge the logo down slightly for better alignment */
+}
+
+.intro-section h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #232323;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    /* Match logo height */
+}
+/* Auth pages logo styling */
+.auth-logo-container {
+    margin-top: -2.5rem;
+        margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.auth-logo {
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.header .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.25rem;
+        margin-bottom: 0.25rem;
+}
+
+.header .app-title {
+    margin: 0;
+    font-size: 1.75rem;
+    }
+    
+    /* Homepage specific styling */
+    .intro-section .logo-container {
+        margin-top: 0.7rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .intro-section p {
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        color: #555;
+        font-size: 1.1rem;
+        line-height: 1.5;
+}
+/* Homepage features styling */
+.features-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
+.feature {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa00;
+    border-radius: 1rem;
+    padding: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.13);
+}
+
+.feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: 1.75rem;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.feature-text {
+    flex: 1;
+}
+
+.feature-text h3 {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.feature-text p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* For businesses feature */
+.feature.for-business {
+    background-color: #f0f8ff;
+    border: 1px dashed #69b3f8;
+}
+/* Dashboard Activities Styling - Redesigned Cards */
+.dashboard .activities-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin: 1.25rem 0 2rem;
+}
+
+.activity-card-detailed {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.activity-card-detailed:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.activity-content {
+    padding: 1.25rem;
+    flex: 1;
+}
+
+.activity-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.activity-icon-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: #fdf2f8;
+    border-radius: 12px;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.activity-title-group {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #111827;
+    line-height: 1.3;
+}
+
+.activity-category {
+    font-size: 0.8rem;
+    color: #ec4899;
+    font-weight: 500;
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: #fdf2f8;
+    border-radius: 1rem;
+}
+
+.activity-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 1rem 0;
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+.activity-time,
+.activity-location,
+.activity-couples {
+    display: flex;
+    align-items: center;
+}
+
+.detail-icon {
+    margin-right: 0.6rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+}
+
+.activity-description {
+    font-size: 0.95rem;
+    margin: 1rem 0 1.5rem;
+    line-height: 1.5;
+    color: #4b5563;
+}
+
+.activity-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: auto;
+}
+
+.btn-view-profile,
+.btn-interested {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-view-profile {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: none;
+}
+
+.btn-view-profile:hover {
+    background-color: #e5e7eb;
+}
+
+.btn-interested {
+    background-color: #ec4899;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-interested:hover {
+    background-color: #db2777;
+}
+
+/* Activity Detail Page Styling - Enhanced */
+.activity-detail-header {
+    text-align: center;
+    padding: 1.75rem 1.25rem;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 1.75rem;
+    background-color: #fdf2f8;
+}
+
+.activity-detail-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    width: 90px;
+    height: 90px;
+    background-color: white;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.15);
+}
+
+.activity-detail-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: #111827;
+}
+
+.activity-detail-category {
+    color: #ec4899;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 6px rgba(236, 72, 153, 0.1);
+}
+
+.activity-detail-time,
+.activity-detail-location,
+.activity-detail-attendance {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    color: #4b5563;
+    margin-bottom: 0.75rem;
+}
+
+.activity-detail-time .detail-icon,
+.activity-detail-location .detail-icon,
+.activity-detail-attendance .detail-icon {
+    margin-right: 0.5rem;
+    opacity: 0.8;
+}
+
+.activity-detail-section {
+    padding: 0 1.5rem;
+    margin-bottom: 2.25rem;
+}
+
+.activity-detail-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #111827;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.activity-detail-section h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    height: 1rem;
+    width: 4px;
+    background-color: #ec4899;
+    border-radius: 2px;
+}
+
+.activity-detail-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+}
+
+/* Fix styling for requirement items */
+.activity-detail-requirements {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.requirement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.requirement-icon {
+    color: #10b981;
+    margin-right: 0.75rem;
+    font-weight: bold;
+}
+
+/* Activity detail footer */
+.activity-detail-footer {
+    display: flex;
+    gap: 1rem;
+    padding: 1.5rem;
+    border-top: 1px solid #f0f0f0;
+    background-color: white;
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.activity-detail-footer .btn {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.btn-interested-confirmed {
+    background-color: #10b981 !important;
+    color: white !important;
+}
+
+.attending-couples {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.attending-couple {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+}
+
+.attending-couple-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.avatar-placeholder.xsmall {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+}
+
+.attending-couple-info {
+    flex: 1;
+}
+
+.attending-couple-name {
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+.attending-couple-partners {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.similar-activities {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.similar-activity {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem;
+    background-color: #f8f9fa;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.similar-activity:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+}
+
+.similar-activity-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.75rem;
+}
+
+.similar-activity-info {
+    flex: 1;
+}
+
+.similar-activity-title {
+    font-weight: 500;
+    color: #333;
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+}
+
+.similar-activity-meta {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.similar-activity-category {
+    color: #ec4899;
+}
+
+.activity-cta {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+/* Fix for dashboard navigation on activity detail page */
+.dashboard .content-wrapper {
+    padding-bottom: 80px;
+}
+
+.content-wrapper {
+    padding: 1rem 1rem 70px;
+    min-height: calc(100vh - 60px - 60px);
+    /* viewport - header - footer */
+}
+
+.dashboard-section {
+    margin-bottom: 2rem;
+}
+
+/* Activity Landing Pages */
+.activity-landing-header {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 1.5rem;
+    background-color: #fdf2f8;
+}
+
+.activity-landing-icon {
+    font-size: 3rem;
+    width: 80px;
+    height: 80px;
+    background-color: white;
+    border-radius: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1rem;
+    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.15);
+}
+
+.activity-landing-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: #111827;
+}
+
+.activity-landing-category {
+    color: #ec4899;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    display: inline-block;
+    padding: 0.25rem 1rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 2px 6px rgba(236, 72, 153, 0.1);
+}
+
+.activity-landing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.activity-landing-time,
+.activity-landing-location,
+.activity-landing-attendance {
+    display: flex;
+    align-items: center;
+}
+
+.activity-landing-content {
+    padding: 0 1.25rem;
+}
+
+.activity-landing-section {
+    margin-bottom: 2rem;
+}
+
+.activity-landing-section h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #111827;
+    position: relative;
+    padding-left: 1rem;
+}
+
+.activity-landing-section h2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.25rem;
+    height: 1rem;
+    width: 4px;
+    background-color: #ec4899;
+    border-radius: 2px;
+}
+
+.activity-landing-description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.activity-landing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-landing-list li {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+}
+
+.list-icon {
+    color: #10b981;
+    margin-right: 0.75rem;
+    font-weight: bold;
+}
+
+.activity-organizer {
+    font-size: 1rem;
+    color: #111827;
+    margin-bottom: 0.5rem;
+}
+
+.activity-price {
+    font-size: 0.95rem;
+    color: #4b5563;
+}
+
+.activity-landing-image {
+    margin: 1.5rem 0;
+}
+
+.image-container {
+    width: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.activity-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.image-caption {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.75rem;
+}
+
+.movie-details {
+    display: flex;
+    background-color: #f9fafb;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.poster-container {
+    width: 120px;
+    height: 180px;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.poster-image {
+    object-fit: cover;
+}
+
+.movie-info {
+    flex: 1;
+}
+
+.movie-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+    color: #111827;
+}
+
+.movie-meta {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.75rem;
+}
+
+.movie-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #4b5563;
+    margin-bottom: 0.75rem;
+}
+
+.movie-rating {
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.star-rating {
+    color: #f59e0b;
+    margin-right: 0.5rem;
+}
+
+.activity-schedule {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activity-schedule li {
+    display: flex;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.schedule-time {
+    width: 80px;
+    font-weight: 600;
+    color: #111827;
+    flex-shrink: 0;
+}
+
+.schedule-event {
+    flex: 1;
+    color: #4b5563;
+}
+
+.trail-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #f9fafb;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.trail-details li {
+    display: flex;
+    margin-bottom: 0.75rem;
+}
+
+.trail-spec {
+    width: 40%;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+.trail-value {
+    width: 60%;
+    color: #111827;
+}
+
+.meeting-point {
+    background-color: #f9fafb;
+    padding: 1rem;
+    border-radius: 1rem;
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.menu-list li {
+    margin-bottom: 1rem;
+}
+
+.menu-course {
+    font-weight: 600;
+    color: #111827;
+    margin-right: 0.5rem;
+    min-width: 90px;
+    display: inline-block;
+}
+
+.activity-cta {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.btn-view-more {
+    background-color: white;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    flex: 1;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.btn-view-more:hover {
+    background-color: #f3f4f6;
+}
+
+/* Activities listing page */
+.activities-content {
+    padding: 0 1rem;
+}
+
+.category-scrollbar {
+    margin: 1.5rem -1rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.category-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.category-scroll-container {
+    display: flex;
+    padding: 0 1rem;
+    gap: 0.75rem;
+}
+
+.category-chip {
+    display: flex;
+    align-items: center;
+    background-color: #f9fafb;
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+}
+
+.category-icon {
+    margin-right: 0.5rem;
+}
+
+.category-name {
+    margin-right: 0.5rem;
+}
+
+.category-count {
+    background-color: #ec4899;
+    color: white;
+    border-radius: 1rem;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+}
+
+.featured-section {
+    margin-bottom: 2rem;
+}
+
+.featured-activities {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.activity-card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    padding: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.activity-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.activity-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.activity-card-icon {
+    font-size: 1.75rem;
+    width: 50px;
+    height: 50px;
+    background-color: #fdf2f8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.activity-card-info {
+    flex: 1;
+}
+
+.activity-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+    color: #111827;
+}
+
+.activity-card-category {
+    font-size: 0.8rem;
+    color: #ec4899;
+    font-weight: 500;
+}
+
+.activity-card-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.activity-card-date,
+.activity-card-location {
+    font-size: 0.85rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+}
+
+.detail-icon-mini {
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-row {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.activity-row-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background-color: #f3f4f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+.activity-row-info {
+    flex: 1;
+}
+
+.activity-row-title {
+    font-weight: 500;
+    color: #111827;
+    margin-bottom: 0.25rem;
+}
+
+.activity-row-details {
+    font-size: 0.8rem;
+    color: #6b7280;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.activity-row-category {
+    color: #ec4899;
+}
+
+.activity-row-action {
+    margin-left: 1rem;
+}
+
+.view-action {
+    color: #ec4899;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.suggest-activity {
+    background-color: #f9fafb;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.suggest-description {
+    color: #4b5563;
+    margin-bottom: 1.5rem;
+}
+
+.suggest-cta {
+    display: flex;
+    justify-content: center;
 }

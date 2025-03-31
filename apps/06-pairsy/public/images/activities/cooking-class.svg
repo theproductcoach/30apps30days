@@ -1,0 +1,20 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#f4f7f2" />
+  
+  <!-- Cooking elements -->
+  <circle cx="300" cy="120" r="70" fill="#f5f5f5" stroke="#333" stroke-width="2" />
+  <circle cx="300" cy="120" r="60" fill="#f9f9f9" />
+  
+  <!-- Chef hat -->
+  <path d="M280,80 C280,50 320,50 320,80 L320,90 L280,90 Z" fill="white" stroke="#333" stroke-width="1" />
+  <rect x="280" y="90" width="40" height="10" fill="white" stroke="#333" stroke-width="1" />
+  
+  <!-- Cooking spoon -->
+  <rect x="350" y="100" width="5" height="80" fill="#8a5a44" rx="2" ry="2" transform="rotate(30, 350, 100)" />
+  <ellipse cx="360" cy="80" rx="15" ry="10" fill="#a67c52" transform="rotate(30, 360, 80)" />
+  
+  <!-- Text -->
+  <text x="300" y="220" font-family="Arial" font-size="20" fill="#4a7c59" text-anchor="middle">Couples Cooking Class</text>
+  <text x="300" y="250" font-family="Arial" font-size="14" fill="#666666" text-anchor="middle">Learn, cook, and taste together</text>
+  <text x="300" y="275" font-family="Arial" font-size="12" fill="#888888" text-anchor="middle">Culinary Institute</text>
+</svg> 

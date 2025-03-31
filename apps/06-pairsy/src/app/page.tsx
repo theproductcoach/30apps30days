@@ -14,7 +14,16 @@ export default function Home() {
           <StatusBar />
           <main className="content-wrapper">
             <div className="intro-section">
-              <h1>Pairsy</h1>
+              <div className="logo-container">
+                <Image
+                  src="/pairsy-icon.png"
+                  alt="Pairsy"
+                  width={70}
+                  height={70}
+                  className="homepage-logo"
+                />
+                <h1>Pairsy</h1>
+              </div>
               <p>
                 Connect with other couples for double dates and new friendships!
               </p>
@@ -68,6 +77,17 @@ export default function Home() {
                 <div className="feature-text">
                   <h3>Stay Connected</h3>
                   <p>Chat with your matches and make plans</p>
+                </div>
+              </Link>
+
+              <Link
+                href="/features/for-businesses"
+                className="feature for-business"
+              >
+                <div className="feature-icon">💼</div>
+                <div className="feature-text">
+                  <h3>For Businesses</h3>
+                  <p>List your activities on our platform</p>
                 </div>
               </Link>
             </div>

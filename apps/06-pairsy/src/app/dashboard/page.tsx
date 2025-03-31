@@ -228,7 +228,15 @@ export default function Dashboard() {
         <StatusBar title="Dashboard" />
         <div className="main-content">
           <header className="status-bar">
-            <div className="status-left">Pairsy</div>
+            <div className="status-left">
+              <Image
+                src="/pairsy-icon.png"
+                alt="Pairsy"
+                width={28}
+                height={28}
+                className="pairsy-logo"
+              />
+            </div>
             <div className="status-right">
               <button onClick={handleSignOut} className="sign-out-btn">
                 Sign Out
