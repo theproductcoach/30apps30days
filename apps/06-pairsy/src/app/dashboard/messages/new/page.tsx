@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import StatusBar from "@/components/StatusBar";
@@ -12,6 +12,13 @@ type Couple = {
   partner1_name: string;
   partner2_name: string;
   avatar?: string;
+};
+
+type Activity = {
+  id: string;
+  title: string;
+  icon: string;
+  organizer?: string;
 };
 
 // Mock data for couples
@@ -46,34 +53,68 @@ const MOCK_COUPLES: { [key: string]: Couple } = {
   },
 };
 
-export default function NewMessage() {
+// Mock data for activities
+const MOCK_ACTIVITIES: { [key: string]: Activity } = {
+  "activity-1": {
+    id: "activity-1",
+    title: "Wine Tasting Evening",
+    icon: "🍷",
+    organizer: "Seattle Social Events",
+  },
+  "activity-4": {
+    id: "activity-4",
+    title: "Weekend Hiking Trip",
+    icon: "🥾",
+    organizer: "Outdoor Adventures Club",
+  },
+};
+
+function NewMessageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [couple, setCouple] = useState<Couple | null>(null);
+  const [activity, setActivity] = useState<Activity | null>(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [avatarError, setAvatarError] = useState(false);
 
-  // Get couple ID from query params
+  // Get parameters from query params
   const coupleId = searchParams.get("couple");
+  const activityId = searchParams.get("activity");
 
   useEffect(() => {
-    if (!coupleId) {
+    if (!coupleId && !activityId) {
       setLoading(false);
       return;
     }
 
-    // Simulate loading couple data
+    // Simulate loading data
     const timer = setTimeout(() => {
-      const coupleData = MOCK_COUPLES[coupleId];
-      if (coupleData) {
-        setCouple(coupleData);
+      if (coupleId) {
+        const coupleData = MOCK_COUPLES[coupleId];
+        if (coupleData) {
+          setCouple(coupleData);
+        }
       }
+
+      if (activityId) {
+        const activityData = MOCK_ACTIVITIES[activityId];
+        if (activityData) {
+          setActivity(activityData);
+          // If it's an activity and no couple specified, set a default message
+          if (!coupleId) {
+            setMessage(
+              `Hi, I have a question about the "${activityData.title}" activity: `
+            );
+          }
+        }
+      }
+
       setLoading(false);
     }, 600);
 
     return () => clearTimeout(timer);
-  }, [coupleId]);
+  }, [coupleId, activityId]);
 
   const handleBack = () => {
     router.back();
@@ -81,10 +122,14 @@ export default function NewMessage() {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!message.trim() || !couple) return;
+    if (!message.trim()) return;
 
     // In a real app, this would send the message to the API
-    alert(`Message sent to ${couple.couple_name}!`);
+    if (couple) {
+      alert(`Message sent to ${couple.couple_name}!`);
+    } else if (activity) {
+      alert(`Question about "${activity.title}" sent to organizer!`);
+    }
 
     // Redirect to the message list
     router.push("/dashboard/messages");
@@ -105,7 +150,7 @@ export default function NewMessage() {
     );
   }
 
-  if (!coupleId || !couple) {
+  if ((!coupleId || !couple) && (!activityId || !activity)) {
     return (
       <div className="app-container">
         <div className="phone-container">
@@ -115,7 +160,7 @@ export default function NewMessage() {
               <div className="error-state">
                 <div className="error-icon">⚠️</div>
                 <h3>Recipient not found</h3>
-                <p>The couple you're trying to message doesn't exist</p>
+                <p>The recipient you're trying to message doesn't exist</p>
                 <button onClick={handleBack} className="btn btn-connect">
                   Back
                 </button>
@@ -141,29 +186,49 @@ export default function NewMessage() {
             </div>
 
             <div className="new-message-recipient">
-              <div className="recipient-avatar">
-                {couple.avatar && !avatarError ? (
-                  <Image
-                    src={couple.avatar}
-                    alt={`${couple.partner1_name} & ${couple.partner2_name}`}
-                    width={50}
-                    height={50}
-                    className="avatar-image"
-                    onError={() => setAvatarError(true)}
-                  />
-                ) : (
-                  <div className="avatar-placeholder">
-                    {couple.partner1_name[0]}
-                    {couple.partner2_name[0]}
+              {couple && (
+                <>
+                  <div className="recipient-avatar">
+                    {couple.avatar && !avatarError ? (
+                      <Image
+                        src={couple.avatar}
+                        alt={`${couple.partner1_name} & ${couple.partner2_name}`}
+                        width={50}
+                        height={50}
+                        className="avatar-image"
+                        onError={() => setAvatarError(true)}
+                      />
+                    ) : (
+                      <div className="avatar-placeholder">
+                        {couple.partner1_name[0]}
+                        {couple.partner2_name[0]}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-              <div className="recipient-info">
-                <div className="recipient-name">{couple.couple_name}</div>
-                <div className="recipient-partners">
-                  {couple.partner1_name} & {couple.partner2_name}
-                </div>
-              </div>
+                  <div className="recipient-info">
+                    <div className="recipient-name">{couple.couple_name}</div>
+                    <div className="recipient-partners">
+                      {couple.partner1_name} & {couple.partner2_name}
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {activity && !couple && (
+                <>
+                  <div className="recipient-avatar activity">
+                    <div className="activity-icon-small">{activity.icon}</div>
+                  </div>
+                  <div className="recipient-info">
+                    <div className="recipient-name">{activity.title}</div>
+                    {activity.organizer && (
+                      <div className="recipient-organizer">
+                        Organized by: {activity.organizer}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </div>
 
             <form onSubmit={handleSendMessage} className="new-message-form">
@@ -179,7 +244,9 @@ export default function NewMessage() {
                   required
                 />
                 <p className="input-help">
-                  Introduce yourselves and suggest a way to connect
+                  {couple
+                    ? "Introduce yourselves and suggest a way to connect"
+                    : "Ask any questions you have about this activity"}
                 </p>
               </div>
 
@@ -204,5 +271,14 @@ export default function NewMessage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrap with Suspense for useSearchParams
+export default function NewMessage() {
+  return (
+    <Suspense fallback={<div className="loading">Loading...</div>}>
+      <NewMessageContent />
+    </Suspense>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import StatusBar from "@/components/StatusBar";
@@ -130,8 +131,11 @@ const MOCK_ACTIVITIES: Activity[] = [
   },
 ];
 
-export default function Explore() {
-  const [mode, setMode] = useState<"couples" | "activities">("couples");
+function ExploreContent() {
+  const searchParams = useSearchParams();
+  const initialMode =
+    searchParams.get("mode") === "activities" ? "activities" : "couples";
+  const [mode, setMode] = useState<"couples" | "activities">(initialMode);
   const [couples, setCouples] = useState<Couple[]>([]);
   const [activities, setActivities] = useState<Activity[]>([]);
   const [loading, setLoading] = useState(true);
@@ -343,6 +347,12 @@ export default function Explore() {
                             {activity.description}
                           </p>
                           <div className="activity-actions">
+                            <Link 
+                              href={`/dashboard/explore/activity/${activity.id}`} 
+                              className="btn btn-view-profile"
+                            >
+                              View Details
+                            </Link>
                             <button className="btn btn-interested">
                               I'm Interested
                             </button>
@@ -365,5 +375,14 @@ export default function Explore() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrap with Suspense for useSearchParams
+export default function Explore() {
+  return (
+    <Suspense fallback={<div className="loading">Loading explore content...</div>}>
+      <ExploreContent />
+    </Suspense>
   );
 }

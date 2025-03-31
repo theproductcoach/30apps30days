@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import StatusBar from "@/components/StatusBar";
@@ -210,7 +210,7 @@ const MOCK_CONVERSATIONS: { [key: string]: Conversation } = {
   },
 };
 
-export default function ConversationDetail() {
+function ConversationDetailContent() {
   const params = useParams();
   const router = useRouter();
   const [conversation, setConversation] = useState<Conversation | null>(null);
@@ -391,5 +391,13 @@ export default function ConversationDetail() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ConversationDetail() {
+  return (
+    <Suspense fallback={<div className="loading">Loading conversation...</div>}>
+      <ConversationDetailContent />
+    </Suspense>
   );
 }

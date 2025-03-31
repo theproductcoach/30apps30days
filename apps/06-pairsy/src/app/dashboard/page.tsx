@@ -356,39 +356,43 @@ export default function Dashboard() {
                   <Link
                     href={`/dashboard/messages/${message.id}`}
                     key={message.id}
-                    className={`dashboard-message-item ${
-                      message.unread ? "unread" : ""
-                    }`}
+                    className="dashboard-message-item-link"
                   >
-                    <div className="message-avatar">
-                      {message.avatar && !avatarErrors[message.id] ? (
-                        <Image
-                          src={message.avatar}
-                          alt={`${message.partner1_name} & ${message.partner2_name}`}
-                          width={40}
-                          height={40}
-                          className="avatar-image"
-                          onError={() => handleAvatarError(message.id)}
-                        />
-                      ) : (
-                        <div className="avatar-placeholder small">
-                          {message.partner1_name[0]}
-                          {message.partner2_name[0]}
-                        </div>
-                      )}
-                      {message.unread && (
-                        <div className="unread-indicator small"></div>
-                      )}
-                    </div>
-                    <div className="message-content">
-                      <div className="message-header">
-                        <div className="message-name">
-                          {message.couple_name}
-                        </div>
-                        <div className="message-time">{message.time}</div>
+                    <div
+                      className={`dashboard-message-item ${
+                        message.unread ? "unread" : ""
+                      }`}
+                    >
+                      <div className="message-avatar">
+                        {message.avatar && !avatarErrors[message.id] ? (
+                          <Image
+                            src={message.avatar}
+                            alt={`${message.partner1_name} & ${message.partner2_name}`}
+                            width={40}
+                            height={40}
+                            className="avatar-image"
+                            onError={() => handleAvatarError(message.id)}
+                          />
+                        ) : (
+                          <div className="avatar-placeholder small">
+                            {message.partner1_name[0]}
+                            {message.partner2_name[0]}
+                          </div>
+                        )}
+                        {message.unread && (
+                          <div className="unread-indicator small"></div>
+                        )}
                       </div>
-                      <div className="message-preview">
-                        {message.last_message}
+                      <div className="message-content">
+                        <div className="message-header">
+                          <div className="message-name">
+                            {message.couple_name}
+                          </div>
+                          <div className="message-time">{message.time}</div>
+                        </div>
+                        <div className="message-preview">
+                          {message.last_message}
+                        </div>
                       </div>
                     </div>
                   </Link>
@@ -422,7 +426,12 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <div className="activity-dashboard-actions">
-                      <button className="btn-view small">Details</button>
+                      <Link
+                        href={`/dashboard/explore/activity/${activity.id}`}
+                        className="btn-view small"
+                      >
+                        Details
+                      </Link>
                     </div>
                   </div>
                 ))}
