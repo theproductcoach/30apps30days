@@ -18,8 +18,8 @@ export default function Home() {
                 <Image
                   src="/pairsy-icon.png"
                   alt="Pairsy"
-                  width={75}
-                  height={75}
+                  width={70}
+                  height={70}
                   className="homepage-logo"
                 />
                 <h1>Pairsy</h1>
