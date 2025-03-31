@@ -79,6 +79,17 @@ export default function Home() {
                   <p>Chat with your matches and make plans</p>
                 </div>
               </Link>
+
+              <Link
+                href="/features/for-businesses"
+                className="feature for-business"
+              >
+                <div className="feature-icon">💼</div>
+                <div className="feature-text">
+                  <h3>For Businesses</h3>
+                  <p>List your activities on our platform</p>
+                </div>
+              </Link>
             </div>
           </main>
 

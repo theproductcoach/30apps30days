@@ -36,7 +36,7 @@ const MOCK_PROFILE: CoupleProfile = {
   avatar: "/images/avatars/Will & Bri.png",
   joined_date: "May 2023",
   location: "London, UK",
-  relationship_status: "Married",
+  relationship_status: "Dating",
   looking_for: ["Double dates", "Couple friends", "Activity partners"],
 };
 
