@@ -1075,3 +1075,173 @@ button:active {
   font-weight: 500;
   margin-bottom: 1rem;
 }
+/* Login Form Button */
+.login-form {
+  margin-top: 1.5rem;
+}
+
+.login-form .btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  padding: 0.875rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 12px;
+    min-height: 56px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.login-form .btn-connect {
+  background-color: #ec4899;
+  color: white;
+  max-width: 100%;
+}
+
+.login-form .btn-connect:hover:not(:disabled) {
+  background-color: #db2777;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.login-form .btn-connect:disabled {
+  background-color: #f9a8d4;
+  cursor: not-allowed;
+}
+
+/* Signup Success Screen */
+.signup-success {
+  display: flex;
+  flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.success-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.success-message {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 2rem;
+}
+
+.signup-success .btn-connect {
+  min-width: 200px;
+  padding: 0.875rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 12px;
+  min-height: 56px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+}
+
+.signup-success .btn-connect:hover {
+  background-color: #db2777;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Button Enhancements */
+.form-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    width: 100%;
+}
+
+.signup-form .btn {
+  min-width: 150px;
+  padding: 0.875rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 12px;
+    min-height: 56px;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form .btn-connect {
+  flex: 1;
+  max-width: 300px;
+  background-color: #ec4899;
+  color: white;
+}
+
+.signup-form .btn-connect:hover:not(:disabled) {
+  background-color: #db2777;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.signup-form .btn-connect:disabled {
+  background-color: #f9a8d4;
+  cursor: not-allowed;
+}
+
+.signup-form .btn-secondary {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+  min-width: 100px;
+}
+
+.signup-form .btn-secondary:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Step Indicator Styles */
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #e5e7eb;
+  transition: all 0.3s ease;
+}
+.step-dot.active {
+  background-color: #ec4899;
+  transform: scale(1.2);
+}
+
+/* Form Validation Styles */
+.validation-message {
+  color: #e11d48;
+  font-size: 0.8rem;
+  margin-top: 0.375rem;
+  font-weight: 500;
+}
+
+.input-error {
+  border-color: #e11d48 !important;
+  background-color: #fff5f7;
+}
+
+.input-error:focus {
+  border-color: #e11d48 !important;
+  box-shadow: 0 0 0 1px rgba(225, 29, 72, 0.1);
+}
+
+.input-help {
+  font-size: 0.8rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
