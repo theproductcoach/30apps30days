@@ -493,7 +493,7 @@ body {
     align-items: center;
     justify-content: flex-start;
         text-align: left;
-        gap: 1rem;
+        gap: 0rem;
         margin-bottom: 1rem;
         padding: 0 1rem;
 }
