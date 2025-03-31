@@ -1,0 +1,30 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#e8f4ea" />
+  
+  <!-- Mountains -->
+  <polygon points="0,300 200,100 400,250 600,150 600,300" fill="#4a7c59" />
+  <polygon points="0,300 100,180 200,250 350,170 500,280 600,220 600,300" fill="#2c5530" />
+  
+  <!-- Sun -->
+  <circle cx="500" cy="80" r="40" fill="#f9da4a" />
+  <circle cx="500" cy="80" r="30" fill="#fceba7" />
+  
+  <!-- Hikers -->
+  <circle cx="230" cy="260" r="10" fill="#333" />
+  <rect x="229" y="270" width="2" height="20" fill="#333" />
+  <line x1="231" y1="275" x2="245" y2="270" stroke="#333" stroke-width="2" />
+  <line x1="229" y1="275" x2="215" y2="270" stroke="#333" stroke-width="2" />
+  <line x1="231" y1="290" x2="240" y2="300" stroke="#333" stroke-width="2" />
+  <line x1="229" y1="290" x2="220" y2="300" stroke="#333" stroke-width="2" />
+  
+  <circle cx="260" cy="260" r="10" fill="#555" />
+  <rect x="259" y="270" width="2" height="20" fill="#555" />
+  <line x1="261" y1="275" x2="275" y2="270" stroke="#555" stroke-width="2" />
+  <line x1="259" y1="275" x2="245" y2="270" stroke="#555" stroke-width="2" />
+  <line x1="261" y1="290" x2="270" y2="300" stroke="#555" stroke-width="2" />
+  <line x1="259" y1="290" x2="250" y2="300" stroke="#555" stroke-width="2" />
+  
+  <!-- Text -->
+  <text x="300" y="50" font-family="Arial" font-size="20" fill="#2c5530" text-anchor="middle">Weekend Hiking Trip</text>
+  <text x="300" y="75" font-family="Arial" font-size="14" fill="#666666" text-anchor="middle">Mountain View Trail</text>
+</svg> 

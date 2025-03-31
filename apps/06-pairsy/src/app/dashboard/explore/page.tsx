@@ -200,7 +200,7 @@ function ExploreContent() {
   }
 
   return (
-    <div className="app-container">
+    <div className="app-container dashboard">
       <div className="phone-container">
         <StatusBar title="Explore" />
         <div className="main-content">
@@ -317,13 +317,19 @@ function ExploreContent() {
                   <div className="activities-grid">
                     {filteredActivities.map((activity) => (
                       <div key={activity.id} className="activity-card-detailed">
-                        <div className="activity-icon-large">
-                          {activity.icon}
-                        </div>
                         <div className="activity-content">
-                          <div className="activity-title">{activity.title}</div>
-                          <div className="activity-category">
-                            {activity.category}
+                          <div className="activity-header">
+                            <div className="activity-icon-large">
+                              {activity.icon}
+                            </div>
+                            <div className="activity-title-group">
+                              <div className="activity-title">
+                                {activity.title}
+                              </div>
+                              <div className="activity-category">
+                                {activity.category}
+                              </div>
+                            </div>
                           </div>
                           <div className="activity-details">
                             {activity.date && activity.time && (
@@ -347,8 +353,8 @@ function ExploreContent() {
                             {activity.description}
                           </p>
                           <div className="activity-actions">
-                            <Link 
-                              href={`/dashboard/explore/activity/${activity.id}`} 
+                            <Link
+                              href={`/dashboard/explore/activity/${activity.id}`}
                               className="btn btn-view-profile"
                             >
                               View Details

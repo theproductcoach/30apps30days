@@ -1,0 +1,18 @@
+<svg width="600" height="300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="300" fill="#111827" />
+  
+  <!-- Movie screen -->
+  <rect x="150" y="30" width="300" height="160" fill="#f5f5f5" />
+  <rect x="170" y="50" width="260" height="120" fill="#333333" />
+  
+  <!-- Couple silhouettes -->
+  <circle cx="220" cy="250" r="20" fill="#555555" />
+  <circle cx="260" cy="250" r="20" fill="#777777" />
+  
+  <circle cx="340" cy="250" r="20" fill="#555555" />
+  <circle cx="380" cy="250" r="20" fill="#777777" />
+  
+  <!-- Text -->
+  <text x="300" y="100" font-family="Arial" font-size="18" fill="white" text-anchor="middle">Movie Night</text>
+  <text x="300" y="280" font-family="Arial" font-size="14" fill="#bbbbbb" text-anchor="middle">Double Date at Cinema Plaza</text>
+</svg> 
