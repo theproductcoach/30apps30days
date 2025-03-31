@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import Image from "next/image";
 
 // Mock data type
 type Couple = {
@@ -14,6 +15,7 @@ type Couple = {
   bio?: string;
   interests?: string[];
   email?: string;
+  avatar?: string;
 };
 
 // Mock data for the dashboard
@@ -24,6 +26,7 @@ const MOCK_COUPLE: Couple = {
   partner2_name: "Bri",
   bio: "We love hiking and exploring new places together!",
   interests: ["hikes", "travel", "cooking", "movies"],
+  avatar: "/images/avatars/Will & Bri.png",
 };
 
 const MOCK_SUGGESTIONS: Couple[] = [
@@ -33,6 +36,7 @@ const MOCK_SUGGESTIONS: Couple[] = [
     partner1_name: "Sam",
     partner2_name: "Taylor",
     interests: ["travel", "coffee", "movies"],
+    avatar: "/images/avatars/Sam & Taylor.png",
   },
   {
     id: "match-2",
@@ -40,6 +44,7 @@ const MOCK_SUGGESTIONS: Couple[] = [
     partner1_name: "Riley",
     partner2_name: "Casey",
     interests: ["games", "cooking", "movies"],
+    avatar: "/images/avatars/Riley & Casey.png",
   },
   {
     id: "match-3",
@@ -47,6 +52,7 @@ const MOCK_SUGGESTIONS: Couple[] = [
     partner1_name: "Jamie",
     partner2_name: "Morgan",
     interests: ["brunch", "cooking", "travel"],
+    avatar: "/images/avatars/Jamie & Morgan.png",
   },
 ];
 
@@ -56,6 +62,9 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [coupleData, setCoupleData] = useState<Couple | null>(null);
   const [matchSuggestions, setMatchSuggestions] = useState<Couple[]>([]);
+  const [avatarErrors, setAvatarErrors] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   useEffect(() => {
     // Simulate loading data
@@ -75,6 +84,10 @@ export default function Dashboard() {
     } catch (error) {
       console.error("Error signing out:", error);
     }
+  };
+
+  const handleAvatarError = (matchId: string) => {
+    setAvatarErrors((prev) => ({ ...prev, [matchId]: true }));
   };
 
   if (loading) {
@@ -113,14 +126,35 @@ export default function Dashboard() {
             <div className="dashboard-section">
               <h2 className="section-title">Your Profile</h2>
               <div className="profile-card">
-                <div className="profile-info">
-                  <div className="profile-name">{coupleData?.couple_name}</div>
-                  <div className="profile-partners">
-                    {coupleData?.partner1_name} & {coupleData?.partner2_name}
+                <div className="profile-header">
+                  <div className="profile-avatar">
+                    {coupleData?.avatar && !avatarErrors["user"] ? (
+                      <Image
+                        src={coupleData.avatar}
+                        alt={`${coupleData.partner1_name} & ${coupleData.partner2_name}`}
+                        width={80}
+                        height={80}
+                        className="avatar-image"
+                        onError={() => handleAvatarError("user")}
+                      />
+                    ) : (
+                      <div className="avatar-placeholder profile-avatar-placeholder">
+                        {coupleData?.partner1_name?.[0]}
+                        {coupleData?.partner2_name?.[0]}
+                      </div>
+                    )}
                   </div>
-                  <div className="profile-bio">
-                    {coupleData?.bio || "No bio yet"}
+                  <div className="profile-info">
+                    <div className="profile-name">
+                      {coupleData?.couple_name}
+                    </div>
+                    <div className="profile-partners">
+                      {coupleData?.partner1_name} & {coupleData?.partner2_name}
+                    </div>
                   </div>
+                </div>
+                <div className="profile-bio">
+                  {coupleData?.bio || "No bio yet"}
                 </div>
                 <div className="profile-interests">
                   {coupleData?.interests?.map((interest, idx) => (
@@ -144,7 +178,23 @@ export default function Dashboard() {
                 <div className="matches-grid">
                   {matchSuggestions.map((match) => (
                     <div key={match.id} className="match-card">
-                      <div className="match-avatar"></div>
+                      <div className="match-avatar">
+                        {match.avatar && !avatarErrors[match.id] ? (
+                          <Image
+                            src={match.avatar}
+                            alt={`${match.partner1_name} & ${match.partner2_name}`}
+                            width={60}
+                            height={60}
+                            className="avatar-image"
+                            onError={() => handleAvatarError(match.id)}
+                          />
+                        ) : (
+                          <div className="avatar-placeholder">
+                            {match.partner1_name[0]}
+                            {match.partner2_name[0]}
+                          </div>
+                        )}
+                      </div>
                       <div className="match-info">
                         <div className="match-name">{match.couple_name}</div>
                         <div className="match-partners">

@@ -341,7 +341,31 @@ button:active {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25%;
+  text-decoration: none;
+    color: #666;
+    font-size: 12px;
+    padding: 8px;
+    cursor: pointer;
+    transition: transform 0.15s ease, color 0.2s ease;
+    background: none;
+    border: none;
+    outline: none;
+    width: auto;
+    font-family: inherit;
+  }
+  
+  .nav-item:hover {
+    transform: translateY(-2px);
+  }
+  
+  .nav-item:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  
+  .nav-item.active {
+    color: var(--accent-color);
 }
 
 .nav-icon-container {
@@ -802,10 +826,32 @@ button:active {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.profile-info {
+.profile-header {
+  display: flex;
+  align-items: center;
   margin-bottom: 16px;
 }
 
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 3px solid var(--accent-color);
+}
+
+.profile-avatar-placeholder {
+  font-size: 1.75rem;
+}
+
+.profile-info {
+  flex: 1;
+}
 .profile-name {
   font-size: 18px;
   font-weight: 600;
@@ -851,10 +897,17 @@ button:active {
 
 .match-card {
   display: flex;
+  align-items: center;
   background-color: #fff;
   border-radius: 16px;
   padding: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .match-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .match-avatar {
@@ -863,22 +916,53 @@ button:active {
   border-radius: 50%;
   background-color: #f0f0f0;
   margin-right: 16px;
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px solid var(--accent-color);
+  }
+  
+  .avatar-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 600;
 }
 
 .match-info {
   flex: 1;
+  min-width: 0;
+    /* Prevent flex child from overflowing */
 }
 
 .match-name {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 4px;
+  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .match-partners {
   font-size: 13px;
   color: #666;
   margin-bottom: 8px;
+  white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .match-common-interests {
@@ -891,6 +975,9 @@ button:active {
   align-self: center;
   padding: 8px 16px;
   font-size: 14px;
+  min-height: 36px;
+    margin-left: 8px;
+    white-space: nowrap;
 }
 
 .no-matches {
@@ -926,6 +1013,12 @@ button:active {
   color: #666;
   font-size: 12px;
   padding: 8px;
+  cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  
+  .nav-item:hover {
+    transform: translateY(-2px);
 }
 
 .nav-item.active {
@@ -1006,6 +1099,15 @@ button:active {
   background-color: #f9fafb;
   padding: 1rem;
   border-radius: 0.75rem;
+  text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    background-color: #f3f4f6;
 }
 
 .feature-icon {
@@ -1074,4 +1176,176 @@ button:active {
   color: #4b5563;
   font-weight: 500;
   margin-bottom: 1rem;
+}
+/* Feature pages */
+.feature-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.feature-icon-large {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.feature-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.feature-description {
+  font-size: 1.1rem;
+  color: #4b5563;
+}
+
+.feature-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.feature-image-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.feature-image {
+  border-radius: 0.75rem;
+  object-fit: cover;
+}
+
+.feature-section {
+  margin-bottom: 1rem;
+}
+
+.feature-section h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #111827;
+}
+
+.feature-section p {
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.feature-list {
+  list-style-type: none;
+  padding-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #4b5563;
+}
+
+.feature-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.activities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.feature-cta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+/* Responsive adjustments */
+@media (min-width: 640px) {
+  .feature-cta {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .feature-cta .btn {
+    min-width: 150px;
+  }
+}
+
+.feature-image-placeholder {
+  width: 100%;
+  max-width: 400px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 0.75rem;
+  text-align: center;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.placeholder-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Toast notification */
+.toast-notification {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  z-index: 1000;
+  font-size: 14px;
+  max-width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s, fadeOut 0.3s 2.7s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
 }

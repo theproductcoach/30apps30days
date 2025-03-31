@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import BottomNavigation from "@/components/BottomNavigation";
 
 export default function Home() {
   return (
@@ -67,7 +68,10 @@ export default function Home() {
                 Connect with other couples for double dates and new friendships!
               </p>
 
-              <div className="cta-buttons">
+              <div
+                className="cta-buttons"
+                style={{ flexDirection: "column", alignItems: "stretch" }}
+              >
                 <Link href="/signup" className="btn btn-connect">
                   Sign Up as a Couple
                 </Link>
@@ -78,51 +82,34 @@ export default function Home() {
             </div>
 
             <div className="features-section">
-              <div className="feature">
+              <Link href="/features/meet-couples" className="feature">
                 <div className="feature-icon">👥</div>
                 <div className="feature-text">
                   <h3>Meet Couples</h3>
                   <p>Find other couples with similar interests in your area</p>
                 </div>
-              </div>
+              </Link>
 
-              <div className="feature">
+              <Link href="/features/plan-activities" className="feature">
                 <div className="feature-icon">🗓️</div>
                 <div className="feature-text">
                   <h3>Plan Activities</h3>
                   <p>Discover fun activities to do together</p>
                 </div>
-              </div>
+              </Link>
 
-              <div className="feature">
+              <Link href="/features/stay-connected" className="feature">
                 <div className="feature-icon">💬</div>
                 <div className="feature-text">
                   <h3>Stay Connected</h3>
                   <p>Chat with your matches and make plans</p>
                 </div>
-              </div>
+              </Link>
             </div>
           </main>
 
           {/* Bottom navigation */}
-          <div className="dashboard-nav">
-            <div className="nav-item active">
-              <span className="nav-icon">🏠</span>
-              <span className="nav-label">Home</span>
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">🔍</span>
-              <span className="nav-label">Explore</span>
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">💬</span>
-              <span className="nav-label">Messages</span>
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">👤</span>
-              <span className="nav-label">Profile</span>
-            </div>
-          </div>
+          <BottomNavigation activePath="/" />
         </div>
       </div>
     </div>

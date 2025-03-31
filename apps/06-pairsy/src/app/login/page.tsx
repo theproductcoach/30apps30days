@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   // We need to use signIn so marking with eslint-disable
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { signIn } = useAuth();
@@ -14,6 +15,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [returnUrl, setReturnUrl] = useState("/dashboard");
+
+  // Get return URL from query params
+  useEffect(() => {
+    const returnParam = searchParams.get("returnUrl");
+    if (returnParam) {
+      setReturnUrl(returnParam);
+    }
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,8 +34,8 @@ export default function Login() {
       // Simulated sign in - no actual auth
       await signIn(email, password);
 
-      // Redirect to dashboard on "successful login"
-      router.push("/dashboard");
+      // Redirect to return URL or dashboard
+      router.push(returnUrl);
     } catch (error: unknown) {
       console.error("Error during sign in:", error);
       setError(error instanceof Error ? error.message : "Failed to sign in");
