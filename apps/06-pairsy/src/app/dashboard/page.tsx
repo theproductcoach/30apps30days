@@ -6,6 +6,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import Image from "next/image";
 import BottomNavigation from "@/components/BottomNavigation";
+import StatusBar from "@/components/StatusBar";
 
 // Mock data type
 type Couple = {
@@ -57,6 +58,111 @@ const MOCK_SUGGESTIONS: Couple[] = [
   },
 ];
 
+// Mock data types
+type UserProfile = {
+  couple_name: string;
+  partner1_name: string;
+  partner2_name: string;
+  avatar?: string;
+  interests: string[];
+};
+
+type SuggestedCouple = {
+  id: string;
+  couple_name: string;
+  partner1_name: string;
+  partner2_name: string;
+  avatar?: string;
+  compatibility: number;
+};
+
+type RecentMessage = {
+  id: string;
+  couple_name: string;
+  partner1_name: string;
+  partner2_name: string;
+  avatar?: string;
+  last_message: string;
+  time: string;
+  unread: boolean;
+};
+
+type Activity = {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  icon: string;
+};
+
+// Mock data
+const MOCK_PROFILE: UserProfile = {
+  couple_name: "The Adventurers",
+  partner1_name: "Will",
+  partner2_name: "Bri",
+  avatar: "/images/avatars/Will & Bri.png",
+  interests: ["hikes", "travel", "cooking", "movies"],
+};
+
+const MOCK_SUGGESTED_COUPLES: SuggestedCouple[] = [
+  {
+    id: "couple-1",
+    couple_name: "City Explorers",
+    partner1_name: "Sam",
+    partner2_name: "Taylor",
+    avatar: "/images/avatars/Sam & Taylor.png",
+    compatibility: 85,
+  },
+  {
+    id: "couple-3",
+    couple_name: "Foodies",
+    partner1_name: "Jamie",
+    partner2_name: "Morgan",
+    avatar: "/images/avatars/Jamie & Morgan.png",
+    compatibility: 90,
+  },
+];
+
+const MOCK_RECENT_MESSAGES: RecentMessage[] = [
+  {
+    id: "conv-1",
+    couple_name: "City Explorers",
+    partner1_name: "Sam",
+    partner2_name: "Taylor",
+    avatar: "/images/avatars/Sam & Taylor.png",
+    last_message: "That sounds great! We're free this Saturday.",
+    time: "10 min ago",
+    unread: true,
+  },
+  {
+    id: "conv-2",
+    couple_name: "Game Night",
+    partner1_name: "Riley",
+    partner2_name: "Casey",
+    avatar: "/images/avatars/Riley & Casey.png",
+    last_message: "We'll bring Settlers of Catan and some snacks!",
+    time: "2 hours ago",
+    unread: true,
+  },
+];
+
+const MOCK_ACTIVITIES: Activity[] = [
+  {
+    id: "activity-1",
+    title: "Wine Tasting Evening",
+    date: "June 15",
+    time: "7:00 PM",
+    icon: "🍷",
+  },
+  {
+    id: "activity-4",
+    title: "Weekend Hiking Trip",
+    date: "June 25",
+    time: "9:00 AM",
+    icon: "🥾",
+  },
+];
+
 export default function Dashboard() {
   const router = useRouter();
   const { signOut } = useAuth();
@@ -66,12 +172,22 @@ export default function Dashboard() {
   const [avatarErrors, setAvatarErrors] = useState<{ [key: string]: boolean }>(
     {}
   );
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [suggestedCouples, setSuggestedCouples] = useState<SuggestedCouple[]>(
+    []
+  );
+  const [recentMessages, setRecentMessages] = useState<RecentMessage[]>([]);
+  const [activities, setActivities] = useState<Activity[]>([]);
 
   useEffect(() => {
     // Simulate loading data
     const timer = setTimeout(() => {
       setCoupleData(MOCK_COUPLE);
       setMatchSuggestions(MOCK_SUGGESTIONS);
+      setProfile(MOCK_PROFILE);
+      setSuggestedCouples(MOCK_SUGGESTED_COUPLES);
+      setRecentMessages(MOCK_RECENT_MESSAGES);
+      setActivities(MOCK_ACTIVITIES);
       setLoading(false);
     }, 1000);
 
@@ -95,9 +211,10 @@ export default function Dashboard() {
     return (
       <div className="app-container">
         <div className="phone-container">
+          <StatusBar title="Dashboard" />
           <div className="main-content">
             <main className="content-wrapper">
-              <div className="loading">Loading...</div>
+              <div className="loading">Loading your dashboard...</div>
             </main>
           </div>
         </div>
@@ -108,6 +225,7 @@ export default function Dashboard() {
   return (
     <div className="app-container">
       <div className="phone-container">
+        <StatusBar title="Dashboard" />
         <div className="main-content">
           <header className="status-bar">
             <div className="status-left">Pairsy</div>
@@ -119,113 +237,199 @@ export default function Dashboard() {
           </header>
 
           <main className="content-wrapper">
-            <div className="dashboard-header">
-              <h1>Welcome, {coupleData?.couple_name || "Couple"}!</h1>
-              <p className="dashboard-subtitle">Find your next double date</p>
+            <div className="header">
+              <h1 className="app-title">Welcome Back!</h1>
+              <p className="app-subtitle">Here's what's new today</p>
             </div>
 
+            {/* Profile Summary */}
             <div className="dashboard-section">
-              <h2 className="section-title">Your Profile</h2>
-              <div className="profile-card">
-                <div className="profile-header">
-                  <div className="profile-avatar">
-                    {coupleData?.avatar && !avatarErrors["user"] ? (
-                      <Image
-                        src={coupleData.avatar}
-                        alt={`${coupleData.partner1_name} & ${coupleData.partner2_name}`}
-                        width={80}
-                        height={80}
-                        className="avatar-image"
-                        onError={() => handleAvatarError("user")}
-                      />
-                    ) : (
-                      <div className="avatar-placeholder profile-avatar-placeholder">
-                        {coupleData?.partner1_name?.[0]}
-                        {coupleData?.partner2_name?.[0]}
-                      </div>
+              <div className="section-header">
+                <h2 className="section-title">Your Profile</h2>
+                <Link href="/dashboard/profile" className="section-link">
+                  View Full Profile
+                </Link>
+              </div>
+              <div className="profile-summary-card">
+                <div className="profile-summary-avatar">
+                  {profile?.avatar && !avatarErrors["profile"] ? (
+                    <Image
+                      src={profile.avatar}
+                      alt={`${profile.partner1_name} & ${profile.partner2_name}`}
+                      width={60}
+                      height={60}
+                      className="avatar-image"
+                      onError={() => handleAvatarError("profile")}
+                    />
+                  ) : (
+                    <div className="avatar-placeholder medium">
+                      {profile?.partner1_name[0]}
+                      {profile?.partner2_name[0]}
+                    </div>
+                  )}
+                </div>
+                <div className="profile-summary-info">
+                  <div className="profile-summary-name">
+                    {profile?.couple_name}
+                  </div>
+                  <div className="profile-summary-partners">
+                    {profile?.partner1_name} & {profile?.partner2_name}
+                  </div>
+                  <div className="profile-summary-interests">
+                    {profile?.interests.slice(0, 3).map((interest, idx) => (
+                      <span key={idx} className="interest-tag small">
+                        {interest}
+                      </span>
+                    ))}
+                    {profile?.interests && profile.interests.length > 3 && (
+                      <span className="more-interests">
+                        +{profile.interests.length - 3}
+                      </span>
                     )}
                   </div>
-                  <div className="profile-info">
-                    <div className="profile-name">
-                      {coupleData?.couple_name}
-                    </div>
-                    <div className="profile-partners">
-                      {coupleData?.partner1_name} & {coupleData?.partner2_name}
-                    </div>
-                  </div>
                 </div>
-                <div className="profile-bio">
-                  {coupleData?.bio || "No bio yet"}
-                </div>
-                <div className="profile-interests">
-                  {coupleData?.interests?.map((interest, idx) => (
-                    <span key={idx} className="interest-tag">
-                      {interest}
-                    </span>
-                  ))}
-                </div>
-                <Link
-                  href="/dashboard/edit-profile"
-                  className="edit-profile-link"
-                >
-                  Edit Profile
-                </Link>
               </div>
             </div>
 
+            {/* Suggested Matches */}
             <div className="dashboard-section">
-              <h2 className="section-title">Suggested Matches</h2>
-              {matchSuggestions.length > 0 ? (
-                <div className="matches-grid">
-                  {matchSuggestions.map((match) => (
-                    <div key={match.id} className="match-card">
-                      <div className="match-avatar">
-                        {match.avatar && !avatarErrors[match.id] ? (
-                          <Image
-                            src={match.avatar}
-                            alt={`${match.partner1_name} & ${match.partner2_name}`}
-                            width={60}
-                            height={60}
-                            className="avatar-image"
-                            onError={() => handleAvatarError(match.id)}
-                          />
-                        ) : (
-                          <div className="avatar-placeholder">
-                            {match.partner1_name[0]}
-                            {match.partner2_name[0]}
-                          </div>
-                        )}
-                      </div>
-                      <div className="match-info">
-                        <div className="match-name">{match.couple_name}</div>
-                        <div className="match-partners">
-                          {match.partner1_name} & {match.partner2_name}
+              <div className="section-header">
+                <h2 className="section-title">Suggested Matches</h2>
+                <Link href="/dashboard/explore" className="section-link">
+                  See All
+                </Link>
+              </div>
+              <div className="dashboard-suggestions">
+                {suggestedCouples.map((couple) => (
+                  <div key={couple.id} className="suggestion-card">
+                    <div className="suggestion-avatar">
+                      {couple.avatar && !avatarErrors[couple.id] ? (
+                        <Image
+                          src={couple.avatar}
+                          alt={`${couple.partner1_name} & ${couple.partner2_name}`}
+                          width={50}
+                          height={50}
+                          className="avatar-image"
+                          onError={() => handleAvatarError(couple.id)}
+                        />
+                      ) : (
+                        <div className="avatar-placeholder">
+                          {couple.partner1_name[0]}
+                          {couple.partner2_name[0]}
                         </div>
-                        <div className="match-common-interests">
-                          {match.interests
-                            ?.filter((i) => coupleData?.interests?.includes(i))
-                            .map((interest, idx) => (
-                              <span key={idx} className="interest-tag">
-                                {interest}
-                              </span>
-                            ))}
-                        </div>
-                      </div>
-                      <button className="btn btn-connect match-connect-btn">
-                        Connect
-                      </button>
+                      )}
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="no-matches">
-                  <p>No matches available right now. Check back later!</p>
-                </div>
-              )}
+                    <div className="suggestion-info">
+                      <div className="suggestion-name">
+                        {couple.couple_name}
+                      </div>
+                      <div className="suggestion-partners">
+                        {couple.partner1_name} & {couple.partner2_name}
+                      </div>
+                      <div className="suggestion-match">
+                        {couple.compatibility}% match
+                      </div>
+                    </div>
+                    <div className="suggestion-actions">
+                      <Link
+                        href={`/dashboard/explore/profile/${couple.id}`}
+                        className="btn-view small"
+                      >
+                        View
+                      </Link>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <BottomNavigation activePath="/dashboard" />
+            {/* Recent Messages */}
+            <div className="dashboard-section">
+              <div className="section-header">
+                <h2 className="section-title">Recent Messages</h2>
+                <Link href="/dashboard/messages" className="section-link">
+                  See All
+                </Link>
+              </div>
+              <div className="dashboard-messages">
+                {recentMessages.map((message) => (
+                  <Link
+                    href={`/dashboard/messages/${message.id}`}
+                    key={message.id}
+                    className={`dashboard-message-item ${
+                      message.unread ? "unread" : ""
+                    }`}
+                  >
+                    <div className="message-avatar">
+                      {message.avatar && !avatarErrors[message.id] ? (
+                        <Image
+                          src={message.avatar}
+                          alt={`${message.partner1_name} & ${message.partner2_name}`}
+                          width={40}
+                          height={40}
+                          className="avatar-image"
+                          onError={() => handleAvatarError(message.id)}
+                        />
+                      ) : (
+                        <div className="avatar-placeholder small">
+                          {message.partner1_name[0]}
+                          {message.partner2_name[0]}
+                        </div>
+                      )}
+                      {message.unread && (
+                        <div className="unread-indicator small"></div>
+                      )}
+                    </div>
+                    <div className="message-content">
+                      <div className="message-header">
+                        <div className="message-name">
+                          {message.couple_name}
+                        </div>
+                        <div className="message-time">{message.time}</div>
+                      </div>
+                      <div className="message-preview">
+                        {message.last_message}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Upcoming Activities */}
+            <div className="dashboard-section">
+              <div className="section-header">
+                <h2 className="section-title">Upcoming Activities</h2>
+                <Link
+                  href="/dashboard/explore?mode=activities"
+                  className="section-link"
+                >
+                  Find More
+                </Link>
+              </div>
+              <div className="dashboard-activities">
+                {activities.map((activity) => (
+                  <div key={activity.id} className="dashboard-activity-item">
+                    <div className="activity-dashboard-icon">
+                      {activity.icon}
+                    </div>
+                    <div className="activity-dashboard-info">
+                      <div className="activity-dashboard-title">
+                        {activity.title}
+                      </div>
+                      <div className="activity-dashboard-date">
+                        {activity.date} at {activity.time}
+                      </div>
+                    </div>
+                    <div className="activity-dashboard-actions">
+                      <button className="btn-view small">Details</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </main>
+          <BottomNavigation activePath="/dashboard" />
         </div>
       </div>
     </div>

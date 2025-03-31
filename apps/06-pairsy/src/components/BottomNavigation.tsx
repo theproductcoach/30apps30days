@@ -65,6 +65,12 @@ export default function BottomNavigation({ activePath = "/" }: BottomNavigationP
       return;
     }
 
+    // Special handling for home when user is authenticated
+    if (item.label === "Home" && user) {
+      router.push("/dashboard");
+      return;
+    }
+
     // Regular navigation for non-auth items or when user is authenticated
     router.push(item.path);
   };
