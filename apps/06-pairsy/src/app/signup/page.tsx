@@ -6,7 +6,10 @@ import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 
 export default function SignUp() {
+  // We need router and signUp but don't use them directly
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { signUp } = useAuth();
   const [step, setStep] = useState(1);
   const [error, setError] = useState<string | null>(null);
@@ -90,7 +93,7 @@ export default function SignUp() {
 
       // Just show the success screen
       setSignupComplete(true);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error during sign up:", error);
       setError(error instanceof Error ? error.message : "Failed to sign up");
     } finally {
@@ -186,7 +189,7 @@ export default function SignUp() {
                 value={partner1Name}
                 onChange={(e) => setPartner1Name(e.target.value)}
                 className="form-input"
-                placeholder="Enter first partner&apos;s name"
+                placeholder="Enter first partner's name"
                 required
               />
             </div>
@@ -198,7 +201,7 @@ export default function SignUp() {
                 value={partner2Name}
                 onChange={(e) => setPartner2Name(e.target.value)}
                 className="form-input"
-                placeholder="Enter second partner&apos;s name"
+                placeholder="Enter second partner's name"
                 required
               />
             </div>

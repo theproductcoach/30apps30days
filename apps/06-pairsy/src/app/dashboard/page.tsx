@@ -20,8 +20,8 @@ type Couple = {
 const MOCK_COUPLE: Couple = {
   id: "mock-id",
   couple_name: "The Adventurers",
-  partner1_name: "Alex",
-  partner2_name: "Jordan",
+  partner1_name: "Will",
+  partner2_name: "Bri",
   bio: "We love hiking and exploring new places together!",
   interests: ["hikes", "travel", "cooking", "movies"],
 };

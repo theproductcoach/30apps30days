@@ -76,19 +76,17 @@ export default function EditProfile() {
       }
 
       // Simulate API call delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
       setSuccess(true);
 
       // Redirect back to dashboard after a delay
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error updating profile:", error);
-      setError(
-        error instanceof Error ? error.message : "Failed to update profile"
-      );
+      setError(error instanceof Error ? error.message : "Failed to update profile");
     } finally {
       setSaving(false);
     }

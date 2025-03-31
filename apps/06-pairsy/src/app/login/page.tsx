@@ -7,6 +7,8 @@ import Link from "next/link";
 
 export default function Login() {
   const router = useRouter();
+  // We need to use signIn so marking with eslint-disable
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +26,7 @@ export default function Login() {
 
       // Redirect to dashboard on "successful login"
       router.push("/dashboard");
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error during sign in:", error);
       setError(error instanceof Error ? error.message : "Failed to sign in");
     } finally {
