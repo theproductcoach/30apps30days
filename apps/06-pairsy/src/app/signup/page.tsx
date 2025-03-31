@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import StatusBar from "@/components/StatusBar";
 
-export default function SignUp() {
+function SignUpContent() {
   // We need router and signUp but don't use them directly
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const router = useRouter();
@@ -429,5 +429,14 @@ export default function SignUp() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrap with Suspense for future compatibility
+export default function SignUp() {
+  return (
+    <Suspense fallback={<div className="loading">Loading...</div>}>
+      <SignUpContent />
+    </Suspense>
   );
 }

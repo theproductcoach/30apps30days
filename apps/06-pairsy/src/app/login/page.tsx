@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import StatusBar from "@/components/StatusBar";
 
-export default function Login() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   // We need to use signIn so marking with eslint-disable
@@ -155,5 +155,14 @@ export default function Login() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Wrap the component with Suspense to handle the useSearchParams hook properly
+export default function Login() {
+  return (
+    <Suspense fallback={<div className="loading">Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
