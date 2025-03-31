@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'images.openfoodfacts.org',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'static.openfoodfacts.org',
+        pathname: '/**',
+      }
     ],
   },
 };
