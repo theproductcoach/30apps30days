@@ -1,0 +1,181 @@
+[33mcommit fab662ba0f38a665acfaf74f059c149c041c7de9[m
+Author: theproductcoach <will@productcoach.io>
+Date:   Mon Mar 31 15:50:41 2025 +0100
+
+    still struggling with user creation though
+
+[1mdiff --git a/apps/06-pairsy/src/app/signup/page.tsx b/apps/06-pairsy/src/app/signup/page.tsx[m
+[1mnew file mode 100644[m
+[1mindex 00000000..e1098f60[m
+[1m--- /dev/null[m
+[1m+++ b/apps/06-pairsy/src/app/signup/page.tsx[m
+[36m@@ -0,0 +1,552 @@[m
+[32m+[m[32m"use client";[m
+[32m+[m
+[32m+[m[32mimport { useState } from "react";[m
+[32m+[m[32mimport { useRouter } from "next/navigation";[m
+[32m+[m[32mimport { useAuth } from "@/contexts/AuthContext";[m
+[32m+[m[32mimport { supabase } from "@/lib/supabase";[m
+[32m+[m[32mimport Link from "next/link";[m
+[32m+[m
+[32m+[m[32mexport default function SignUp() {[m
+[32m+[m[32m  const router = useRouter();[m
+[32m+[m[32m  const { signUp } = useAuth();[m
+[32m+[m[32m  const [step, setStep] = useState(1);[m
+[32m+[m[32m  const [error, setError] = useState<string | null>(null);[m
+[32m+[m[32m  const [loading, setLoading] = useState(false);[m
+[32m+[m
+[32m+[m[32m  // Form data[m
+[32m+[m[32m  const [email, setEmail] = useState("");[m
+[32m+[m[32m  const [password, setPassword] = useState("");[m
+[32m+[m[32m  const [coupleName, setCoupleName] = useState("");[m
+[32m+[m[32m  const [partner1Name, setPartner1Name] = useState("");[m
+[32m+[m[32m  const [partner2Name, setPartner2Name] = useState("");[m
+[32m+[m[32m  const [bio, setBio] = useState("");[m
+[32m+[m[32m  const [interests, setInterests] = useState<string[]>([]);[m
+[32m+[m
+[32m+[m[32m  // Add this new state[m
+[32m+[m[32m  const [signupComplete, setSignupComplete] = useState(false);[m
+[32m+[m[32m  const [userId, setUserId] = useState<string | null>(null);[m
+[32m+[m
+[32m+[m[32m  const availableInterests = [[m
+[32m+[m[32m    { id: "hikes", name: "Hikes", icon: "👟" },[m
+[32m+[m[32m    { id: "coffee", name: "Coffee", icon: "☕" },[m
+[32m+[m[32m    { id: "brunch", name: "Brunch", icon: "🍳" },[m
+[32m+[m[32m    { id: "games", name: "Games", icon: "🎲" },[m
+[32m+[m[32m    { id: "movies", name: "Movies", icon: "🎬" },[m
+[32m+[m[32m    { id: "travel", name: "Travel", icon: "✈️" },[m
+[32m+[m[32m    { id: "cooking", name: "Cooking", icon: "👨‍🍳" },[m
+[32m+[m[32m    { id: "fitness", name: "Fitness", icon: "💪" },[m
+[32m+[m[32m  ];[m
+[32m+[m
+[32m+[m[32m  const toggleInterest = (interest: string) => {[m
+[32m+[m[32m    if (interests.includes(interest)) {[m
+[32m+[m[32m      setInterests(interests.filter((i) => i !== interest));[m
+[32m+[m[32m    } else {[m
+[32m+[m[32m      setInterests([...interests, interest]);[m
+[32m+[m[32m    }[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handleNextStep = () => {[m
+[32m+[m[32m    // Validate current step[m
+[32m+[m[32m    if (step === 1) {[m
+[32m+[m[32m      if (!email || !password || !coupleName) {[m
+[32m+[m[32m        setError("Please fill out all fields");[m
+[32m+[m[32m        return;[m
+[32m+[m[32m      }[m
+[32m+[m[32m      if (password.length < 6) {[m
+[32m+[m[32m        setError("Password must be at least 6 characters");[m
+[32m+[m[32m        return;[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    if (step === 2) {[m
+[32m+[m[32m      if (!partner1Name || !partner2Name) {[m
+[32m+[m[32m        setError("Please enter both partner names");[m
+[32m+[m[32m        return;[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    if (step === 3) {[m
+[32m+[m[32m      if (interests.length < 1) {[m
+[32m+[m[32m        setError("Please select at least one interest");[m
+[32m+[m[32m        return;[m
+[32m+[m[32m      }[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    setError(null);[m
+[32m+[m[32m    setStep(step + 1);[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handlePrevStep = () => {[m
+[32m+[m[32m    setError(null);[m
+[32m+[m[32m    setStep(step - 1);[m
+[32m+[m[32m  };[m
+[32m+[m
+[32m+[m[32m  const handleSubmit = async (e: React.FormEvent) => {[m
+[32m+[m[32m    e.preventDefault();[m
+[32m+[m[32m    setLoading(true);[m
+[32m+[m[32m    setError(null);[m
+[32m+[m
+[32m+[m[32m    try {[m
+[32m+[m[32m      // Check if email already exists[m
+[32m+[m[32m      const { data: existingUsers, error: checkError } = await supabase[m
+[32m+[m[32m        .from("couples")[m
+[32m+[m[32m        .select("id")[m
+[32m+[m[32m        .eq("email", email)[m
+[32m+[m[32m        .maybeSingle();[m
+[32m+[m
+[32m+[m[32m      if (existingUsers) {[m
+[32m+[m[32m        throw new Error([m
+[32m+[m[32m          "This email is already registered. Please try logging in instead."[m
+[32m+[m[32m        );[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      // 1. Sign up user directly with Supabase[m
+[32m+[m[32m      const { data: signUpData, error: signUpError } =[m
+[32m+[m[32m        await supabase.auth.signUp({[m
+[32m+[m[32m          email,[m
+[32m+[m[32m          password,[m
+[32m+[m[32m        });[m
+[32m+[m
+[32m+[m[32m      if (signUpError) {[m
+[32m+[m[32m        throw new Error(signUpError.message || "Failed to sign up");[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      const newUserId = signUpData?.user?.id;[m
+[32m+[m
+[32m+[m[32m      if (!newUserId) {[m
+[32m+[m[32m        throw new Error("Failed to get user ID after signup");[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      // Store userId in state for display[m
+[32m+[m[32m      setUserId(newUserId);[m
+[32m+[m[32m      console.log("User created successfully with ID:", newUserId);[m
+[32m+[m
+[32m+[m[32m      // Try inserting couple profile data[m
+[32m+[m[32m      let profileSuccess = false;[m
+[32m+[m
+[32m+[m[32m      // Try approaches in sequence, stopping when one works[m
+[32m+[m
+[32m+[m[32m      // 1. First try the direct_insert_couple function (most likely to work)[m
+[32m+[m[32m      try {[m
+[32m+[m[32m        console.log("Trying direct_insert_couple RPC function");[m
+[32m+[m[32m        const { data: directData, error: directError } = await supabase.rpc([m
+[32m+[m[32m          "direct_insert_couple",[m
+[32m+[m[32m          {[m
+[32m+[m[32m            p_id: newUserId,[m
+[32m+[m[32m            p_email: email,[m
+[32m+[m[32m            p_couple_name: coupleName,[m
+[32m+[m[32m            p_partner1_name: partner1Name,[m
+[32m+[m[32m            p_partner2_name: partner2Name,[m
+[32m+[m[32m            p_bio: bio || null,[m
+[32m+[m[32m            p_interests: interests.length > 0 ? interests : null,[m
+[32m+[m[32m          }[m
+[32m+[m[32m        );[m
+[32m+[m
+[32m+[m[32m        if (!directError && directData) {[m
+[32m+[m[32m          console.log([m
+[32m+[m[32m            "Couple profile created via direct_insert_couple:",[m
+[32m+[m[32m            directData[m
+[32m+[m[32m          );[m
+[32m+[m[32m          profileSuccess = true;[m
+[32m+[m[32m        } else {[m
+[32m+[m[32m          console.error("direct_insert_couple error:", directError);[m
+[32m+[m[32m        }[m
+[32m+[m[32m      } catch (directErr) {[m
+[32m+[m[32m        console.error("Exception calling direct_insert_couple:", directErr);[m
+[32m+[m[32m      }[m
+[32m+[m
+[32m+[m[32m      // 2. If that failed, try insert_new_couple[m
+[32m+[m[32m      if (!profileSuccess) {[m
+[32m+[m[32m        try {[m
+[32m+[m[32m          console.log("Trying insert_new_couple RPC function");[m
+[32m+[m[32m          const { data: rpcData, error: rpcError } = await supabase.rpc([m
+[32m+[m[32m            "insert_new_couple",[m
+[32m+[m[32m            {[m
+[32m+[m[32m              p_id: newUserId,[m
+[32m+[m[32m              p_email: email,[m
+[32m+[m[32m              p_couple_name: coupleName,[m
+[32m+[m[32m              p_partner1_name: partner1Name,[m
+[32m+[m[32m              p_partner2_na

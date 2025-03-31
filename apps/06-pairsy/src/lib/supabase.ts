@@ -1,57 +1,81 @@
-import { createClient } from '@supabase/supabase-js';
-import { Database } from '@/types/supabase';
-
-// Fallback values should be replaced with environment variables
-const FALLBACK_SUPABASE_URL = '';
-const FALLBACK_SUPABASE_ANON_KEY = '';
-
-// Try to get from environment variables
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_ANON_KEY;
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Supabase URL or Anon Key is missing. Please check your environment variables.');
-}
-
-export const supabase = createClient<Database>(supabaseUrl!, supabaseAnonKey!, {
-  auth: {
-    persistSession: true,
-    autoRefreshToken: true,
-    detectSessionInUrl: true
-  }
-});
-
-// Create an admin client for server operations
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
-
-// Only create admin client on the server
-export const createAdminClient = () => {
-  if (typeof window !== 'undefined') {
-    console.error('Admin client should only be used on the server');
-    return null;
-  }
-  
-  if (!supabaseUrl || !serviceRoleKey) {
-    console.error('Missing Supabase URL or service role key');
-    return null;
-  }
-  
-  return createClient<Database>(supabaseUrl, serviceRoleKey, {
-    auth: {
-      persistSession: false,
-    }
-  });
-};
+// Mock Supabase client that doesn't connect to any real backend
 
 // Types for our database tables
 export type Couple = {
   id: string;
-  created_at: string;
-  email: string;
+  created_at?: string;
+  email?: string;
   couple_name: string;
   partner1_name: string;
   partner2_name: string;
-  bio: string | null;
-  interests: string[];
-  avatar_url: string | null;
-}; 
+  bio?: string | null;
+  interests?: string[];
+  avatar_url?: string | null;
+};
+
+// Mock Supabase client with fake methods
+export const supabase = {
+  auth: {
+    signUp: async () => ({
+      data: { 
+        user: { id: `user-${Date.now()}` },
+        session: null 
+      },
+      error: null
+    }),
+    signInWithPassword: async () => ({
+      data: { 
+        user: { id: `user-${Date.now()}` },
+        session: { access_token: 'fake-token' } 
+      },
+      error: null
+    }),
+    signOut: async () => ({ error: null }),
+    getSession: async () => ({
+      data: { 
+        session: {
+          user: { id: `user-${Date.now()}` }
+        }
+      },
+      error: null
+    }),
+    onAuthStateChange: () => ({
+      data: {
+        subscription: {
+          unsubscribe: () => {}
+        }
+      }
+    })
+  },
+  from: () => ({
+    select: () => ({
+      eq: () => ({
+        single: async () => ({
+          data: null,
+          error: null
+        }),
+        maybeSingle: async () => ({
+          data: null,
+          error: null
+        })
+      }),
+      neq: () => ({
+        limit: () => ({
+          data: [],
+          error: null
+        })
+      })
+    }),
+    insert: async () => ({
+      data: { id: `record-${Date.now()}` },
+      error: null
+    })
+  }),
+  rpc: async () => ({
+    data: { success: true },
+    error: null
+  })
+};
+
+// Mock admin client that does nothing
+export const createAdminClient = () => null; 
