@@ -3,64 +3,70 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabase";
 import Link from "next/link";
-import { Couple } from "@/lib/supabase";
+
+// Mock data type
+type Couple = {
+  id: string;
+  couple_name: string;
+  partner1_name: string;
+  partner2_name: string;
+  bio?: string;
+  interests?: string[];
+  email?: string;
+};
+
+// Mock data for the dashboard
+const MOCK_COUPLE: Couple = {
+  id: "mock-id",
+  couple_name: "The Adventurers",
+  partner1_name: "Alex",
+  partner2_name: "Jordan",
+  bio: "We love hiking and exploring new places together!",
+  interests: ["hikes", "travel", "cooking", "movies"],
+};
+
+const MOCK_SUGGESTIONS: Couple[] = [
+  {
+    id: "match-1",
+    couple_name: "City Explorers",
+    partner1_name: "Sam",
+    partner2_name: "Taylor",
+    interests: ["travel", "coffee", "movies"],
+  },
+  {
+    id: "match-2",
+    couple_name: "Game Night",
+    partner1_name: "Riley",
+    partner2_name: "Casey",
+    interests: ["games", "cooking", "movies"],
+  },
+  {
+    id: "match-3",
+    couple_name: "Foodies",
+    partner1_name: "Jamie",
+    partner2_name: "Morgan",
+    interests: ["brunch", "cooking", "travel"],
+  },
+];
 
 export default function Dashboard() {
   const router = useRouter();
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
   const [loading, setLoading] = useState(true);
   const [coupleData, setCoupleData] = useState<Couple | null>(null);
   const [matchSuggestions, setMatchSuggestions] = useState<Couple[]>([]);
 
   useEffect(() => {
-    // Redirect if not authenticated
-    if (!user) {
-      router.push("/login");
-      return;
-    }
+    // Simulate loading data
+    const timer = setTimeout(() => {
+      setCoupleData(MOCK_COUPLE);
+      setMatchSuggestions(MOCK_SUGGESTIONS);
+      setLoading(false);
+    }, 1000);
 
-    // Fetch couple data
-    const fetchCoupleData = async () => {
-      try {
-        setLoading(true);
-
-        const { data, error } = await supabase
-          .from("couples")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        setCoupleData(data as Couple);
-
-        // Fetch match suggestions based on interests
-        if (data && data.interests) {
-          const { data: matches, error: matchError } = await supabase
-            .from("couples")
-            .select("*")
-            .neq("id", user.id)
-            .limit(5);
-
-          if (matchError) {
-            throw matchError;
-          }
-
-          setMatchSuggestions(matches as Couple[]);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCoupleData();
-  }, [user, router]);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleSignOut = async () => {
     try {

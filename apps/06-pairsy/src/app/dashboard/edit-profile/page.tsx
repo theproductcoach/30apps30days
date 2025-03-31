@@ -2,14 +2,23 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabase";
 import Link from "next/link";
-import { Couple } from "@/lib/supabase";
+
+// Import type from types folder
+import { Couple } from "@/types/supabase";
+
+// Mock couple data
+const MOCK_COUPLE: Couple = {
+  id: "mock-id",
+  couple_name: "The Adventurers",
+  partner1_name: "Will",
+  partner2_name: "Bri",
+  bio: "We love hiking and exploring new places together!",
+  interests: ["hikes", "travel", "cooking", "movies"],
+};
 
 export default function EditProfile() {
   const router = useRouter();
-  const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,45 +51,17 @@ export default function EditProfile() {
   };
 
   useEffect(() => {
-    // Redirect if not authenticated
-    if (!user) {
-      router.push("/login");
-      return;
-    }
-
-    // Fetch current profile data
-    const fetchProfileData = async () => {
-      try {
-        setLoading(true);
-
-        const { data, error } = await supabase
-          .from("couples")
-          .select("*")
-          .eq("id", user.id)
-          .single();
-
-        if (error) {
-          throw error;
-        }
-
-        const coupleData = data as Couple;
-
-        // Set form state with existing data
-        setCoupleName(coupleData.couple_name || "");
-        setPartner1Name(coupleData.partner1_name || "");
-        setPartner2Name(coupleData.partner2_name || "");
-        setBio(coupleData.bio || "");
-        setInterests(coupleData.interests || []);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-        setError("Failed to load profile information");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfileData();
-  }, [user, router]);
+    // Simulate loading profile data
+    setTimeout(() => {
+      // Set form state with mock data
+      setCoupleName(MOCK_COUPLE.couple_name);
+      setPartner1Name(MOCK_COUPLE.partner1_name);
+      setPartner2Name(MOCK_COUPLE.partner2_name);
+      setBio(MOCK_COUPLE.bio || "");
+      setInterests(MOCK_COUPLE.interests || []);
+      setLoading(false);
+    }, 1000);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -94,21 +75,8 @@ export default function EditProfile() {
         throw new Error("Please fill out all required fields");
       }
 
-      // Update profile in Supabase
-      const { error } = await supabase
-        .from("couples")
-        .update({
-          couple_name: coupleName,
-          partner1_name: partner1Name,
-          partner2_name: partner2Name,
-          bio,
-          interests,
-        })
-        .eq("id", user?.id);
-
-      if (error) {
-        throw error;
-      }
+      // Simulate API call delay
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       setSuccess(true);
 
@@ -116,9 +84,11 @@ export default function EditProfile() {
       setTimeout(() => {
         router.push("/dashboard");
       }, 2000);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error updating profile:", error);
-      setError(error.message || "Failed to update profile");
+      setError(
+        error instanceof Error ? error.message : "Failed to update profile"
+      );
     } finally {
       setSaving(false);
     }
@@ -201,13 +171,13 @@ export default function EditProfile() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="bio">About You</label>
+                <label htmlFor="bio">About You (Optional)</label>
                 <textarea
                   id="bio"
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   className="form-textarea"
-                  placeholder="Tell other couples about yourselves..."
+                  placeholder="Tell other couples a bit about yourselves"
                   rows={3}
                 />
               </div>
@@ -218,10 +188,10 @@ export default function EditProfile() {
                   {availableInterests.map((interest) => (
                     <div
                       key={interest.id}
-                      onClick={() => toggleInterest(interest.id)}
                       className={`interest-item ${
                         interests.includes(interest.id) ? "selected" : ""
                       }`}
+                      onClick={() => toggleInterest(interest.id)}
                     >
                       <span className="interest-icon">{interest.icon}</span>
                       <span className="interest-name">{interest.name}</span>
@@ -232,7 +202,7 @@ export default function EditProfile() {
 
               <button
                 type="submit"
-                className="btn btn-connect"
+                className="btn btn-primary btn-block"
                 disabled={saving}
               >
                 {saving ? "Saving..." : "Save Changes"}

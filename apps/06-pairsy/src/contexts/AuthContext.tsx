@@ -1,102 +1,108 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
-import { User, Session } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
+import { createContext, useContext, useState, ReactNode } from "react";
+
+// Simplified types without actual Supabase deps
+type User = {
+  id: string;
+  email: string;
+};
+
+type Session = {
+  user: User;
+};
+
+type AuthError = {
+  message: string;
+};
+
+type AuthResult = {
+  data: {
+    user: User | null;
+    session: Session | null;
+  } | null;
+  error: AuthError | null;
+};
 
 type AuthContextType = {
   user: User | null;
   session: Session | null;
   isLoading: boolean;
-  signUp: (
-    email: string,
-    password: string
-  ) => Promise<{
-    error: any | null;
-    data: any | null;
-  }>;
-  signIn: (
-    email: string,
-    password: string
-  ) => Promise<{
-    error: any | null;
-    data: any | null;
-  }>;
+  signUp: (email: string, password: string) => Promise<AuthResult>;
+  signIn: (email: string, password: string) => Promise<AuthResult>;
   signOut: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useState<User | null>({
+    id: "dummy-user-id",
+    email: "user@example.com",
+  });
+  const [session, setSession] = useState<Session | null>({
+    user: { id: "dummy-user-id", email: "user@example.com" },
+  });
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    // Check active session
-    const getSession = async () => {
-      setIsLoading(true);
+  // Mock sign up function - always succeeds
+  const signUp = async (
+    email: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: string
+  ): Promise<AuthResult> => {
+    setIsLoading(true);
 
-      try {
-        const { data, error } = await supabase.auth.getSession();
-
-        if (error) {
-          throw error;
-        }
-
-        if (data.session) {
-          setSession(data.session);
-          setUser(data.session.user);
-        }
-      } catch (error) {
-        console.error("Error getting session:", error);
-      } finally {
-        setIsLoading(false);
-      }
+    // Create a fake user
+    const mockUser = {
+      id: `user-${Date.now()}`,
+      email,
     };
 
-    getSession();
+    setUser(mockUser);
+    setSession({ user: mockUser });
+    setIsLoading(false);
 
-    // Listen for auth changes
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setIsLoading(false);
-      }
-    );
-
-    // Cleanup on unmount
-    return () => {
-      authListener.subscription.unsubscribe();
+    return {
+      data: {
+        user: mockUser,
+        session: { user: mockUser },
+      },
+      error: null,
     };
-  }, []);
-
-  // Sign up a new user
-  const signUp = async (email: string, password: string) => {
-    return await supabase.auth.signUp({
-      email,
-      password,
-    });
   };
 
-  // Sign in a user
-  const signIn = async (email: string, password: string) => {
-    return await supabase.auth.signInWithPassword({
+  // Mock sign in function - always succeeds
+  const signIn = async (
+    email: string,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _: string
+  ): Promise<AuthResult> => {
+    setIsLoading(true);
+
+    // Create a fake user
+    const mockUser = {
+      id: `user-${Date.now()}`,
       email,
-      password,
-    });
+    };
+
+    setUser(mockUser);
+    setSession({ user: mockUser });
+    setIsLoading(false);
+
+    return {
+      data: {
+        user: mockUser,
+        session: { user: mockUser },
+      },
+      error: null,
+    };
   };
 
-  // Sign out
+  // Mock sign out
   const signOut = async () => {
-    await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
   };
 
   const value = {

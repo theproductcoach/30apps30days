@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabase";
 import Link from "next/link";
 
 export default function SignUp() {
@@ -22,9 +21,8 @@ export default function SignUp() {
   const [bio, setBio] = useState("");
   const [interests, setInterests] = useState<string[]>([]);
 
-  // Add this new state
+  // Final step state
   const [signupComplete, setSignupComplete] = useState(false);
-  const [userId, setUserId] = useState<string | null>(null);
 
   const availableInterests = [
     { id: "hikes", name: "Hikes", icon: "👟" },
@@ -87,180 +85,55 @@ export default function SignUp() {
     setError(null);
 
     try {
-      // Check if email already exists
-      const { data: existingUsers, error: checkError } = await supabase
-        .from("couples")
-        .select("id")
-        .eq("email", email)
-        .maybeSingle();
+      // Simplified signup - no actual API calls
+      await signUp(email, password);
 
-      if (existingUsers) {
-        throw new Error(
-          "This email is already registered. Please try logging in instead."
-        );
-      }
-
-      // 1. Sign up user directly with Supabase
-      const { data: signUpData, error: signUpError } =
-        await supabase.auth.signUp({
-          email,
-          password,
-        });
-
-      if (signUpError) {
-        throw new Error(signUpError.message || "Failed to sign up");
-      }
-
-      const newUserId = signUpData?.user?.id;
-
-      if (!newUserId) {
-        throw new Error("Failed to get user ID after signup");
-      }
-
-      // Store userId in state for display
-      setUserId(newUserId);
-      console.log("User created successfully with ID:", newUserId);
-
-      // Try inserting couple profile data
-      let profileSuccess = false;
-
-      // Try approaches in sequence, stopping when one works
-
-      // 1. First try the direct_insert_couple function (most likely to work)
-      try {
-        console.log("Trying direct_insert_couple RPC function");
-        const { data: directData, error: directError } = await supabase.rpc(
-          "direct_insert_couple",
-          {
-            p_id: newUserId,
-            p_email: email,
-            p_couple_name: coupleName,
-            p_partner1_name: partner1Name,
-            p_partner2_name: partner2Name,
-            p_bio: bio || null,
-            p_interests: interests.length > 0 ? interests : null,
-          }
-        );
-
-        if (!directError && directData) {
-          console.log(
-            "Couple profile created via direct_insert_couple:",
-            directData
-          );
-          profileSuccess = true;
-        } else {
-          console.error("direct_insert_couple error:", directError);
-        }
-      } catch (directErr) {
-        console.error("Exception calling direct_insert_couple:", directErr);
-      }
-
-      // 2. If that failed, try insert_new_couple
-      if (!profileSuccess) {
-        try {
-          console.log("Trying insert_new_couple RPC function");
-          const { data: rpcData, error: rpcError } = await supabase.rpc(
-            "insert_new_couple",
-            {
-              p_id: newUserId,
-              p_email: email,
-              p_couple_name: coupleName,
-              p_partner1_name: partner1Name,
-              p_partner2_name: partner2Name,
-              p_bio: bio || null,
-              p_interests: interests.length > 0 ? interests : null,
-            }
-          );
-
-          if (!rpcError && rpcData) {
-            console.log(
-              "Couple profile created via insert_new_couple:",
-              rpcData
-            );
-            profileSuccess = true;
-          } else {
-            console.error("insert_new_couple error:", rpcError);
-          }
-        } catch (rpcErr) {
-          console.error("Exception calling insert_new_couple:", rpcErr);
-        }
-      }
-
-      // 3. If RPC methods failed, try API endpoint
-      if (!profileSuccess) {
-        try {
-          console.log("Falling back to API endpoint");
-          const response = await fetch("/api/couples/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: newUserId,
-              email,
-              couple_name: coupleName,
-              partner1_name: partner1Name,
-              partner2_name: partner2Name,
-              bio: bio || null,
-              interests: interests.length > 0 ? interests : null,
-            }),
-          });
-
-          const result = await response.json();
-
-          if (response.ok) {
-            console.log("Couple profile created via API:", result);
-            profileSuccess = true;
-          } else {
-            console.error("API error:", result);
-          }
-        } catch (apiErr) {
-          console.error("Exception calling API:", apiErr);
-        }
-      }
-
-      // Even if profile creation fails, we'll still continue with signup
-      // The trigger function may handle this, or admin intervention will be needed
-
-      // Save email to localStorage for the verification page
-      localStorage.setItem("signupEmail", email);
-
-      // Set signup as complete for UI rendering
+      // Just show the success screen
       setSignupComplete(true);
-
-      // Only redirect if we want to navigate away
-      // router.push("/signup/verify-email");
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error during sign up:", error);
-      setError(error.message || "An error occurred during sign up");
+      setError(error instanceof Error ? error.message : "Failed to sign up");
     } finally {
       setLoading(false);
     }
   };
 
-  // Check if current step is valid
   const isCurrentStepValid = () => {
-    switch (step) {
-      case 1:
-        return email && password && coupleName;
-      case 2:
-        return partner1Name && partner2Name;
-      case 3:
-        return true; // Interests are optional
-      case 4:
-        return true; // Just reviewing
-      default:
-        return false;
+    if (step === 1) {
+      return email && password && coupleName;
     }
+    if (step === 2) {
+      return partner1Name && partner2Name;
+    }
+    if (step === 3) {
+      return interests.length > 0;
+    }
+    return true;
   };
 
-  // Render the content for the current step
   const renderStepContent = () => {
+    if (signupComplete) {
+      return (
+        <div className="signup-success">
+          <h2 className="success-title">You&apos;re all set!</h2>
+          <p className="success-message">
+            Your account has been created successfully.
+          </p>
+          <button
+            className="btn btn-connect"
+            onClick={() => router.push("/dashboard")}
+          >
+            Go to Dashboard
+          </button>
+        </div>
+      );
+    }
+
     switch (step) {
       case 1:
         return (
-          <div className="step-content">
-            <h2 className="step-title">Account Details</h2>
+          <div className="signup-step">
+            <h2 className="step-title">Basic Info</h2>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -284,6 +157,7 @@ export default function SignUp() {
                 placeholder="Create a password"
                 required
               />
+              <p className="input-help">At least 6 characters</p>
             </div>
             <div className="form-group">
               <label htmlFor="coupleName">Couple Name</label>
@@ -293,70 +167,69 @@ export default function SignUp() {
                 value={coupleName}
                 onChange={(e) => setCoupleName(e.target.value)}
                 className="form-input"
-                placeholder="How you'd like to be known"
+                placeholder="How you want to be known"
                 required
               />
+              <p className="input-help">This will be visible to other users</p>
             </div>
           </div>
         );
-
       case 2:
         return (
-          <div className="step-content">
-            <h2 className="step-title">Partner Details</h2>
+          <div className="signup-step">
+            <h2 className="step-title">Partner Names</h2>
             <div className="form-group">
-              <label htmlFor="partner1">Partner 1 Name</label>
+              <label htmlFor="partner1Name">Partner 1 Name</label>
               <input
                 type="text"
-                id="partner1"
+                id="partner1Name"
                 value={partner1Name}
                 onChange={(e) => setPartner1Name(e.target.value)}
                 className="form-input"
-                placeholder="Enter name"
+                placeholder="Enter first partner&apos;s name"
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="partner2">Partner 2 Name</label>
+              <label htmlFor="partner2Name">Partner 2 Name</label>
               <input
                 type="text"
-                id="partner2"
+                id="partner2Name"
                 value={partner2Name}
                 onChange={(e) => setPartner2Name(e.target.value)}
                 className="form-input"
-                placeholder="Enter name"
+                placeholder="Enter second partner&apos;s name"
                 required
               />
             </div>
             <div className="form-group">
-              <label htmlFor="bio">About You (Optional)</label>
+              <label htmlFor="bio">Couple Bio (Optional)</label>
               <textarea
                 id="bio"
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 className="form-textarea"
-                placeholder="Tell other couples a bit about yourselves..."
+                placeholder="Tell others a bit about yourselves"
                 rows={3}
               />
             </div>
           </div>
         );
-
       case 3:
         return (
-          <div className="step-content">
+          <div className="signup-step">
             <h2 className="step-title">Your Interests</h2>
             <p className="step-description">
-              Select activities you enjoy as a couple.
+              Select activities you enjoy doing together
             </p>
             <div className="interests-grid">
               {availableInterests.map((interest) => (
                 <div
                   key={interest.id}
-                  onClick={() => toggleInterest(interest.id)}
                   className={`interest-item ${
                     interests.includes(interest.id) ? "selected" : ""
                   }`}
+                  onClick={() => toggleInterest(interest.id)}
                 >
                   <span className="interest-icon">{interest.icon}</span>
                   <span className="interest-name">{interest.name}</span>
@@ -365,60 +238,29 @@ export default function SignUp() {
             </div>
           </div>
         );
-
       case 4:
         return (
-          <div className="step-content">
-            <h2 className="step-title">Review & Complete</h2>
-            <div className="review-summary">
-              <div className="review-item">
-                <span className="review-label">Couple Name:</span>
-                <span className="review-value">{coupleName}</span>
-              </div>
-              <div className="review-item">
-                <span className="review-label">Partners:</span>
-                <span className="review-value">
-                  {partner1Name} & {partner2Name}
-                </span>
-              </div>
-              {bio && (
-                <div className="review-item">
-                  <span className="review-label">About:</span>
-                  <span className="review-value">{bio}</span>
-                </div>
-              )}
-              {interests.length > 0 && (
-                <div className="review-item">
-                  <span className="review-label">Interests:</span>
-                  <div className="review-interests">
-                    {interests.map((interest) => (
-                      <span key={interest} className="interest-tag">
-                        {
-                          availableInterests.find((i) => i.id === interest)
-                            ?.name
-                        }
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-            <div className="terms-agreement">
+          <div className="signup-step">
+            <h2 className="step-title">Ready to Connect?</h2>
+            <p className="step-description">
+              You&apos;re all set to start connecting with other couples!
+            </p>
+            <div className="profile-preview">
+              <h3>{coupleName}</h3>
               <p>
-                By completing sign-up, you agree to our{" "}
-                <Link href="/terms" className="text-link">
-                  Terms of Service
-                </Link>{" "}
-                and{" "}
-                <Link href="/privacy" className="text-link">
-                  Privacy Policy
-                </Link>
-                .
+                {partner1Name} & {partner2Name}
               </p>
+              {bio && <p className="preview-bio">{bio}</p>}
+              <div className="preview-interests">
+                {interests.map((id) => (
+                  <span key={id} className="interest-tag">
+                    {availableInterests.find((i) => i.id === id)?.name}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         );
-
       default:
         return null;
     }
@@ -433,115 +275,67 @@ export default function SignUp() {
               <Link href="/" className="back-link">
                 ← Home
               </Link>
-              <h1 className="app-title">Create Account</h1>
+              <h1 className="app-title">Sign Up</h1>
             </div>
 
-            {!signupComplete ? (
-              <>
-                <div className="steps-indicator">
-                  <div
-                    className={`step ${step >= 1 ? "active" : ""}`}
-                    onClick={() => step > 1 && setStep(1)}
-                  >
-                    1
-                  </div>
-                  <div
-                    className={`step ${step >= 2 ? "active" : ""}`}
-                    onClick={() => step > 2 && setStep(2)}
-                  >
-                    2
-                  </div>
-                  <div
-                    className={`step ${step >= 3 ? "active" : ""}`}
-                    onClick={() => step > 3 && setStep(3)}
-                  >
-                    3
-                  </div>
-                  <div
-                    className={`step ${step >= 4 ? "active" : ""}`}
-                    onClick={() => step > 4 && setStep(4)}
-                  >
-                    4
-                  </div>
+            {error && <div className="error-message">{error}</div>}
+
+            <form onSubmit={handleSubmit} className="signup-form">
+              {/* Step indicator */}
+              {!signupComplete && (
+                <div className="step-indicator">
+                  {[1, 2, 3, 4].map((num) => (
+                    <div
+                      key={num}
+                      className={`step-dot ${step >= num ? "active" : ""}`}
+                    ></div>
+                  ))}
                 </div>
+              )}
 
-                <form onSubmit={handleSubmit}>
-                  {/* Step content */}
-                  {renderStepContent()}
+              {renderStepContent()}
 
-                  {/* Navigation */}
-                  <div className="form-navigation">
-                    {step > 1 && (
-                      <button
-                        type="button"
-                        onClick={handlePrevStep}
-                        className="btn btn-secondary"
-                        disabled={loading}
-                      >
-                        Back
-                      </button>
-                    )}
-                    {step < 4 ? (
-                      <button
-                        type="button"
-                        onClick={handleNextStep}
-                        className="btn btn-primary"
-                        disabled={!isCurrentStepValid() || loading}
-                      >
-                        Next
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        className="btn btn-primary"
-                        disabled={!isCurrentStepValid() || loading}
-                      >
-                        {loading ? "Creating Account..." : "Sign Up"}
-                      </button>
-                    )}
-                  </div>
+              {!signupComplete && (
+                <div className="form-buttons">
+                  {step > 1 && (
+                    <button
+                      type="button"
+                      onClick={handlePrevStep}
+                      className="btn btn-secondary"
+                    >
+                      Back
+                    </button>
+                  )}
+                  {step < 4 ? (
+                    <button
+                      type="button"
+                      onClick={handleNextStep}
+                      className="btn btn-connect"
+                      disabled={!isCurrentStepValid() || loading}
+                    >
+                      Next
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="btn btn-connect"
+                      disabled={loading}
+                    >
+                      {loading ? "Creating Account..." : "Create Account"}
+                    </button>
+                  )}
+                </div>
+              )}
+            </form>
 
-                  {error && <p className="error-message">{error}</p>}
-                </form>
-
-                <div className="auth-footer">
+            {!signupComplete && step === 1 && (
+              <div className="auth-footer">
+                <p>
                   Already have an account?{" "}
-                  <Link href="/login" className="auth-link">
-                    Log in
+                  <Link href="/login" className="text-link">
+                    Sign in
                   </Link>
-                </div>
-              </>
-            ) : (
-              <div className="verify-email-content">
-                <div className="verify-icon">✅</div>
-                <h2 className="verify-title">Account Created!</h2>
-
-                <p className="verify-message">
-                  We've sent a verification link to:
                 </p>
-                <p className="verify-email">{email}</p>
-
-                <p className="verify-instructions">
-                  Please check your email and click the link to verify your
-                  account. If you don't see it, check your spam folder.
-                </p>
-
-                <div className="verify-actions">
-                  <Link href="/login" className="btn btn-primary">
-                    Go to Login
-                  </Link>
-                </div>
-
-                <div className="verify-help mt-4">
-                  <p>
-                    <strong>
-                      Verification emails may take a few minutes to arrive.
-                    </strong>
-                  </p>
-                  <p className="text-sm text-gray-600 mt-2">
-                    Your user ID is: {userId}
-                  </p>
-                </div>
               </div>
             )}
           </main>
