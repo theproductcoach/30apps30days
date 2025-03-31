@@ -1,13 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import { Database } from '@/types/supabase';
 
-// Hardcoded values to use as fallback
-const FALLBACK_SUPABASE_URL = 'https://eikdlfbamtbhxwdahpsl.supabase.co';
-const FALLBACK_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVpa2RsZmJhbXRiaHh3ZGFocHNsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA1NzIwODUsImV4cCI6MjA1NjE0ODA4NX0.mZ9H2hw1NKJQ8AM8WiGg0fgiZDVmDp2QmtYYXHQk4f4';
 
 // Try to get from environment variables, fall back to hardcoded values if not available
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || FALLBACK_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || FALLBACK_SUPABASE_ANON_KEY;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Supabase URL or Anon Key is missing. Please check your environment variables.');
