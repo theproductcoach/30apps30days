@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 interface StatusBarProps {
   title?: string;
@@ -34,7 +35,19 @@ export default function StatusBar({ title }: StatusBarProps) {
       <div className="status-left">
         <span className="status-time">{currentTime}</span>
       </div>
-      {title && <div className="status-center">{title}</div>}
+      {title ? (
+        <div className="status-center">{title}</div>
+      ) : (
+        <div className="status-center status-logo">
+          <Image
+            src="/pairsy-icon.png"
+            alt="Pairsy"
+            width={24}
+            height={24}
+            className="pairsy-logo"
+          />
+        </div>
+      )}
       <div className="status-right">
         <div className="status-icon">
           <svg

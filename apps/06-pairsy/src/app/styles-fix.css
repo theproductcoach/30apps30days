@@ -475,3 +475,54 @@ body {
         border-bottom-right-radius: 1.5rem;
     }
 }
+/* Logo styling */
+.pairsy-logo {
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.status-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.homepage-logo {
+    border-radius: 12px;
+    object-fit: contain;
+}
+
+/* Auth pages logo styling */
+.auth-logo-container {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.auth-logo {
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.header .logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.header .app-title {
+    margin: 0;
+}

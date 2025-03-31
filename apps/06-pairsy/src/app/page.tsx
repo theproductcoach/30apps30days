@@ -14,7 +14,16 @@ export default function Home() {
           <StatusBar />
           <main className="content-wrapper">
             <div className="intro-section">
-              <h1>Pairsy</h1>
+              <div className="logo-container">
+                <Image
+                  src="/pairsy-icon.png"
+                  alt="Pairsy"
+                  width={75}
+                  height={75}
+                  className="homepage-logo"
+                />
+                <h1>Pairsy</h1>
+              </div>
               <p>
                 Connect with other couples for double dates and new friendships!
               </p>
