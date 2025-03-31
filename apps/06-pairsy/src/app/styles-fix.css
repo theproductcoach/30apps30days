@@ -502,6 +502,9 @@ body {
     border-radius: 16px;
     object-fit: contain;
     flex-shrink: 0;
+    position: relative;
+        top: 3px;
+        /* Nudge the logo down slightly for better alignment */
 }
 
 .intro-section h1 {
@@ -545,7 +548,7 @@ body {
     
     /* Homepage specific styling */
     .intro-section .logo-container {
-        margin-top: 1rem;
+        margin-top: 0.7rem;
         margin-bottom: 1.5rem;
     }
     
