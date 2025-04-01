@@ -125,7 +125,7 @@ export default function Chat() {
       <div className="chat-messages">
         {messages.length === 0 && (
           <div className="empty-state">
-            <p>Ask me anything! I'm definitely here to help.</p>
+            <p>Ask me anything! I&apos;m definitely here to help.</p>
           </div>
         )}
         {messages.map((message) => (
