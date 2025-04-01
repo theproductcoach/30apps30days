@@ -1,6 +1,6 @@
 # Pairsy
 
-A social platform that helps couples find other couples for double dates and shared activities. Because adventures are better shared!
+A social platform that helps couples find other couples for double dates and shared activities - because adventures are better shared!
 
 ## Features
 

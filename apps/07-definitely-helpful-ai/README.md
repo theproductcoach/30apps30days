@@ -38,7 +38,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to experie
 ## How It Works
 
 1. Type your question in the chat
-2. Receive our AI's most "thoughtful" response
+2. Receive our AI's most..."thoughtful" response
 3. Marvel at its "incredible" problem-solving abilities
 4. Try not to laugh (okay, you can laugh)
 5. Clear the chat when you need a fresh start
