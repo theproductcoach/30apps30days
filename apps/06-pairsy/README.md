@@ -1,4 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pairsy
+
+A social platform that helps couples find other couples for double dates and shared activities. Because adventures are better shared!
+
+## Features
+
+- 👥 Couple Profile Creation
+- 🤝 Match with Other Couples
+- 🎯 Interest-Based Matching
+- 📅 Activity Planning & Scheduling
+- 💬 Real-Time Chat System
+- 🏢 Business Partnership Platform
+- 📱 Fully Responsive Design
+- 🔒 Privacy-Focused Design
+
+## Tech Stack
+
+- Next.js 14 with App Router
+- React
+- Tailwind CSS
+- TypeScript
+- Supabase for Backend
 
 ## Getting Started
 
@@ -16,7 +37,25 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## How It Works
+
+1. Create a profile for you and your partner
+2. Select your shared interests and activities
+3. Browse and match with other couples in your area
+4. Plan activities and schedule double dates
+5. Chat and coordinate meetups through the app
+6. Share memories and build lasting friendships
+
+## For Businesses
+
+- List your couple-friendly activities and venues
+- Reach couples actively seeking experiences
+- Integrated booking system
+- Analytics and engagement tracking
+
+## Deployment
+
+The app is deployed on Vercel and can be accessed at [https://30-in-30-app-6.vercel.app/](https://30-in-30-app-6.vercel.app/)
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
