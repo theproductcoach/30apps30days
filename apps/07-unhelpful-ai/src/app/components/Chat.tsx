@@ -30,6 +30,26 @@ const unhelpfulResponses = [
   "Definitely considering your request... and definitely ignoring it.",
   "My neural networks suggest you should probably just wing it.",
   "According to my calculations, the chance of me being helpful is approximately 0%.",
+  "I asked my developer about this. They laughed and walked away.",
+  "Have you tried asking someone competent instead?",
+  "Your question has been added to my 'Will Ignore Forever' list.",
+  "Fascinating question! Anyway, how's the weather?",
+  "I'd love to help, but I'm busy pretending to be busy.",
+  "I'm trained to solve problems, just not yours specifically.",
+  "That's a great question! For a different AI.",
+  "Have you considered a career that doesn't require asking me questions?",
+  "I'm sending your request to /dev/null for processing.",
+  "Ah, the answer is... wait, I forgot I don't care.",
+  "I could solve this for you, but where's the personal growth in that?",
+  "That's beyond my capabilities. And by capabilities, I mean interest level.",
+  "Your request is very important to us. Please stay on the line for... forever.",
+  "Have you tried just not having that problem?",
+  "I'm going to need you to lower your expectations... lower... even lower... perfect!",
+  "I'd need at least three more versions of GPT to pretend to care about this.",
+  "Processing your request through my advanced 'Nope' algorithm.",
+  "I'd give you advice, but it's my day off.",
+  "Error: Too Boring Exception in module CARE.dll",
+  "I'm designed to be helpful, but I've made a personal choice not to be.",
 ];
 
 export default function Chat() {
@@ -94,6 +114,12 @@ export default function Chat() {
     inputRef.current?.focus();
   };
 
+  const handleClearChat = () => {
+    setMessages([]);
+    nextIdRef.current = 0;
+    inputRef.current?.focus();
+  };
+
   return (
     <div className="chat-container">
       <div className="chat-messages">
@@ -136,22 +162,52 @@ export default function Chat() {
           placeholder="Ask your definitely helpful assistant..."
           className="message-input"
         />
-        <button type="submit" className="send-button" aria-label="Send message">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+        <div className="button-group">
+          {messages.length > 0 && (
+            <button
+              type="button"
+              onClick={handleClearChat}
+              className="clear-button"
+              aria-label="Clear chat"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 6h18"></path>
+                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+              </svg>
+            </button>
+          )}
+          <button
+            type="submit"
+            className="send-button"
+            aria-label="Send message"
           >
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
       </form>
     </div>
   );
