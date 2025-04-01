@@ -28,28 +28,28 @@ const MOCK_COUPLES: { [key: string]: Couple } = {
     couple_name: "City Explorers",
     partner1_name: "Sam",
     partner2_name: "Taylor",
-    avatar: "/images/avatars/sam-taylor.png",
+    avatar: "/avatars/sam-taylor.png",
   },
   "couple-2": {
     id: "couple-2",
     couple_name: "Game Night",
     partner1_name: "Riley",
     partner2_name: "Casey",
-    avatar: "/images/avatars/riley-casey.png",
+    avatar: "/avatars/riley-casey.png",
   },
   "couple-3": {
     id: "couple-3",
     couple_name: "Foodies",
     partner1_name: "Jamie",
     partner2_name: "Morgan",
-    avatar: "/images/avatars/jamie-morgan.png",
+    avatar: "/avatars/jamie-morgan.png",
   },
   "couple-4": {
     id: "couple-4",
     couple_name: "Outdoor Adventurers",
     partner1_name: "Alex",
     partner2_name: "Jordan",
-    avatar: "/images/avatars/alex-jordan.png",
+    avatar: "/avatars/alex-jordan.png",
   },
 };
 
