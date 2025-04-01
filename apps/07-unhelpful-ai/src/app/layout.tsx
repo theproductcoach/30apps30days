@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Unhelpful AI Assistant",
+  title: "Definitely Helpful AI",
   description:
-    "A chat interface with an unhelpful AI that provides sarcastic, useless responses",
+    "A chat interface with a definitely (not) helpful AI that provides sarcastic, useless responses",
 };
 
 export default function RootLayout({
@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="light dark:dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
