@@ -31,7 +31,7 @@ const MOCK_CONVERSATIONS: { [key: string]: Conversation } = {
     couple_name: "City Explorers",
     partner1_name: "Sam",
     partner2_name: "Taylor",
-    avatar: "/avatars/sam-taylor.png",
+    avatar: "/avatars/Sam-Taylor.png",
     online: true,
     messages: [
       {
@@ -77,7 +77,7 @@ const MOCK_CONVERSATIONS: { [key: string]: Conversation } = {
     couple_name: "Game Night",
     partner1_name: "Riley",
     partner2_name: "Casey",
-    avatar: "/avatars/riley-casey.png",
+    avatar: "/avatars/Riley-Casey.png",
     online: false,
     messages: [
       {
@@ -123,7 +123,7 @@ const MOCK_CONVERSATIONS: { [key: string]: Conversation } = {
     couple_name: "Foodies",
     partner1_name: "Jamie",
     partner2_name: "Morgan",
-    avatar: "/avatars/jamie-morgan.png",
+    avatar: "/avatars/Jamie-Morgan.png",
     messages: [
       {
         id: "msg-1",
@@ -168,7 +168,7 @@ const MOCK_CONVERSATIONS: { [key: string]: Conversation } = {
     couple_name: "Outdoor Adventurers",
     partner1_name: "Alex",
     partner2_name: "Jordan",
-    avatar: "/avatars/alex-jordan.png",
+    avatar: "/avatars/Alex-Jordan.png",
     messages: [
       {
         id: "msg-1",

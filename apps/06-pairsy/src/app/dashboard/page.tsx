@@ -28,7 +28,7 @@ const MOCK_COUPLE: Couple = {
   partner2_name: "Bri",
   bio: "We love hiking and exploring new places together!",
   interests: ["hikes", "travel", "cooking", "movies"],
-  avatar: "/avatars/will-bri.png",
+  avatar: "/avatars/Will-Bri.png",
 };
 
 const MOCK_SUGGESTIONS: Couple[] = [
@@ -38,7 +38,7 @@ const MOCK_SUGGESTIONS: Couple[] = [
     partner1_name: "Sam",
     partner2_name: "Taylor",
     interests: ["travel", "coffee", "movies"],
-    avatar: "/avatars/sam-taylor.png",
+    avatar: "/avatars/Sam-Taylor.png",
   },
   {
     id: "match-2",
@@ -46,7 +46,7 @@ const MOCK_SUGGESTIONS: Couple[] = [
     partner1_name: "Riley",
     partner2_name: "Casey",
     interests: ["games", "cooking", "movies"],
-    avatar: "/avatars/riley-casey.png",
+    avatar: "/avatars/Riley-Casey.png",
   },
   {
     id: "match-3",
@@ -54,7 +54,7 @@ const MOCK_SUGGESTIONS: Couple[] = [
     partner1_name: "Jamie",
     partner2_name: "Morgan",
     interests: ["brunch", "cooking", "travel"],
-    avatar: "/avatars/jamie-morgan.png",
+    avatar: "/avatars/Jamie-Morgan.png",
   },
 ];
 
@@ -100,7 +100,7 @@ const MOCK_PROFILE: UserProfile = {
   couple_name: "The Adventurers",
   partner1_name: "Will",
   partner2_name: "Bri",
-  avatar: "/avatars/will-bri.png",
+  avatar: "/avatars/Will-Bri.png",
   interests: ["hikes", "travel", "cooking", "movies"],
 };
 
@@ -110,7 +110,7 @@ const MOCK_SUGGESTED_COUPLES: SuggestedCouple[] = [
     couple_name: "City Explorers",
     partner1_name: "Sam",
     partner2_name: "Taylor",
-    avatar: "/avatars/sam-taylor.png",
+    avatar: "/avatars/Sam-Taylor.png",
     compatibility: 85,
   },
   {
@@ -118,7 +118,7 @@ const MOCK_SUGGESTED_COUPLES: SuggestedCouple[] = [
     couple_name: "Foodies",
     partner1_name: "Jamie",
     partner2_name: "Morgan",
-    avatar: "/avatars/jamie-morgan.png",
+    avatar: "/avatars/Jamie-Morgan.png",
     compatibility: 90,
   },
 ];
@@ -129,7 +129,7 @@ const MOCK_RECENT_MESSAGES: RecentMessage[] = [
     couple_name: "City Explorers",
     partner1_name: "Sam",
     partner2_name: "Taylor",
-    avatar: "/avatars/sam-taylor.png",
+    avatar: "/avatars/Sam-Taylor.png",
     last_message: "That sounds great! We're free this Saturday.",
     time: "10 min ago",
     unread: true,
@@ -139,7 +139,7 @@ const MOCK_RECENT_MESSAGES: RecentMessage[] = [
     couple_name: "Game Night",
     partner1_name: "Riley",
     partner2_name: "Casey",
-    avatar: "/avatars/riley-casey.png",
+    avatar: "/avatars/Riley-Casey.png",
     last_message: "We'll bring Settlers of Catan and some snacks!",
     time: "2 hours ago",
     unread: true,

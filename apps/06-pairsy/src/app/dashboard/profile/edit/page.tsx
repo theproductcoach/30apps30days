@@ -30,7 +30,7 @@ const MOCK_PROFILE: CoupleProfile = {
   bio: "We love hiking and exploring new places together! We're always up for a coffee date or game night with other couples.",
   interests: ["hikes", "travel", "cooking", "movies"],
   email: "couple@example.com",
-  avatar: "/avatars/will-bri.png",
+  avatar: "/avatars/Will-Bri.png",
   joined_date: "May 2023",
   location: "London, UK",
   relationship_status: "Dating",
