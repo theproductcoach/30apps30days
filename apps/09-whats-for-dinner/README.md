@@ -5,25 +5,25 @@ A Next.js application that generates personalized recipes based on your ingredie
 ## Features
 
 - **Ingredient Selection**
-  - Searchable protein and carb inputs with suggestions
-  - Multiple vegetable selection with custom additions
-  - Various cuisine style options
-  - Cooking time preference
-  - ✨ "Surprise Me" feature for random recipe generation
+  - Searchable protein and carb inputs with suggestions.
+  - Multiple vegetable selection with custom additions.
+  - Various cuisine style options.
+  - Cooking time preference.
+  - ✨ "Surprise Me" feature for random recipe generation.
 
 - **AI Recipe Generation**
-  - Generates complete recipes using OpenAI's GPT model
-  - Provides detailed shopping lists
-  - Step-by-step cooking instructions
-  - Cuisine-specific recipe suggestions
-  - Random recipe generation with one click
+  - Generates complete recipes using OpenAI's GPT model.
+  - Provides detailed shopping lists.
+  - Step-by-step cooking instructions.
+  - Cuisine-specific recipe suggestions.
+  - Random recipe generation with one click.
 
 - **Modern UI/UX**
-  - Clean, dark mode interface
-  - Mobile responsive design
-  - Interactive form elements
-  - Real-time input validation
-  - Neon purple accents for fun interactions
+  - Clean, dark mode interface.
+  - Mobile responsive design.
+  - Interactive form elements.
+  - Real-time input validation.
+  - Neon purple accents for fun interactions.
 
 ## Tech Stack
 
