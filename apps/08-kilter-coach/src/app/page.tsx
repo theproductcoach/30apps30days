@@ -2,33 +2,8 @@
 
 import { useState, FormEvent } from "react";
 import styles from "./session-planner.module.css";
-
-type Mood = "Fresh" | "Normal" | "Tired";
-type Goal = "Power" | "Technique" | "Endurance" | "Fun";
-type Grade =
-  | "V0"
-  | "V1"
-  | "V2"
-  | "V3"
-  | "V4"
-  | "V5"
-  | "V6"
-  | "V7"
-  | "V8"
-  | "V9"
-  | "V10"
-  | "V11"
-  | "V12";
-
-interface SessionPlan {
-  warmups: string[];
-  climbs: Array<{
-    name: string;
-    grade: Grade;
-    description: string;
-  }>;
-  drill: string;
-}
+import { Mood, Goal, Grade, SessionPlan } from "./types";
+import { generateSessionPlan } from "./sessionPlans";
 
 const GRADES: Grade[] = [
   "V0",
@@ -71,41 +46,8 @@ export default function Home() {
 
   const generateSession = (e: FormEvent) => {
     e.preventDefault();
-
-    // Mock session plan generation
-    const mockPlan: SessionPlan = {
-      warmups: [
-        "Traverse on jugs for 5 minutes, focusing on quiet feet",
-        "Do 10 easy moves with perfect form, hold each position for 2 seconds",
-      ],
-      climbs: [
-        {
-          name: "Power Crimp Project",
-          grade: maxGrade,
-          description: "Steep climbing on small crimps. Focus on body tension.",
-        },
-        {
-          name: "Technical Corner",
-          grade: minGrade,
-          description:
-            "Delicate footwork required. Practice precise movements.",
-        },
-        {
-          name: "Endurance Link-up",
-          grade:
-            GRADES[
-              Math.floor(
-                (GRADES.indexOf(minGrade) + GRADES.indexOf(maxGrade)) / 2
-              )
-            ],
-          description: "Long sequence with good rests. Work on pacing.",
-        },
-      ],
-      drill:
-        "Silent feet drill: Climb 3 easy problems focusing on placing your feet as quietly as possible.",
-    };
-
-    setSessionPlan(mockPlan);
+    const plan = generateSessionPlan(mood, goal, minGrade, maxGrade);
+    setSessionPlan(plan);
   };
 
   return (
@@ -136,7 +78,9 @@ export default function Home() {
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.label}>What's your goal for today?</label>
+          <label className={styles.label}>
+            What&apos;s your goal for today?
+          </label>
           <div className={styles.radioGroup}>
             {(["Power", "Technique", "Endurance", "Fun"] as Goal[]).map(
               (option) => (
