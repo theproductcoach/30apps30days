@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# What's for Dinner?
+
+A Next.js application that generates personalized recipes based on your ingredients and preferences using AI. Built with modern web technologies and a clean, dark-mode interface.
+
+## Features
+
+- **Ingredient Selection**
+  - Searchable protein and carb inputs with suggestions
+  - Multiple vegetable selection with custom additions
+  - Various cuisine style options
+  - Cooking time preference
+  - ✨ "Surprise Me" feature for random recipe generation
+
+- **AI Recipe Generation**
+  - Generates complete recipes using OpenAI's GPT model
+  - Provides detailed shopping lists
+  - Step-by-step cooking instructions
+  - Cuisine-specific recipe suggestions
+  - Random recipe generation with one click
+
+- **Modern UI/UX**
+  - Clean, dark mode interface
+  - Mobile responsive design
+  - Interactive form elements
+  - Real-time input validation
+  - Neon purple accents for fun interactions
+
+## Tech Stack
+
+- **Framework**: Next.js 14 with App Router
+- **UI Components**:
+  - Headless UI for accessible components
+  - Hero Icons for icons
+- **Styling**: CSS Modules
+- **AI Integration**: OpenAI API
+- **Language**: TypeScript
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository
+2. Install dependencies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   npm install
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Create a `.env.local` file in the root directory and add your OpenAI API key:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```
+   OPENAI_API_KEY=your_api_key_here
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
 
-## Learn More
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+You can generate recipes in two ways:
 
-## Deploy on Vercel
+### 1. Custom Recipe
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Select or type in your preferred protein
+2. Choose or enter your desired carb
+3. Select one or more vegetables (including custom options)
+4. Pick a cuisine style
+5. Set your desired cooking time
+6. Click "Generate Recipe" to get your personalized recipe
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 2. Random Recipe
+
+1. Click the "✨ Surprise Me!" button to instantly generate a random recipe with:
+   - Random protein selection
+   - Random carb selection
+   - 1-3 random vegetables
+   - Random cuisine style
+   - Random cooking time between 15-135 minutes
+
+The app will generate:
+
+- A recipe name and description
+- A categorized shopping list
+- Step-by-step cooking instructions
+
+## Environment Variables
+
+- `OPENAI_API_KEY`: Your OpenAI API key (required)
+
+## Contributing
+
+Feel free to submit issues and enhancement requests!
