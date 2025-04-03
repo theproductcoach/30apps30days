@@ -4,6 +4,7 @@ import { useState } from "react";
 import RecipeForm from "@/components/RecipeForm";
 import RecipeResult from "@/components/RecipeResult";
 import styles from "./page.module.css";
+import { Recipe } from "@/types/recipe";
 
 type FormData = {
   protein: string;
@@ -14,7 +15,7 @@ type FormData = {
 };
 
 export default function Home() {
-  const [recipe, setRecipe] = useState<any>(null);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
