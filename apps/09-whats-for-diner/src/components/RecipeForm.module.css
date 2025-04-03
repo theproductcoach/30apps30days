@@ -1,0 +1,165 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #1f2937;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup label {
+    font-weight: 500;
+    color: #e5e7eb;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup select,
+.formGroup input[type="number"],
+.formGroup input[type="text"] {
+    padding: 0.75rem;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #111827;
+    color: #e5e7eb;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.formGroup select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e5e7eb' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+}
+
+.formGroup select:focus,
+.formGroup input[type="number"]:focus,
+.formGroup input[type="text"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #1f2937;
+}
+
+.formGroup select:hover,
+.formGroup input[type="number"]:hover,
+.formGroup input[type="text"]:hover {
+    background-color: #1f2937;
+}
+
+.checkboxGroup {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    color: #e5e7eb;
+}
+
+.checkbox input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    cursor: pointer;
+    accent-color: #3b82f6;
+}
+
+.customVegetableInput {
+    margin-top: 0.5rem;
+}
+
+.buttonContainer {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+}
+.button {
+    padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+    background-color: #3b82f6;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.button:hover:not(:disabled) {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.button:disabled {
+    opacity: 0.5;
+        cursor: not-allowed;
+    }
+    
+    .surpriseButton {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+        color: white;
+        background-color: #8b5cf6;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+        position: relative;
+    }
+    
+    .surpriseButton:hover:not(:disabled) {
+        background-color: #7c3aed;
+        transform: translateY(-1px);
+        box-shadow: 0 0 15px #a855f7,
+            0 0 30px #a855f7,
+            0 0 45px #a855f7;
+    }
+    
+    .surpriseButton:disabled {
+        opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@media (min-width: 640px) {
+    .buttonContainer {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .button,
+    .surpriseButton {
+        min-width: 200px;
+    }
+}
+@media (max-width: 600px) {
+    .form {
+        padding: 1rem;
+    }
+
+    .checkboxGroup {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+}
