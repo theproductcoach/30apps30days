@@ -1,0 +1,109 @@
+.wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.container {
+    position: relative;
+}
+
+.label {
+    display: block;
+    font-weight: 500;
+    color: #e5e7eb;
+    margin-bottom: 0.5rem;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    padding-right: 2.5rem;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #111827;
+    color: #e5e7eb;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background-color: #1f2937;
+}
+
+.button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #9ca3af;
+}
+
+.options {
+    position: absolute;
+    z-index: 10;
+    margin-top: 0.25rem;
+    width: 100%;
+    background-color: #1f2937;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    max-height: 15rem;
+    list-style: none;
+    padding: 0.25rem;
+}
+
+.option {
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.75rem;
+    border-radius: 4px;
+}
+
+.option span {
+    display: block;
+    color: #e5e7eb;
+    font-size: 1rem;
+}
+
+.optionActive {
+    background-color: #2563eb;
+}
+
+.optionActive span {
+    color: white;
+}
+
+.selected span {
+    font-weight: 500;
+}
+
+.selected span::before {
+    content: '✓';
+    position: absolute;
+    left: 0.5rem;
+    color: #3b82f6;
+}
+
+.optionActive.selected span::before {
+    color: white;
+}

@@ -1,0 +1,89 @@
+.recipe {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #1f2937;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    font-size: 2rem;
+    color: #f3f4f6;
+    margin: 0 0 1rem;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: #9ca3af;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.section {
+    margin: 2rem 0;
+}
+
+.section h2 {
+    font-size: 1.5rem;
+    color: #f3f4f6;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #374151;
+}
+
+.ingredients {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.ingredientGroup {
+    background: #111827;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #374151;
+}
+
+.ingredientGroup h3 {
+    font-size: 1.2rem;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+}
+
+.ingredientGroup ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ingredientGroup li {
+    padding: 0.5rem 0;
+    color: #e5e7eb;
+    border-bottom: 1px solid #374151;
+}
+
+.ingredientGroup li:last-child {
+    border-bottom: none;
+}
+
+.instructions {
+    padding-left: 1.5rem;
+}
+
+.instructions li {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    color: #e5e7eb;
+}
+
+@media (max-width: 600px) {
+    .recipe {
+        padding: 1rem;
+        margin: 1rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+}
