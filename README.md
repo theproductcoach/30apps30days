@@ -15,8 +15,9 @@ Deployed via [Vercel](https://vercel.com) • Powered by [Next.js](https://nextj
 | 3   | Flappy Bird Clone            | Classic game rebuilt with React & Canvas, includes mobile Android app | [Live](https://30-in-30-app-3.vercel.app/) |
 | 4   | Climber Coaching App         | Rock climbing coaching platform with blog, session booking, Q&A, and Redpoint Journal | [Live](https://30-in-30-app-4.vercel.app/) |
 | 5   | PantrySnap                   | Barcode scanner app for managing pantry inventory with offline storage | [Live](https://30-in-30-app-5.vercel.app/) |
-| 6   | Pairsy App                       | Social platform for couples to find other couples for double dates and activities | [Live](https://30-in-30-app-6.vercel.app/) |
+| 6   | Pairsy App                   | Social platform for couples to find other couples for double dates and activities | [Live](https://30-in-30-app-6.vercel.app/) |
 | 7   | Definitely Helpful AI        | A "totally helpful" AI chat assistant that definitely won't sass you | [Live](https://30-in-30-app-7.vercel.app/) |
+| 8   | KilterCoach                 | Personalized climbing session planner for the Kilterboard with mood-based recommendations | [Live](https://30-in-30-app-8.vercel.app/) |
 
 ---
 
