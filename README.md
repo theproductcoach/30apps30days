@@ -17,7 +17,7 @@ Deployed via [Vercel](https://vercel.com) • Powered by [Next.js](https://nextj
 | 5   | PantrySnap                   | Barcode scanner app for managing pantry inventory with offline storage | [Live](https://30-in-30-app-5.vercel.app/) |
 | 6   | Pairsy App                   | Social platform for couples to find other couples for double dates and activities | [Live](https://30-in-30-app-6.vercel.app/) |
 | 7   | Definitely Helpful AI        | A "totally helpful" AI chat assistant that definitely won't sass you | [Live](https://30-in-30-app-7.vercel.app/) |
-| 8   | KilterCoach                 | Personalized climbing session planner for the Kilterboard with mood-based recommendations | [Live](https://30-in-30-app-8.vercel.app/) |
+| 8   | KilterCoach                 | Personalised climbing session planner for the Kilterboard with mood-based recommendations | [Live](https://30-in-30-app-8.vercel.app/) |
 
 ---
 
