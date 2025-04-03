@@ -24,7 +24,7 @@ export default function Home() {
     setError("");
 
     try {
-      const response = await fetch("/api/generate-recipe", {
+      const response = await fetch("/api/recipe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
