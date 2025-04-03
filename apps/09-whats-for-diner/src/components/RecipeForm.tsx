@@ -3,7 +3,6 @@
 import { useState } from "react";
 import styles from "./RecipeForm.module.css";
 import ComboboxInput from "./ComboboxInput";
-import RecipeResult from "./RecipeResult";
 
 type FormData = {
   protein: string;
