@@ -5,17 +5,25 @@ import RecipeForm from "@/components/RecipeForm";
 import RecipeResult from "@/components/RecipeResult";
 import styles from "./page.module.css";
 
+type FormData = {
+  protein: string;
+  carb: string;
+  vegetables: string[];
+  cuisine: string;
+  time: number;
+};
+
 export default function Home() {
-  const [recipe, setRecipe] = useState(null);
+  const [recipe, setRecipe] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (formData) => {
+  const handleSubmit = async (formData: FormData) => {
     setIsLoading(true);
     setError("");
 
     try {
-      const response = await fetch("/api/recipe", {
+      const response = await fetch("/api/generate-recipe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -30,8 +38,9 @@ export default function Home() {
       const data = await response.json();
       setRecipe(data);
     } catch (err) {
-      setError("Failed to generate recipe. Please try again.");
-      console.error("Error:", err);
+      setError(
+        err instanceof Error ? err.message : "Failed to generate recipe"
+      );
     } finally {
       setIsLoading(false);
     }
