@@ -3,7 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "HikeScout - Find Your Perfect Hike",
-  description: "Discover the best hiking trips around London",
+  description: "Discover the best hiking trips around the world",
+  icons: {
+    icon: "/faviconsmall.png",
+  },
 };
 
 export default function RootLayout({
@@ -13,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/png" href="/faviconsmall.png" />
+      </head>
       <body>{children}</body>
     </html>
   );

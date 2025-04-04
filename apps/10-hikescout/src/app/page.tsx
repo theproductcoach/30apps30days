@@ -9,6 +9,7 @@ interface HikeFormData {
   distance: string;
   terrain: string;
   foodPreference: string;
+  vibe: string;
 }
 
 interface HikeResponse {
@@ -20,10 +21,28 @@ interface HikeResponse {
   foodStops: string;
   returnOptions: string;
   tips: string;
+  weather?: {
+    temperature: number;
+    description: string;
+  };
+  image?: {
+    url: string;
+    alt: string;
+    credit: {
+      name: string;
+      link: string;
+    };
+  };
 }
 
 const terrainTypes = ["woodland", "hills", "coast", "mixed"];
 const foodTypes = ["pub lunch", "cafe", "picnic spots", "restaurant"];
+const vibeTypes = [
+  "Chill & Scenic",
+  "Epic Views",
+  "Adventure & Challenge",
+  "Forest Bathing",
+];
 
 export default function Home() {
   const [formData, setFormData] = useState<HikeFormData>({
@@ -32,6 +51,7 @@ export default function Home() {
     distance: "",
     terrain: "",
     foodPreference: "",
+    vibe: "",
   });
   const [hikeResponse, setHikeResponse] = useState<HikeResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -55,6 +75,35 @@ export default function Home() {
       });
 
       const data = await response.json();
+
+      // Fetch weather data for the hike location
+      try {
+        const mainLocation = data.location.split(/[,()]/, 1)[0].trim();
+
+        const weatherResponse = await fetch(
+          `/api/weather?location=${encodeURIComponent(mainLocation)}`
+        );
+        if (!weatherResponse.ok) {
+          throw new Error("Weather service responded with an error");
+        }
+        const weatherData = await weatherResponse.json();
+        if (weatherData.error) {
+          throw new Error(weatherData.error);
+        }
+        data.weather = weatherData;
+
+        // Fetch image for the location
+        const imageResponse = await fetch(
+          `/api/unsplash?query=${encodeURIComponent(mainLocation)}`
+        );
+        if (imageResponse.ok) {
+          const imageData = await imageResponse.json();
+          data.image = imageData;
+        }
+      } catch (error) {
+        console.error("Error fetching additional data:", error);
+      }
+
       setHikeResponse(data);
     } catch (error) {
       console.error("Error generating hike:", error);
@@ -65,6 +114,12 @@ export default function Home() {
 
   const handleSurpriseMe = async (e: React.MouseEvent) => {
     e.preventDefault();
+
+    if (!formData.startLocation.trim()) {
+      alert("Please enter a starting location first!");
+      return;
+    }
+
     setLoading(true);
 
     const randomData: HikeFormData = {
@@ -73,6 +128,7 @@ export default function Home() {
       distance: "2 hours from " + formData.startLocation,
       terrain: terrainTypes[Math.floor(Math.random() * terrainTypes.length)],
       foodPreference: foodTypes[Math.floor(Math.random() * foodTypes.length)],
+      vibe: vibeTypes[Math.floor(Math.random() * vibeTypes.length)],
     };
 
     try {
@@ -85,6 +141,36 @@ export default function Home() {
       });
 
       const data = await response.json();
+
+      // Fetch weather data for the hike location
+      try {
+        // Extract the main location name (first part before any comma or detailed directions)
+        const mainLocation = data.location.split(/[,()]/, 1)[0].trim();
+
+        const weatherResponse = await fetch(
+          `/api/weather?location=${encodeURIComponent(mainLocation)}`
+        );
+        if (!weatherResponse.ok) {
+          throw new Error("Weather service responded with an error");
+        }
+        const weatherData = await weatherResponse.json();
+        if (weatherData.error) {
+          throw new Error(weatherData.error);
+        }
+        data.weather = weatherData;
+
+        // Fetch image for the location
+        const imageResponse = await fetch(
+          `/api/unsplash?query=${encodeURIComponent(mainLocation)}`
+        );
+        if (imageResponse.ok) {
+          const imageData = await imageResponse.json();
+          data.image = imageData;
+        }
+      } catch (error) {
+        console.error("Error fetching additional data:", error);
+      }
+
       setHikeResponse(data);
       setFormData(randomData);
     } catch (error) {
@@ -92,6 +178,18 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleClearForm = () => {
+    setFormData({
+      startLocation: "",
+      duration: "",
+      distance: "",
+      terrain: "",
+      foodPreference: "",
+      vibe: "",
+    });
+    setHikeResponse(null);
   };
 
   const handleInputChange = (
@@ -123,7 +221,7 @@ export default function Home() {
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGroup}>
               <label htmlFor="startLocation">
-                Where are you starting from?
+                Where are you starting from?*
               </label>
               <input
                 type="text"
@@ -188,6 +286,24 @@ export default function Home() {
             </div>
 
             <div className={styles.formGroup}>
+              <label htmlFor="vibe">Vibe of the Hike</label>
+              <select
+                id="vibe"
+                name="vibe"
+                value={formData.vibe}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">Select the vibe you want</option>
+                {vibeTypes.map((vibe) => (
+                  <option key={vibe} value={vibe}>
+                    {vibe}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.formGroup}>
               <label htmlFor="foodPreference">
                 Any food or coffee preferences?
               </label>
@@ -202,20 +318,31 @@ export default function Home() {
             </div>
 
             <div className={styles.buttonContainer}>
-              <button
-                type="submit"
-                className={styles.button}
-                disabled={loading}
-              >
-                {loading ? "Finding your perfect hike..." : "Find My Hike"}
-              </button>
+              <div className={styles.mainButtons}>
+                <button
+                  type="submit"
+                  className={styles.button}
+                  disabled={loading}
+                >
+                  {loading ? "Finding your perfect hike..." : "Find My Hike"}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleSurpriseMe}
+                  className={styles.surpriseButton}
+                  disabled={loading}
+                >
+                  {loading ? "Generating..." : "Surprise Me!"}
+                </button>
+              </div>
               <button
                 type="button"
-                onClick={handleSurpriseMe}
-                className={styles.surpriseButton}
+                onClick={handleClearForm}
+                className={styles.clearButton}
                 disabled={loading}
               >
-                {loading ? "Generating..." : "Surprise Me!"}
+                <span>✨</span>
+                <span>Start a New Adventure</span>
               </button>
             </div>
           </form>
@@ -223,10 +350,52 @@ export default function Home() {
           {hikeResponse && (
             <div className={styles.response}>
               <h2>{hikeResponse.name}</h2>
+              {hikeResponse.image && (
+                <>
+                  <img
+                    src={hikeResponse.image.url}
+                    alt={hikeResponse.image.alt}
+                    className={styles.hikeImage}
+                  />
+                  {hikeResponse.image.credit.name && (
+                    <p className={styles.photoCredit}>
+                      Photo by{" "}
+                      <a
+                        href={hikeResponse.image.credit.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {hikeResponse.image.credit.name}
+                      </a>{" "}
+                      on Unsplash
+                    </p>
+                  )}
+                </>
+              )}
               <div className={styles.responseSection}>
                 <h3>📍 Location</h3>
                 <p>{hikeResponse.location}</p>
+                <a
+                  href={`https://www.google.com/maps/search/${encodeURIComponent(
+                    hikeResponse.location
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.mapsLink}
+                >
+                  <span>🗺️</span>
+                  <span>View on Google Maps</span>
+                </a>
               </div>
+              {hikeResponse.weather && (
+                <div className={styles.responseSection}>
+                  <h3>🌤️ Weather Forecast</h3>
+                  <p>
+                    {hikeResponse.weather.description},{" "}
+                    {hikeResponse.weather.temperature}°C
+                  </p>
+                </div>
+              )}
               <div className={styles.responseSection}>
                 <h3>🚂 Getting There</h3>
                 <p>{hikeResponse.transport}</p>
@@ -234,7 +403,7 @@ export default function Home() {
               <div className={styles.responseSection}>
                 <h3>🥾 About the Hike</h3>
                 <p>{hikeResponse.description}</p>
-                <p>
+                <p className={styles.difficultyText}>
                   <strong>Difficulty:</strong> {hikeResponse.difficulty}
                 </p>
               </div>
