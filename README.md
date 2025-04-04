@@ -17,8 +17,9 @@ Deployed via [Vercel](https://vercel.com) • Powered by [Next.js](https://nextj
 | 5   | PantrySnap                   | Barcode scanner app for managing pantry inventory with offline storage | [Live](https://30-in-30-app-5.vercel.app/) |
 | 6   | Pairsy App                   | Social platform for couples to find other couples for double dates and activities | [Live](https://30-in-30-app-6.vercel.app/) |
 | 7   | Definitely Helpful AI        | A "totally helpful" AI chat assistant that definitely won't sass you | [Live](https://30-in-30-app-7.vercel.app/) |
-| 8   | KilterCoach                 | Personalised climbing session planner for the Kilterboard with mood-based recommendations | [Live](https://30-in-30-app-8.vercel.app/) |
+| 8   | KilterCoach                  | Personalised climbing session planner for the Kilterboard with mood-based recommendations | [Live](https://30-in-30-app-8.vercel.app/) |
 | 9   | What's for Dinner?           | AI-powered recipe generator with customizable ingredients and cuisine styles | [Live](https://30-in-30-app-9.vercel.app/) |
+| 10  | HikeScout                    | A hiking trip recommender with weather and photo integration | [Live](https://30-in-30-app-10.vercel.app/) |
 
 ---
 
@@ -29,5 +30,3 @@ Deployed via [Vercel](https://vercel.com) • Powered by [Next.js](https://nextj
 - 📦 Each app lives in `/apps/xx-name` as its own Next.js build  
 - 🔄 Some apps are deployed standalone, others will live within the main app
 
-Follow progress on [willchan.ai](https://willchan.ai)  
-Or come vibe-code with me on Twitter (if you're sharing there).
