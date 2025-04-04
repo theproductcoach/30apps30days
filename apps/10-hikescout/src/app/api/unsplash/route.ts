@@ -18,7 +18,8 @@ export async function GET(request: Request) {
       return NextResponse.json(DEFAULT_IMAGE);
     }
 
-    const searchQuery = `${query} landscape hiking nature`;
+    // Create a more specific search query focused on hiking trails
+    const searchQuery = `${query} hiking trail landscape`;
     const response = await fetch(
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
         searchQuery
@@ -37,13 +38,38 @@ export async function GET(request: Request) {
     const data = await response.json();
     
     if (!data.results?.[0]) {
-      return NextResponse.json(DEFAULT_IMAGE);
+      // If no results with specific query, try a fallback with just the location
+      const fallbackResponse = await fetch(
+        `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+          query
+        )}&orientation=landscape&per_page=1`,
+        {
+          headers: {
+            Authorization: `Client-ID ${process.env.UNSPLASH_ACCESS_KEY}`,
+          },
+        }
+      );
+
+      if (!fallbackResponse.ok || !(await fallbackResponse.json()).results?.[0]) {
+        return NextResponse.json(DEFAULT_IMAGE);
+      }
+
+      const fallbackData = await fallbackResponse.json();
+      const fallbackImage = fallbackData.results[0];
+      return NextResponse.json({
+        url: fallbackImage.urls.regular,
+        alt: fallbackImage.alt_description || `Photo of ${query}`,
+        credit: {
+          name: fallbackImage.user.name,
+          link: fallbackImage.user.links.html
+        }
+      });
     }
 
     const image = data.results[0];
     return NextResponse.json({
       url: image.urls.regular,
-      alt: image.alt_description || `Landscape photo of ${query}`,
+      alt: image.alt_description || `Hiking trail at ${query}`,
       credit: {
         name: image.user.name,
         link: image.user.links.html
