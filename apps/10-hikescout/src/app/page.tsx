@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import styles from "./page.module.css";
+import dynamic from "next/dynamic";
 
 interface HikeFormData {
   startLocation: string;
@@ -46,7 +47,7 @@ const vibeTypes = [
 
 export default function Home() {
   const [formData, setFormData] = useState<HikeFormData>({
-    startLocation: "London",
+    startLocation: "",
     duration: "",
     distance: "",
     terrain: "",
@@ -348,76 +349,78 @@ export default function Home() {
           </form>
 
           {hikeResponse && (
-            <div className={styles.response}>
-              <h2>{hikeResponse.name}</h2>
-              {hikeResponse.image && (
-                <>
-                  <img
-                    src={hikeResponse.image.url}
-                    alt={hikeResponse.image.alt}
-                    className={styles.hikeImage}
-                  />
-                  {hikeResponse.image.credit.name && (
-                    <p className={styles.photoCredit}>
-                      Photo by{" "}
-                      <a
-                        href={hikeResponse.image.credit.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {hikeResponse.image.credit.name}
-                      </a>{" "}
-                      on Unsplash
-                    </p>
-                  )}
-                </>
-              )}
-              <div className={styles.responseSection}>
-                <h3>📍 Location</h3>
-                <p>{hikeResponse.location}</p>
-                <a
-                  href={`https://www.google.com/maps/search/${encodeURIComponent(
-                    hikeResponse.location
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.mapsLink}
-                >
-                  <span>🗺️</span>
-                  <span>View on Google Maps</span>
-                </a>
-              </div>
-              {hikeResponse.weather && (
+            <div className={styles.formContainer}>
+              <div className={styles.response}>
+                <h2>{hikeResponse.name}</h2>
+                {hikeResponse.image && (
+                  <>
+                    <img
+                      src={hikeResponse.image.url}
+                      alt={hikeResponse.image.alt}
+                      className={styles.hikeImage}
+                    />
+                    {hikeResponse.image.credit.name && (
+                      <p className={styles.photoCredit}>
+                        Photo by{" "}
+                        <a
+                          href={hikeResponse.image.credit.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {hikeResponse.image.credit.name}
+                        </a>{" "}
+                        on Unsplash
+                      </p>
+                    )}
+                  </>
+                )}
                 <div className={styles.responseSection}>
-                  <h3>🌤️ Weather Forecast</h3>
-                  <p>
-                    {hikeResponse.weather.description},{" "}
-                    {hikeResponse.weather.temperature}°C
+                  <h3>📍 Location</h3>
+                  <p>{hikeResponse.location}</p>
+                  <a
+                    href={`https://www.google.com/maps/search/${encodeURIComponent(
+                      hikeResponse.location
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.mapsLink}
+                  >
+                    <span>🗺️</span>
+                    <span>View on Google Maps</span>
+                  </a>
+                </div>
+                {hikeResponse.weather && (
+                  <div className={styles.responseSection}>
+                    <h3>🌤️ Weather Forecast</h3>
+                    <p>
+                      {hikeResponse.weather.description},{" "}
+                      {hikeResponse.weather.temperature}°C
+                    </p>
+                  </div>
+                )}
+                <div className={styles.responseSection}>
+                  <h3>🚂 Getting There</h3>
+                  <p>{hikeResponse.transport}</p>
+                </div>
+                <div className={styles.responseSection}>
+                  <h3>🥾 About the Hike</h3>
+                  <p>{hikeResponse.description}</p>
+                  <p className={styles.difficultyText}>
+                    <strong>Difficulty:</strong> {hikeResponse.difficulty}
                   </p>
                 </div>
-              )}
-              <div className={styles.responseSection}>
-                <h3>🚂 Getting There</h3>
-                <p>{hikeResponse.transport}</p>
-              </div>
-              <div className={styles.responseSection}>
-                <h3>🥾 About the Hike</h3>
-                <p>{hikeResponse.description}</p>
-                <p className={styles.difficultyText}>
-                  <strong>Difficulty:</strong> {hikeResponse.difficulty}
-                </p>
-              </div>
-              <div className={styles.responseSection}>
-                <h3>🍽️ Food & Drinks</h3>
-                <p>{hikeResponse.foodStops}</p>
-              </div>
-              <div className={styles.responseSection}>
-                <h3>🏠 Return Journey</h3>
-                <p>{hikeResponse.returnOptions}</p>
-              </div>
-              <div className={styles.responseSection}>
-                <h3>🧥 What to Bring</h3>
-                <p>{hikeResponse.tips}</p>
+                <div className={styles.responseSection}>
+                  <h3>🍽️ Food & Drinks</h3>
+                  <p>{hikeResponse.foodStops}</p>
+                </div>
+                <div className={styles.responseSection}>
+                  <h3>🏠 Return Journey</h3>
+                  <p>{hikeResponse.returnOptions}</p>
+                </div>
+                <div className={styles.responseSection}>
+                  <h3>🧥 What to Bring</h3>
+                  <p>{hikeResponse.tips}</p>
+                </div>
               </div>
             </div>
           )}

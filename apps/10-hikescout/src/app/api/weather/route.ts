@@ -2,11 +2,14 @@ import { NextResponse } from 'next/server';
 
 async function getCoordinates(location: string) {
   try {
-    // Clean up the location string
+    // Clean up the location string - remove common prefixes and filler words
     const cleanLocation = location
-      .replace(/near/gi, '')
+      .replace(/^starting\s+/i, '')  // Remove 'starting' from beginning
+      .replace(/^at\s+/i, '')        // Remove 'at' from beginning
+      .replace(/\bnear\b/gi, '')
       .replace(/\bin\b/gi, '')
       .replace(/\bat\b/gi, '')
+      .replace(/\s+/g, ' ')          // Normalize spaces
       .trim();
 
     const response = await fetch(

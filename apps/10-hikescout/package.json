@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "html2pdf.js": "^0.10.3",
     "next": "14.1.0",
     "openai": "^4.28.0",
     "react": "^18",
