@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 
 const DEFAULT_IMAGE = {
   url: '/hikingimage.png',
@@ -9,10 +12,9 @@ const DEFAULT_IMAGE = {
   }
 };
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const query = searchParams.get('query');
+    const query = request.nextUrl.searchParams.get('query');
 
     if (!query) {
       return NextResponse.json(DEFAULT_IMAGE);
@@ -20,6 +22,12 @@ export async function GET(request: Request) {
 
     // Create a more specific search query focused on hiking trails
     const searchQuery = `${query} hiking trail landscape`;
+    
+    if (!process.env.UNSPLASH_ACCESS_KEY) {
+      console.error('Missing Unsplash API key');
+      return NextResponse.json(DEFAULT_IMAGE);
+    }
+
     const response = await fetch(
       `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
         searchQuery

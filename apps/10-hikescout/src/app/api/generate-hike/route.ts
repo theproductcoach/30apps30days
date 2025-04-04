@@ -1,5 +1,8 @@
 import { NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 import OpenAI from 'openai';
+
+export const dynamic = 'force-dynamic';
 
 // Initialize OpenAI client
 const openai = new OpenAI({
@@ -17,7 +20,7 @@ function getVibeContext(vibe: string): string {
   return vibeContexts[vibe as keyof typeof vibeContexts] || "a suitable hike matching your preferences";
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { startLocation, duration, distance, terrain, foodPreference, vibe } = await request.json();
 

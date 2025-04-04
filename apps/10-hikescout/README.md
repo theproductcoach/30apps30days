@@ -1,86 +1,75 @@
-# 🥾 HikeScout
+# HikeScout 🥾
 
-HikeScout is an AI-powered hiking trip recommender that helps you discover perfect day hikes anywhere in the world. Simply enter your starting location and preferences, and get personalized hiking recommendations complete with transport options, food stops, and preparation tips.
+A Next.js application that generates personalized hiking recommendations based on your preferences. Get detailed hiking itineraries including weather forecasts, transport options, and scenic photos.
 
 ## Features
 
-- 🌍 **Location Flexible**: Start from any address, city, station, or landmark
-- 🎯 **Personalized Recommendations**: Specify your preferred hike duration, travel distance, and terrain type
-- 🍽️ **Food & Drink Tips**: Get suggestions for pubs, cafes, and picnic spots along your route
-- 🚂 **Transport Planning**: Detailed instructions for getting to and from your hike
-- 🧥 **Preparation Guide**: Custom tips for what to bring based on the terrain and typical conditions
-- 🎲 **Surprise Me**: Let HikeScout randomly generate a hike within your preferred travel distance
+- 🗺️ Personalized hiking recommendations based on:
+  - Starting location
+  - Desired hiking duration
+  - Travel distance preference
+  - Terrain type
+  - Vibe of the hike
+  - Food preferences
 
-## Getting Started
+- 🌤️ Real-time weather information using Open-Meteo API
+- 📸 Location-specific photos from Unsplash
+- 🚂 Detailed transport instructions
+- 🍽️ Food and refreshment suggestions
+- 🧥 What to bring recommendations
 
-### Prerequisites
+## Tech Stack
 
-- Node.js 18+ and npm
-- OpenAI API key
+- Next.js 14
+- TypeScript
+- CSS Modules
+- APIs:
+  - Unsplash API for location photos
+  - Open-Meteo for weather data
+  - Open-Meteo Geocoding API
 
-### Installation
+## Setup
 
-1. Clone the repository and navigate to the app directory:
-
-```bash
-cd apps/10-hikescout
-```
-
+1. Clone the repository
 2. Install dependencies:
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
-3. Create a `.env.local` file in the root directory and add your OpenAI API key:
+3. Create a `.env` file in the root directory with:
 
-```env
-OPENAI_API_KEY=your_api_key_here
-```
+   ```
+   UNSPLASH_ACCESS_KEY=your_unsplash_api_key
+   ```
 
-4. Start the development server:
+4. Run the development server:
 
-```bash
-npm run dev
-```
-
-The app will be available at `http://localhost:3000`
-
-## Usage
-
-1. Enter your starting location (can be an address, city, station, or landmark)
-2. Specify how long you'd like to hike
-3. Set your maximum travel distance from the starting point
-4. Choose your preferred terrain type
-5. Add any food or drink preferences (optional)
-6. Click "Find My Hike" or "Surprise Me!"
-
-The app will generate a detailed hiking recommendation including:
-
-- Hike name and location
-- Transport instructions
-- Route description and difficulty level
-- Food and drink recommendations
-- Return journey options
-- What to bring and how to prepare
-
-## Technology Stack
-
-- Next.js 14 (App Router)
-- TypeScript
-- OpenAI API
-- CSS Modules
-- React Hooks
+   ```bash
+   npm run dev
+   ```
 
 ## Environment Variables
 
-Required environment variables:
+- `UNSPLASH_ACCESS_KEY`: Required for fetching location photos from Unsplash
 
-- `OPENAI_API_KEY`: Your OpenAI API key
+## API Routes
+
+### `/api/weather`
+
+Fetches current weather conditions for a given location using Open-Meteo API.
+
+### `/api/unsplash`
+
+Retrieves relevant hiking photos for the location using Unsplash API.
+
+### `/api/generate-hike`
+
+Generates personalized hiking recommendations based on user preferences.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Feel free to submit issues and enhancement requests!
 
 ## License
 

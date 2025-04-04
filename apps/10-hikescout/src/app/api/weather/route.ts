@@ -1,4 +1,7 @@
 import { NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
+
+export const dynamic = 'force-dynamic';
 
 async function getCoordinates(location: string) {
   try {
@@ -90,10 +93,9 @@ async function getWeather(latitude: number, longitude: number) {
   }
 }
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
-    const { searchParams } = new URL(request.url);
-    const location = searchParams.get('location');
+    const location = request.nextUrl.searchParams.get('location');
 
     if (!location) {
       return NextResponse.json(
